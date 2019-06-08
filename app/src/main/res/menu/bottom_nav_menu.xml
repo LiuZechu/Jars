@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_files"
+        android:icon="@drawable/ic_navbar_file_24dp"
+        android:title="@string/navbar_files" />
+
+    <item
+        android:id="@+id/navigation_candy"
+        android:icon="@drawable/ic_navbar_candy_24dp"
+        android:title="@string/navbar_candy" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_navbar_profile_24dp"
+        android:title="@string/navbar_profile" />
+
+    <item
+        android:id="@+id/navigation_shop"
+        android:icon="@drawable/ic_navbar_shop_24dp"
+        android:title="@string/navbar_shop" />
+
+</menu>
