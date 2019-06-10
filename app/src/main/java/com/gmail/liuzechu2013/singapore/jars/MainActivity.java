@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ShopFragment.ViewCurrentItemsListener{
     private Button trainingButton;
 
     // switch between different screens using bottom navigation bar
@@ -69,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(training);
     }
 
+    // view current items from ShopFragment
+    @Override
+    public void viewCurrentItems(){
+        Intent intent = new Intent(this, CurrentItemsActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
 
         // load default fragment; need to change to last saved later
         loadFragment(new FilesFragment());
+        /*
+        Fragment existing = getSupportFragmentManager().findFragmentById(R.id.content);
+
+        if (existing == null) {
+            Fragment newFragment = new FilesFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content, newFragment)
+                    .commit();
+        }
+        */
 
         // topbar training button
         trainingButton = (Button) findViewById(R.id.training_button);

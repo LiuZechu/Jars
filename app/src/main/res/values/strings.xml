@@ -5,10 +5,6 @@
     <string name="navbar_profile">Profile</string>
     <string name="navbar_shop">Shop</string>
     <string name="topbar_training">Training</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="current_items_title">My Items</string>
-    <string name="current_items_back">back</string>
-    <string name="shop_view_my_items">view my items</string>
+    <string name="shop_view_my_items">View My Items</string>
 </resources>
