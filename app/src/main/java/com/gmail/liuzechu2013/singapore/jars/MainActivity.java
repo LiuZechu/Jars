@@ -11,7 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements ShopFragment.ViewCurrentItemsListener{
+public class MainActivity extends AppCompatActivity
+        implements ShopFragment.ViewCurrentItemsListener, FilesFragment.OnFileOpenListener{
     private Button trainingButton;
 
     // switch between different screens using bottom navigation bar
@@ -73,6 +74,13 @@ public class MainActivity extends AppCompatActivity implements ShopFragment.View
     @Override
     public void viewCurrentItems(){
         Intent intent = new Intent(this, CurrentItemsActivity.class);
+        startActivity(intent);
+    }
+
+    // TEST: open PDF file
+    @Override
+    public void openFile() {
+        Intent intent = new Intent(this, ViewFileActivity.class);
         startActivity(intent);
     }
 
