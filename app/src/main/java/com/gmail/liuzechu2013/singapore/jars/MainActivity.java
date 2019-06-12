@@ -14,6 +14,11 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
         implements ShopFragment.ViewCurrentItemsListener, FilesFragment.OnFileOpenListener{
     private Button trainingButton;
+    public final static String FRAGMENT_LOAD = "FRAGMENT_LOAD";
+    public final static String FILES = "FILES";
+    public final static String CANDY = "CANDY";
+    public final static String PROFILE = "PROFILE";
+    public final static String SHOP = "SHOP";
 
     // switch between different screens using bottom navigation bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -114,4 +119,30 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+
+    // TODO: CHANGE THIS!!
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        if (intent != null) {
+            String fragmentToLoad = intent.getStringExtra(FRAGMENT_LOAD);
+            switch (fragmentToLoad) {
+                case FILES:
+                    loadFragment(new FilesFragment());
+                    break;
+                case CANDY:
+                    loadFragment(new CandyFragment());
+                    break;
+                case PROFILE:
+                    loadFragment(new ProfileFragment());
+                    break;
+                case SHOP:
+                    loadFragment(new ShopFragment());
+                    break;
+            }
+        } else {
+            // loadFragment(new FilesFragment());
+        }
+    }
 }

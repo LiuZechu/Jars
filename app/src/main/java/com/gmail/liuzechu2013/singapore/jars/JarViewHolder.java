@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class JarViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
     protected TextView jarItemView;
@@ -62,6 +64,14 @@ public class JarViewHolder extends RecyclerView.ViewHolder
     public void trainCandies() {
         Activity activity = getActivity(jarItemView.getContext());
         Intent intent = new Intent(activity, TrainingActivity.class);
+
+        // send candies as an extra
+        ArrayList<Jar> jarList = new ArrayList<>();
+        jarList.add(currentJar);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(jarList);
+        intent.putExtra(TrainingActivity.GET_JAR_LIST, jsonString);
+
         activity.startActivity(intent);
     }
 
