@@ -72,7 +72,8 @@ public class JarViewHolder extends RecyclerView.ViewHolder
         String jsonString = gson.toJson(jarList);
         intent.putExtra(TrainingActivity.GET_JAR_LIST, jsonString);
 
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent, MainActivity.REQUEST_CODE);
+
     }
 
     public void viewAllCandies() {

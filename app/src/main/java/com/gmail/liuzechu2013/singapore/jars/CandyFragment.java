@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,12 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CandyFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ArrayList<Jar> jarList;
+    private FloatingActionButton makeCandyButton;
+    private String[] jarNameArray;
+
+    public static final String JAR_NAME_ARRAY = "JarNameArray";
+    public static final int REQUEST_CODE_FOR_NEW_CANDY = 2;
 
     @Nullable
     @Override
@@ -50,11 +58,33 @@ public class CandyFragment extends Fragment {
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        makeCandyButton = view.findViewById(R.id.make_candy_floating_action_button);
+        makeCandyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeNewCandy();
+            }
+        });
+
+        jarNameArray = new String[jarList.size()];
+        for (int i = 0; i < jarList.size(); i++) {
+            jarNameArray[i] = jarList.get(i).getTitle();
+        }
+
         // menu that pops up when tapping a list item
         //registerForContextMenu(mRecyclerView);
         //mRecyclerView.setLongClickable(false); // menu pops up via short tap instead of long press
 
         return view;
+    }
+
+    public void makeNewCandy() {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(jarNameArray);
+
+        Intent intent = new Intent(getContext(), MakeNewCandyActivity.class);
+        intent.putExtra(JAR_NAME_ARRAY, jsonString);
+        startActivityForResult(intent, REQUEST_CODE_FOR_NEW_CANDY);
     }
 
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/user_item_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/sym_def_app_icon"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="User Item icon"/>
+
+    <TextView
+        android:id="@+id/user_item_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="placeholder"
+        android:textSize="30sp"
+        android:paddingLeft="20dp"
+        app:layout_constraintLeft_toRightOf="@id/user_item_imageView"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/user_item_type_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:text="type"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@id/user_item_imageView"
+        app:layout_constraintTop_toBottomOf="@id/user_item_textView"
+        tools:layout_editor_absoluteY="51dp" />
+
+</android.support.constraint.ConstraintLayout>

@@ -9,4 +9,5 @@
     <string name="shop_view_my_items">View My Items</string>
     <string name="train_your_candies">Train your candies!</string>
     <string name="view_all_candies">View all candies</string>
+    <string name="user_items_title">My Items</string>
 </resources>

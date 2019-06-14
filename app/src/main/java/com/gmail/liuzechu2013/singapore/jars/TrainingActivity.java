@@ -114,6 +114,8 @@ public class TrainingActivity extends AppCompatActivity {
         trainingBottomBarLayout.setVisibility(View.INVISIBLE);
 
         if (currentCandyIndex >= candies.size()) {
+            // reset to zero
+            currentCandyIndex = 0;
             nextJar(jarList);
         } else {
 
@@ -149,7 +151,7 @@ public class TrainingActivity extends AppCompatActivity {
     public void exitTraining() {
         // TODO: change this to return to CandyFragment instead of just MainActivity
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(MainActivity.FRAGMENT_LOAD, MainActivity.CANDY);
-        startActivity(intent);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

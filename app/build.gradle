@@ -35,4 +35,7 @@ dependencies {
 
     // PDF reader library; changed "compile" to "implementation"
     implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
+
+    // advanced nested scroll view
+    implementation 'com.github.eddydn:AdvancedNestedScrollView:1.1'
 }

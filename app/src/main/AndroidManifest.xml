@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewAllCandiesActivity"></activity>
+        <activity android:name=".MakeNewCandyActivity"></activity>
+        <activity android:name=".ViewAllCandiesActivity" />
         <activity android:name=".ViewFileActivity" />
         <activity android:name=".CurrentItemsActivity" />
         <activity android:name=".TrainingActivity" />
