@@ -23,12 +23,11 @@ import java.util.List;
 
 public class CandyFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private ArrayList<Jar> jarList;
+    private static ArrayList<Jar> jarList;
     private FloatingActionButton makeCandyButton;
     private String[] jarNameArray;
 
     public static final String JAR_NAME_ARRAY = "JarNameArray";
-    public static final int REQUEST_CODE_FOR_NEW_CANDY = 2;
 
     @Nullable
     @Override
@@ -36,22 +35,8 @@ public class CandyFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_candy, null);
 
-        // TESTING: CREATE A TEMP jarList; will be replaced later
-        jarList = new ArrayList<>();
-        Jar jar1 = new Jar("Discrete Structures");
-        jar1.addCandy(new Candy("wheres NYC", "USA"));
-        jar1.addCandy(new Candy("whats the capital of singapore", "singapore"));
-        jar1.addCandy(new Candy("whats the time complexity of floyd warshall algo", "V^3"));
-        jarList.add(jar1);
-        jarList.add(new Jar("CS"));
-        jarList.add(new Jar("French"));
-        jarList.add(new Jar("Design Thinking"));
-        jarList.add(new Jar("Computer Organisation"));
-        jarList.add(new Jar("PS"));
-        jarList.add(new Jar("GAPI"));
-        jarList.add(new Jar("Chinese"));
-        jarList.add(new Jar("Japanese"));
-        // TESTING ENDS
+        // Load list of jars
+        jarList = MainActivity.getJarList();
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.jar_list_recyclerView);
         JarListAdapter adapter = new JarListAdapter(getContext(), jarList);
@@ -84,7 +69,11 @@ public class CandyFragment extends Fragment {
 
         Intent intent = new Intent(getContext(), MakeNewCandyActivity.class);
         intent.putExtra(JAR_NAME_ARRAY, jsonString);
-        startActivityForResult(intent, REQUEST_CODE_FOR_NEW_CANDY);
+        getActivity().startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_NEW_CANDY);
+    }
+
+    public static ArrayList<Jar> getJarList() {
+        return jarList;
     }
 
 
@@ -122,3 +111,19 @@ public class CandyFragment extends Fragment {
 //        startActivity(intent);
 //    }
 }
+
+// TESTING: CREATE A TEMP jarList; will be replaced later
+//        jarList = new ArrayList<>();
+//        Jar jar1 = new Jar("Discrete Structures");
+//        jar1.addCandy(new Candy("wheres NYC", "USA"));
+//        jar1.addCandy(new Candy("whats the capital of singapore", "singapore"));
+//        jar1.addCandy(new Candy("whats the time complexity of floyd warshall algo", "V^3"));
+//        jarList.add(jar1);
+//        jarList.add(new Jar("CS"));
+//        jarList.add(new Jar("French"));
+//        jarList.add(new Jar("Design Thinking"));
+//        jarList.add(new Jar("Computer Organisation"));
+//        jarList.add(new Jar("PS"));
+//        jarList.add(new Jar("GAPI"));
+//        jarList.add(new Jar("Chinese"));
+//        jarList.add(new Jar("Japanese"));

@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.ActionProvider;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -17,9 +18,19 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.barteksc.pdfviewer.PDFView;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -27,10 +38,14 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView navView;
     private Button trainingButton;
     private ArrayList<Jar> jarListForTraining;
-    public final static int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE_FOR_NEW_CANDY = 2;
     // for saving user data using shared preferences
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String USER_STATISTICS = "UserStatistics";
+    // for Candy Tab
+    private static ArrayList<Jar> jarList;
+    private static final String USER_JAR_FILE_NAME = "userJars.txt";
 
     // switch between different screens using bottom navigation bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -90,6 +105,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
@@ -99,8 +115,22 @@ public class MainActivity extends AppCompatActivity
                 MenuItem menuItem = menu.getItem(1); // highlight the Candy tab
                 menuItem.setChecked(true);
             }
-        } else if (requestCode == CandyFragment.REQUEST_CODE_FOR_NEW_CANDY) {
+        } else if (requestCode == REQUEST_CODE_FOR_NEW_CANDY) {
             if (resultCode == RESULT_OK) {
+
+                // GET DATA FROM data (for the newly created candy)
+                String jarTitle = data.getStringExtra(MakeNewCandyActivity.JAR_TITLE);
+                String prompt = data.getStringExtra(MakeNewCandyActivity.PROMPT);
+                String answer = data.getStringExtra(MakeNewCandyActivity.ANSWER);
+                int jarIndex = data.getIntExtra(MakeNewCandyActivity.JAR_INDEX,-1);
+
+                Jar jar = jarList.get(jarIndex);
+                jar.addCandy(new Candy(prompt, answer));
+
+                // save and load newly updated jar data
+                Gson gson = new Gson();
+                String jsonString = gson.toJson(jarList);
+                saveToLocalFile(USER_JAR_FILE_NAME, jsonString);
 
                 loadFragment(new CandyFragment());
 
@@ -108,13 +138,64 @@ public class MainActivity extends AppCompatActivity
                 MenuItem menuItem = menu.getItem(1); // highlight the Candy tab
                 menuItem.setChecked(true);
 
-                // GET DATA FROM data (for the newly created candy)
-                String jarTitle = data.getStringExtra(MakeNewCandyActivity.JAR_TITLE);
-                String prompt = data.getStringExtra(MakeNewCandyActivity.PROMPT);
-                String answer = data.getStringExtra(MakeNewCandyActivity.ANSWER);
-
             }
         } else {}
+    }
+
+    // save a String into local text file on phone
+    public void saveToLocalFile(String fileName, String stringToSave) {
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(fileName, MODE_PRIVATE);
+            fos.write(stringToSave.getBytes());
+
+            Toast.makeText(this, "saved successfully", Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    // read a string out from local text file
+    public String loadFromLocalFile(String fileName) {
+        FileInputStream fis = null;
+        String output = null;
+
+        try {
+            fis = openFileInput(fileName);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+
+            output = sb.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return output;
     }
 
     // view current items from ShopFragment
@@ -138,6 +219,11 @@ public class MainActivity extends AppCompatActivity
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        // load data into jarList
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
+        String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
+        jarList = gson.fromJson(jsonStringForJarList, type);
 
 
         // FOR TESTING: MANUALLY ADD JAR LIST FOR TRAINING
@@ -149,6 +235,18 @@ public class MainActivity extends AppCompatActivity
         jar2.addCandy(new Candy("hello", "BONJOUR!"));
         jarListForTraining.add(jar1);
         jarListForTraining.add(jar2);
+
+        if (jarList == null) {
+            jarList = new ArrayList<>();
+        }
+
+//        jarList.add(new Jar("French"));
+//        jarList.add(new Jar("Design Thinking"));
+//        jarList.add(new Jar("Computer Organisation"));
+//        jarList.add(new Jar("PS"));
+//        jarList.add(new Jar("GAPI"));
+//        jarList.add(new Jar("Chinese"));
+//        jarList.add(new Jar("Japanese"));
         // TESTING ENDS
 
 
@@ -187,5 +285,9 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         // sharedPreferences.getString(CONSTANT, default value)
         // etc
+    }
+
+    public static ArrayList<Jar> getJarList() {
+        return jarList;
     }
 }

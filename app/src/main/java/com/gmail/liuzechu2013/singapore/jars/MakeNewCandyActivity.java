@@ -3,6 +3,7 @@ package com.gmail.liuzechu2013.singapore.jars;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,18 +20,44 @@ public class MakeNewCandyActivity extends AppCompatActivity
     private Spinner chooseJarSpinner;
     private Button doneButton;
     private String jarTitleSelected;
+    private int jarIndex;
     private EditText promptEditText;
     private EditText answerEditText;
+    private Button makeNewJarButton;
+    private EditText makeNewJarEditText;
+    private Button makeNewJarSaveButton;
 
     public static final String JAR_TITLE = "jarTitle";
     public static final String PROMPT = "prompt";
     public static final String ANSWER = "answer";
+    public static final String JAR_INDEX = "jarIndex";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_new_candy);
+
+        makeNewJarButton = findViewById(R.id.make_candy_new_jar_button);
+        makeNewJarEditText = findViewById(R.id.make_candy_new_jar_name_edit_text);
+        makeNewJarSaveButton = findViewById(R.id.make_candy_new_jar_save_button);
+        makeNewJarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeNewJarEditText.setVisibility(View.VISIBLE);
+                makeNewJarSaveButton.setVisibility(View.VISIBLE);
+                makeNewJarButton.setVisibility(View.GONE);
+            }
+        });
+
+        makeNewJarSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeNewJarSaveButton.setVisibility(View.GONE);
+                makeNewJarButton.setVisibility(View.VISIBLE);
+                // TODO: implement save/create new jar!!!
+            }
+        });
 
         // get jarNameArray from intent
         String jsonString = getIntent().getStringExtra(CandyFragment.JAR_NAME_ARRAY);
@@ -44,6 +71,7 @@ public class MakeNewCandyActivity extends AppCompatActivity
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         chooseJarSpinner.setAdapter(adapter);
+        chooseJarSpinner.setOnItemSelectedListener(this);
 
         promptEditText = findViewById(R.id.make_candy_prompt_editText);
         answerEditText = findViewById(R.id.make_candy_answer_editText);
@@ -61,6 +89,7 @@ public class MakeNewCandyActivity extends AppCompatActivity
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         jarTitleSelected = (String) parent.getItemAtPosition(pos);
+        jarIndex = pos;
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -69,10 +98,12 @@ public class MakeNewCandyActivity extends AppCompatActivity
 
     public void doneMakingCandy() {
         Intent intent = new Intent(this, MainActivity.class);
+
         // put the candy created by user into intent
         intent.putExtra(JAR_TITLE, jarTitleSelected);
         intent.putExtra(PROMPT, promptEditText.getText().toString());
         intent.putExtra(ANSWER, answerEditText.getText().toString());
+        intent.putExtra(JAR_INDEX, jarIndex);
         setResult(RESULT_OK, intent);
         finish();
     }

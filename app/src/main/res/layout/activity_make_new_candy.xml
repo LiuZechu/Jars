@@ -23,6 +23,32 @@
         app:layout_constraintTop_toBottomOf="@id/make_candy_title">
     </Spinner>
 
+    <Button
+    android:id="@+id/make_candy_new_jar_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="@id/make_candy_text_layout"
+    app:layout_constraintRight_toRightOf="parent"
+    android:text="new jar"/>
+
+    <Button
+        android:id="@+id/make_candy_new_jar_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/make_candy_text_layout"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        android:text="save"/>
+
+    <EditText
+        android:id="@+id/make_candy_new_jar_name_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@id/make_candy_new_jar_button"
+        app:layout_constraintTop_toBottomOf="@id/make_candy_choose_jar_spinner"
+        android:visibility="gone"
+        android:hint="enter the name of the new Jar ..."/>
+
     <LinearLayout
         android:id="@+id/make_candy_text_layout"
         android:layout_width="match_parent"
