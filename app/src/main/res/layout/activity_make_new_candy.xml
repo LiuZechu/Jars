@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/make_candy_choose_jar_spinner"
+        app:layout_constraintTop_toBottomOf="@id/make_candy_new_jar_name_edit_text"
         app:layout_constraintBottom_toTopOf="@id/make_candy_done_button">
 
         <EditText

@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     public static final String USER_STATISTICS = "UserStatistics";
     // for Candy Tab
     private static ArrayList<Jar> jarList;
-    private static final String USER_JAR_FILE_NAME = "userJars.txt";
+    public static final String USER_JAR_FILE_NAME = "userJars.txt";
 
     // switch between different screens using bottom navigation bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity
     };
 
     // to load a fragment in Main Activity
-    private boolean loadFragment(Fragment fragment) {
+    protected boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity
             fos = openFileOutput(fileName, MODE_PRIVATE);
             fos.write(stringToSave.getBytes());
 
-            Toast.makeText(this, "saved successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "changes saved successfully", Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

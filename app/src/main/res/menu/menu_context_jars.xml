@@ -13,4 +13,10 @@
         android:orderInCategory="20"
         />
 
+    <item
+        android:id="@+id/menu_context_jar_delete"
+        android:title="Delete this Jar"
+        android:orderInCategory="30"
+        />
+
 </menu>
