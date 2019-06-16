@@ -97,7 +97,7 @@ public class TrainingActivity extends AppCompatActivity {
 
     public void nextJar(List<Jar> jars) {
 
-        if (currentJarIndex >= jarList.size()) {
+        if (jarList == null || currentJarIndex >= jarList.size()) {
             finishTraining();
         } else {
             currentJar = jars.get(currentJarIndex);
@@ -113,7 +113,7 @@ public class TrainingActivity extends AppCompatActivity {
         // make the two buttons invisible initially
         trainingBottomBarLayout.setVisibility(View.INVISIBLE);
 
-        if (currentCandyIndex >= candies.size()) {
+        if (candies == null || currentCandyIndex >= candies.size()) {
             // reset to zero
             currentCandyIndex = 0;
             nextJar(jarList);

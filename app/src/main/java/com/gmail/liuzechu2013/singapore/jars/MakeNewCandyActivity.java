@@ -40,6 +40,7 @@ public class MakeNewCandyActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_new_candy);
 
+        // make a new jar by entering jar's name
         makeNewJarButton = findViewById(R.id.make_candy_new_jar_button);
         makeNewJarEditText = findViewById(R.id.make_candy_new_jar_name_edit_text);
         makeNewJarSaveButton = findViewById(R.id.make_candy_new_jar_save_button);

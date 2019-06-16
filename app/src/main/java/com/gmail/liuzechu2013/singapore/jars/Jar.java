@@ -5,7 +5,7 @@ import android.app.Activity;
 import java.util.ArrayList;
 
 public class Jar {
-    private int ID; // unique ID for each jar
+    private int ID; // unique ID for each jar; Problem: useless? also training process may screw this up
     private String title;
     private long lastAcessTime; // timestamp of the last access time by user
     private ArrayList<Candy> candies; // all candies in the jar

@@ -1,5 +1,9 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -46,6 +50,15 @@ public class MainActivity extends AppCompatActivity
     // for Candy Tab
     private static ArrayList<Jar> jarList;
     public static final String USER_JAR_FILE_NAME = "userJars.txt";
+    public static final String CANDY_TRAINING_FILE_NAME = "candyTraining.txt";
+
+    // user stats:
+    // private String username;
+    private int level;
+    private int exp;
+    private int streak;
+    private int totalCandiesMade;
+    private int totalCandiesGraduated;
 
     // switch between different screens using bottom navigation bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -126,6 +139,9 @@ public class MainActivity extends AppCompatActivity
 
                 Jar jar = jarList.get(jarIndex);
                 jar.addCandy(new Candy(prompt, answer));
+
+                //increment "total candies made" count
+                incrementTotalCandiesMade();
 
                 // save and load newly updated jar data
                 Gson gson = new Gson();
@@ -225,30 +241,9 @@ public class MainActivity extends AppCompatActivity
         String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
         jarList = gson.fromJson(jsonStringForJarList, type);
 
-
-        // FOR TESTING: MANUALLY ADD JAR LIST FOR TRAINING
-        jarListForTraining = new ArrayList<>();
-        Jar jar1 = new Jar("general knowledge");
-        jar1.addCandy(new Candy("wheres canberra", "australia"));
-        jar1.addCandy(new Candy("whos the father of computer science", "alan turing"));
-        Jar jar2 = new Jar("french");
-        jar2.addCandy(new Candy("hello", "BONJOUR!"));
-        jarListForTraining.add(jar1);
-        jarListForTraining.add(jar2);
-
-        if (jarList == null) {
-            jarList = new ArrayList<>();
-        }
-
-//        jarList.add(new Jar("French"));
-//        jarList.add(new Jar("Design Thinking"));
-//        jarList.add(new Jar("Computer Organisation"));
-//        jarList.add(new Jar("PS"));
-//        jarList.add(new Jar("GAPI"));
-//        jarList.add(new Jar("Chinese"));
-//        jarList.add(new Jar("Japanese"));
-        // TESTING ENDS
-
+        // get list of candies to train from saved local file
+        String jsonStringForTrainingList = loadFromLocalFile(CANDY_TRAINING_FILE_NAME);
+        jarListForTraining = gson.fromJson(jsonStringForTrainingList, type);
 
 
         // load default fragment; TODO: need to change to last saved later
@@ -272,22 +267,98 @@ public class MainActivity extends AppCompatActivity
                 gotoTraining();
             }
         });
+
+        // background work using jobScheduler
+        scheduleJob();
     }
 
-    public void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+    public void saveAllData() {
+        // does not save username here
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        // put stuff into it as key value pairs
-        // editor.apply();
+        editor.putInt(ProfileFragment.LEVEL, level);
+        editor.putInt(ProfileFragment.EXP, exp);
+        editor.putInt(ProfileFragment.STREAK, streak);
+        editor.putInt(ProfileFragment.TOTAL_CANDIES_MADE, totalCandiesMade);
+        editor.putInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, totalCandiesGraduated);
+        editor.commit();
     }
 
-    public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        // sharedPreferences.getString(CONSTANT, default value)
-        // etc
+    public void loadAllData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        // username = sharedPreferences.getString(USERNAME, "default username");
+        level = sharedPreferences.getInt(ProfileFragment.LEVEL, -1);
+        exp = sharedPreferences.getInt(ProfileFragment.EXP, -1);
+        streak = sharedPreferences.getInt(ProfileFragment.STREAK, -1);
+        totalCandiesMade = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_MADE, -1);
+        totalCandiesGraduated = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, -1);
     }
 
     public static ArrayList<Jar> getJarList() {
         return jarList;
     }
+
+    public void incrementTotalCandiesMade() {
+        loadAllData();
+        this.totalCandiesMade++;
+        saveAllData();
+        // TODO: only save relevant data, not everything
+    }
+
+    public void incrementTotalCandiesGraduated() {
+        loadAllData();
+        this.totalCandiesGraduated++;
+        saveAllData();
+        // TODO: only save relevant data, not everything
+    }
+
+    // for background work
+    public void scheduleJob() {
+        ComponentName componentName = new ComponentName(this, DailyBackgroundJobService.class);
+        JobInfo info = new JobInfo.Builder(DailyBackgroundJobService.JOB_ID, componentName)
+                .setPeriodic((long) 24 * 60 * 60 * 1000) // One day in milliseconds
+                .setPersisted(true)
+                .build();
+
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d("JobScheduler result", "Job scheduled successfully");
+        } else {
+            Log.d("JobScheduler result", "Job scheduling failed");
+        }
+    }
+
+    // currently not used
+    public void cancelJob() {
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.cancel(DailyBackgroundJobService.JOB_ID);
+        Log.d("JobScheduler result", "Job scheduling cancelled");
+    }
 }
+
+
+
+// FOR TESTING: MANUALLY ADD JAR LIST FOR TRAINING
+//        jarListForTraining = new ArrayList<>();
+//        Jar jar1 = new Jar("general knowledge");
+//        jar1.addCandy(new Candy("wheres canberra", "australia"));
+//        jar1.addCandy(new Candy("whos the father of computer science", "alan turing"));
+//        Jar jar2 = new Jar("french");
+//        jar2.addCandy(new Candy("hello", "BONJOUR!"));
+//        jarListForTraining.add(jar1);
+//        jarListForTraining.add(jar2);
+//
+//        if (jarList == null) {
+//            jarList = new ArrayList<>();
+//        }
+
+//        jarList.add(new Jar("French"));
+//        jarList.add(new Jar("Design Thinking"));
+//        jarList.add(new Jar("Computer Organisation"));
+//        jarList.add(new Jar("PS"));
+//        jarList.add(new Jar("GAPI"));
+//        jarList.add(new Jar("Chinese"));
+//        jarList.add(new Jar("Japanese"));
+// TESTING ENDS
