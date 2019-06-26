@@ -30,7 +30,7 @@ public class Candy {
     }
 
     public boolean shouldTrain() {
-        return countDown == 0;
+        return countDown <= 0;
     }
 
     public void decrementCountDown() {

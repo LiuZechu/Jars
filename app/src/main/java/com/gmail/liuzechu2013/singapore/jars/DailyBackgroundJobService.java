@@ -54,6 +54,11 @@ public class DailyBackgroundJobService extends JobService {
         Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
         ArrayList<Jar> jarList = gson.fromJson(jsonString, type);
 
+        // create a new list inside USER_JAR_FILE_NAME if no such list exists
+        if (jarList == null) {
+            jarList = new ArrayList<>();
+        }
+
         // process Candies
         ArrayList<Jar> candiesToTrain = new ArrayList<>(); // for now, create a new jar for candies, for training purpose
         numberOfCandiesToTrain = 0;
