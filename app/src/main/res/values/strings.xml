@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Jars</string>
     <string name="navbar_files">Files</string>
-    <string name="navbar_candy">Candy</string>
+    <string name="navbar_jars">Jars</string>
     <string name="navbar_profile">Profile</string>
-    <string name="navbar_shop">Shop</string>
+    <string name="navbar_maker">Maker</string>
     <string name="topbar_training">Training</string>
     <string name="current_items_title">My Items</string>
     <string name="shop_view_my_items">View My Items</string>

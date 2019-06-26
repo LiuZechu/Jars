@@ -6,7 +6,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -14,17 +13,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.barteksc.pdfviewer.PDFView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -72,13 +66,13 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigation_files:
                     fragment = new FilesFragment();
                     break;
-                case R.id.navigation_candy:
+                case R.id.navigation_jars:
                     fragment = new CandyFragment();
                     break;
                 case R.id.navigation_profile:
                     fragment = new ProfileFragment();
                     break;
-                case R.id.navigation_shop:
+                case R.id.navigation_maker:
                     fragment = new ShopFragment();
                     break;
             }
