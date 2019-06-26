@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements ShopFragment.ViewCurrentItemsListener, FilesFragment.OnFileOpenListener{
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     private static ArrayList<Jar> jarList;
     public static final String USER_JAR_FILE_NAME = "userJars.txt";
     public static final String CANDY_TRAINING_FILE_NAME = "candyTraining.txt";
+    // for Training Button
+    final Random rnd = new Random();
 
     // user stats:
     // private String username;
@@ -229,6 +233,14 @@ public class MainActivity extends AppCompatActivity
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        final ImageView img = findViewById(R.id.training_expression);
+        final String str = "ic_expression" + rnd.nextInt(17);
+        img.setImageDrawable
+                (
+                        getResources().getDrawable(getResourceID(str, "drawable",
+                                getApplicationContext()))
+                );
+
         // load data into jarList
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
@@ -321,6 +333,17 @@ public class MainActivity extends AppCompatActivity
             Log.d("JobScheduler result", "Job scheduled successfully");
         } else {
             Log.d("JobScheduler result", "Job scheduling failed");
+        }
+    }
+
+    protected static int getResourceID(final String resName, final String resType, final Context ctx) {
+        final int ResourceID = ctx.getResources().getIdentifier(resName, resType,
+                        ctx.getApplicationInfo().packageName);
+        if (ResourceID == 0) {
+            throw new IllegalArgumentException(
+                            "No resource string found with name " + resName);
+        } else {
+            return ResourceID;
         }
     }
 
