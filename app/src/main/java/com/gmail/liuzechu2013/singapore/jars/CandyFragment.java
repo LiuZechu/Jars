@@ -38,6 +38,11 @@ public class CandyFragment extends Fragment {
         // Load list of jars
         jarList = MainActivity.getJarList();
 
+        // create jar list if there is none
+        if (jarList == null) {
+            jarList = new ArrayList<>();
+        }
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.jar_list_recyclerView);
         JarListAdapter adapter = new JarListAdapter(getContext(), jarList);
         mRecyclerView.setAdapter(adapter);
