@@ -19,6 +19,9 @@ allprojects {
         google()
         jcenter()
 
+        // for MuPDF viewer
+        maven { url 'http://maven.ghostscript.com' }
+
         // for nested scroll view
         maven { url 'https://jitpack.io'}
     }
