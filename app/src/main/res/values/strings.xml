@@ -10,4 +10,10 @@
     <string name="train_your_candies">Train your candies!</string>
     <string name="view_all_candies">View all candies</string>
     <string name="user_items_title">My Items</string>
+    <string name="achievement_level_title">Current Level</string>
+    <string name="achievement_sugar_title">Sugar Spent</string>
+    <string name="achievement_jars_title">Jars Made</string>
+    <string name="achievement_graduated_title">Candies Graduated</string>
+    <string name="achievement_made_title">Candies Made</string>
+    <string name="achievement_streak_title">Maximum Streak</string>
 </resources>

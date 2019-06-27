@@ -1,380 +1,729 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout android:layout_height="wrap_content"
+<android.widget.ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <!-- Reset Button; put here temporarily for testing -->
-    <Button
-        android:id="@+id/reset_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="reset"/>
-
-    <!-- SECTION 1: USER STATS -->
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/profile_user_details_layout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/profile_username_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="20sp"
-            android:padding="8dp"
-            android:text="Username"
-            />
-
-        <TextView
-            android:id="@+id/profile_user_level_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="Level"
-            android:textSize="15sp"
-            android:padding="8dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_user_level_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
-            app:layout_constraintLeft_toRightOf="@id/profile_user_level_textView"
-            android:text="X"
-            android:textSize="15sp"
-            android:padding="8dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_user_exp_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
-            app:layout_constraintRight_toRightOf="parent"
-            android:text="exp to next level"
-            android:textSize="15sp"
-            android:padding="8dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_user_exp_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
-            app:layout_constraintRight_toLeftOf="@id/profile_user_exp_textView"
-            android:text="XXX"
-            android:textSize="15sp"
-            android:padding="8dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_total_candies_made_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_user_level_textView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="Total Candies made:"
-            android:textSize="15sp"
-            android:padding="8dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_total_candies_made_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_user_level_textView"
-            app:layout_constraintLeft_toRightOf="@id/profile_total_candies_made_textView"
-            android:text="XXX"
-            android:textSize="15sp"
-            android:padding="8dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_total_candies_graduated_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_total_candies_made_textView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="Total Candies graduated:"
-            android:textSize="15sp"
-            android:padding="8dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_total_candies_graduated_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_total_candies_made_textView"
-            app:layout_constraintLeft_toRightOf="@id/profile_total_candies_graduated_textView"
-            android:text="XXX"
-            android:textSize="15sp"
-            android:padding="8dp"
-            />
-
-    </android.support.constraint.ConstraintLayout>
-
-
-    <!-- SECTION 2: LINE GRAPH -->
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/profile_statistics_visualisation_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/profile_user_details_layout"
-        app:layout_constraintBottom_toTopOf="@id/achievement_list_recyclerView">
-
-        <!-- TODO: Implement statistics visualisation here (line graphs etc.)_-->
-        <android.support.v7.widget.AppCompatTextView
+        <!-- SECTION 1: USERNAME AND SETTINGS -->
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="50sp"
-            android:gravity="center"
-            android:text="PLACEHOLDER(LINE GRAPH)"/>
+            android:layout_height="wrap_content">
 
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/profile_username_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:padding="8dp"
+                android:text="Username"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-
-    <!-- SECTION 3: ACHIEVEMENTS -->
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/achievement_list_recyclerView"
-        app:layout_constraintTop_toBottomOf="@id/profile_statistics_visualisation_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" >
-    </android.support.v7.widget.RecyclerView>
-
-</android.support.constraint.ConstraintLayout>
-
-
-
-
-<!-- Failed attempt at using AdvancedNestedScrollView
-
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<android.support.constraint.ConstraintLayout
-    android:id="@+id/profile_constraint_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
-    // TOP PART: USER DETAILS
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/profile_user_details_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/profile_username_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="20sp"
-            android:padding="10dp"
-            android:text="Username"
-            />
-
-        <TextView
-            android:id="@+id/profile_user_level_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="Level"
-            android:textSize="20dp"
-            android:padding="10dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_user_level_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
-            app:layout_constraintLeft_toRightOf="@id/profile_user_level_textView"
-            android:text="X"
-            android:textSize="20dp"
-            android:padding="10dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_user_exp_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
-            app:layout_constraintRight_toRightOf="parent"
-            android:text="exp to next level"
-            android:textSize="20dp"
-            android:padding="10dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_user_exp_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
-            app:layout_constraintRight_toLeftOf="@id/profile_user_exp_textView"
-            android:text="XXX"
-            android:textSize="20dp"
-            android:padding="10dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_total_candies_made_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_user_level_textView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="Total Candies made:"
-            android:textSize="20dp"
-            android:padding="10dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_total_candies_made_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_user_level_textView"
-            app:layout_constraintLeft_toRightOf="@id/profile_total_candies_made_textView"
-            android:text="XXX"
-            android:textSize="20dp"
-            android:padding="10dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_total_candies_graduated_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_total_candies_made_textView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="Total Candies graduated:"
-            android:textSize="20dp"
-            android:padding="10dp"
-            />
-
-        <TextView
-            android:id="@+id/profile_total_candies_graduated_number_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_total_candies_made_textView"
-            app:layout_constraintLeft_toRightOf="@id/profile_total_candies_graduated_textView"
-            android:text="XXX"
-            android:textSize="20dp"
-            android:padding="10dp"
-            />
-
-    </android.support.constraint.ConstraintLayout>
-
-
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/profile_statistics_visualisation_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/profile_user_details_layout">
-
-
-        <android.support.v7.widget.AppCompatTextView
+            <!-- Reset Button; put here temporarily for testing -->
+            <Button
+                android:id="@+id/reset_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_settings"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+        <!-- SECTION 2: LINE GRAPH -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/profile_statistics_visualisation_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="50sp"
-            android:gravity="center"
-            android:text="PLACEHOLDER(LINE GRAPH)"/>
+            android:layout_height="wrap_content">
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.constraint.ConstraintLayout>
-
-
-//  ACHIEVEMENTS USING ADVANCED NESTED SCROLL VIEW
-
-<edmt.dev.advancednestedscrollview.AdvancedNestedScrollView
-    android:id="@+id/achievement_nested_scroll_view"
-    android:layout_width="48dp"
-    android:layout_height="47dp"
-    app:layout_behavior="com.gmail.liuzechu2013.singapore.jars.Behavior.CustomBehavior"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
-
-    <FrameLayout
-        android:id="@+id/card_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:descendantFocusability="blocksDescendants">
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="2dp">
-
-            <LinearLayout
+            <!-- TODO: Implement statistics visualisation here (line graphs etc.)_-->
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:text="PLACEHOLDER(LINE GRAPH)"
+                android:textSize="50sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- SECTION 3: ACHIEVEMENTS -->
+        <LinearLayout
+            android:layout_marginBottom="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/achievement_streak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/achievement_streak_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_achievement_streak"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/card_title"
+                    android:id="@+id/achievement_streak_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/achievement_streak_title"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_streak_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/achievement_streak_stars"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_stars0"
+                    app:layout_constraintEnd_toStartOf="@id/achievement_streak_score"
+                    app:layout_constraintStart_toEndOf="@id/achievement_streak_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_streak_title" />
+
+                <TextView
+                    android:id="@+id/achievement_streak_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="6/30"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/achievement_streak_stars"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_streak_stars"
+                    app:layout_constraintTop_toTopOf="@+id/achievement_streak_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_streak_bar"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_achievement_streak_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_streak_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_streak_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_streak_bar_empty"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_bar_empty"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_streak_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_streak_stars" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/achievement_made"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/achievement_made_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_achievement_made"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/achievement_made_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/achievement_made_title"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_made_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/achievement_made_stars"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_stars0"
+                    app:layout_constraintEnd_toStartOf="@id/achievement_made_score"
+                    app:layout_constraintStart_toEndOf="@id/achievement_made_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_made_title" />
+
+                <TextView
+                    android:id="@+id/achievement_made_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="6/30"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/achievement_made_stars"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_made_stars"
+                    app:layout_constraintTop_toTopOf="@+id/achievement_made_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_made_bar"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_achievement_made_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_made_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_made_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_made_bar_empty"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_bar_empty"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_made_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_made_stars" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/achievement_graduated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/achievement_graduated_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_achievement_graduated"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/achievement_graduated_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/achievement_graduated_title"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_graduated_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/achievement_graduated_stars"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_stars0"
+                    app:layout_constraintEnd_toStartOf="@id/achievement_graduated_score"
+                    app:layout_constraintStart_toEndOf="@id/achievement_graduated_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_graduated_title" />
+
+                <TextView
+                    android:id="@+id/achievement_graduated_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="6/30"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/achievement_graduated_stars"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_graduated_stars"
+                    app:layout_constraintTop_toTopOf="@+id/achievement_graduated_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_graduated_bar"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_achievement_graduated_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_graduated_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_graduated_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_graduated_bar_empty"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_bar_empty"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_graduated_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_graduated_stars" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/achievement_jars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/achievement_jars_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_achievement_jars"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/achievement_jars_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/achievement_jars_title"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_jars_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/achievement_jars_stars"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_stars0"
+                    app:layout_constraintEnd_toStartOf="@id/achievement_jars_score"
+                    app:layout_constraintStart_toEndOf="@id/achievement_jars_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_jars_title" />
+
+                <TextView
+                    android:id="@+id/achievement_jars_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="6/30"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/achievement_jars_stars"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_jars_stars"
+                    app:layout_constraintTop_toTopOf="@+id/achievement_jars_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_jars_bar"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_achievement_jars_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_jars_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_jars_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_jars_bar_empty"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_bar_empty"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_jars_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_jars_stars" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_marginTop="16dp"
+                android:id="@+id/achievement_sugar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/achievement_sugar_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_achievement_sugar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/achievement_sugar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/achievement_sugar_title"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_sugar_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/achievement_sugar_stars"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_stars0"
+                    app:layout_constraintEnd_toStartOf="@id/achievement_sugar_score"
+                    app:layout_constraintStart_toEndOf="@id/achievement_sugar_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_sugar_title" />
+
+                <TextView
+                    android:id="@+id/achievement_sugar_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="6/30"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/achievement_sugar_stars"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_sugar_stars"
+                    app:layout_constraintTop_toTopOf="@+id/achievement_sugar_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_sugar_bar"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_achievement_sugar_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_sugar_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_sugar_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_sugar_bar_empty"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_bar_empty"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_sugar_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_sugar_stars" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_marginTop="16dp"
+                android:id="@+id/achievement_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/achievement_level_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_achievement_level"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/achievement_level_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/achievement_level_title"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_level_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/achievement_level_stars"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_stars0"
+                    app:layout_constraintEnd_toStartOf="@id/achievement_level_score"
+                    app:layout_constraintStart_toEndOf="@id/achievement_level_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_level_title" />
+
+                <TextView
+                    android:id="@+id/achievement_level_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="6/30"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/achievement_level_stars"
+                    app:layout_constraintStart_toEndOf="@+id/achievement_level_stars"
+                    app:layout_constraintTop_toTopOf="@+id/achievement_level_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_level_bar"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_achievement_level_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_level_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_level_stars" />
+
+                <ImageView
+                    android:id="@+id/achievement_level_bar_empty"
+                    android:layout_width="240dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_bar_empty"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/achievement_level_icon"
+                    app:layout_constraintTop_toBottomOf="@id/achievement_level_stars" />
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</android.widget.ScrollView>
+
+
+    <!-- Failed attempt at using AdvancedNestedScrollView
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/profile_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        // TOP PART: USER DETAILS
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/profile_user_details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/profile_username_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:text="Username"
+                />
+
+            <TextView
+                android:id="@+id/profile_user_level_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="Level"
+                android:textSize="20dp"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:id="@+id/profile_user_level_number_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
+                app:layout_constraintLeft_toRightOf="@id/profile_user_level_textView"
+                android:text="X"
+                android:textSize="20dp"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:id="@+id/profile_user_exp_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="exp to next level"
+                android:textSize="20dp"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:id="@+id/profile_user_exp_number_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_username_textView"
+                app:layout_constraintRight_toLeftOf="@id/profile_user_exp_textView"
+                android:text="XXX"
+                android:textSize="20dp"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:id="@+id/profile_total_candies_made_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_user_level_textView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="Total Candies made:"
+                android:textSize="20dp"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:id="@+id/profile_total_candies_made_number_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_user_level_textView"
+                app:layout_constraintLeft_toRightOf="@id/profile_total_candies_made_textView"
+                android:text="XXX"
+                android:textSize="20dp"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:id="@+id/profile_total_candies_graduated_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_total_candies_made_textView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="Total Candies graduated:"
+                android:textSize="20dp"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:id="@+id/profile_total_candies_graduated_number_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_total_candies_made_textView"
+                app:layout_constraintLeft_toRightOf="@id/profile_total_candies_graduated_textView"
+                android:text="XXX"
+                android:textSize="20dp"
+                android:padding="10dp"
+                />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/profile_statistics_visualisation_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/profile_user_details_layout">
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="50sp"
+                android:gravity="center"
+                android:text="PLACEHOLDER(LINE GRAPH)"/>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+
+    //  ACHIEVEMENTS USING ADVANCED NESTED SCROLL VIEW
+
+    <edmt.dev.advancednestedscrollview.AdvancedNestedScrollView
+        android:id="@+id/achievement_nested_scroll_view"
+        android:layout_width="48dp"
+        android:layout_height="47dp"
+        app:layout_behavior="com.gmail.liuzechu2013.singapore.jars.Behavior.CustomBehavior"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <FrameLayout
+            android:id="@+id/card_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:descendantFocusability="blocksDescendants">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="2dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:paddingLeft="24dp"
-                    android:paddingTop="16dp"
-                    android:paddingRight="24dp"
-                    android:paddingBottom="4dp"
-                    android:text="My Achievements" />
+                    android:orientation="vertical">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/card_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingLeft="24dp"
+                        android:paddingTop="16dp"
+                        android:paddingRight="24dp"
+                        android:paddingBottom="4dp"
+                        android:text="My Achievements" />
 
-                    <edmt.dev.advancednestedscrollview.MaxHeightRecyclerView
-                        app:fastScrollEnabled="false"
-                        android:id="@+id/card_recycler_view"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    </edmt.dev.advancednestedscrollview.MaxHeightRecyclerView>
+                        <edmt.dev.advancednestedscrollview.MaxHeightRecyclerView
+                            app:fastScrollEnabled="false"
+                            android:id="@+id/card_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                </FrameLayout>
+                        </edmt.dev.advancednestedscrollview.MaxHeightRecyclerView>
 
-            </LinearLayout>
+                    </FrameLayout>
 
-        </android.support.v7.widget.CardView>
+                </LinearLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginRight="24dp"
-            app:srcCompat="@drawable/ic_share_white_24dp" />
+            </android.support.v7.widget.CardView>
 
-    </FrameLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginRight="24dp"
+                app:srcCompat="@drawable/ic_share_white_24dp" />
 
-</edmt.dev.advancednestedscrollview.AdvancedNestedScrollView>
+        </FrameLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+    </edmt.dev.advancednestedscrollview.AdvancedNestedScrollView>
 
--->
+    </android.support.design.widget.CoordinatorLayout>
+
+    -->

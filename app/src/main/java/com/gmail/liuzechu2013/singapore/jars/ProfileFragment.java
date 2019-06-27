@@ -2,6 +2,7 @@ package com.gmail.liuzechu2013.singapore.jars;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,43 +61,30 @@ public class ProfileFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_profile, null);
 
-        // TESTING:
-        achievementList = new ArrayList<>();
-        achievementList.add(new Achievement("10 day streak"));
-        achievementList.add(new Achievement("20 day streak"));
-        achievementList.add(new Achievement("100 cards made"));
-        achievementList.add(new Achievement("50 candies graduated"));
-        achievementList.add(new Achievement("95% correct rate"));
-        achievementList.add(new Achievement("achievement 1"));
-        achievementList.add(new Achievement("achievement 2"));
-        achievementList.add(new Achievement("achievement 3"));
-        achievementList.add(new Achievement("achievement 4"));
-        achievementList.add(new Achievement("achievement 5"));
-        achievementList.add(new Achievement("achievement 6"));
-        achievementList.add(new Achievement("achievement 7"));
-        achievementList.add(new Achievement("achievement 8"));
-        achievementList.add(new Achievement("achievement 9"));
-        // TESTING ENDS
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.achievement_list_recyclerView);
-        AchievementListAdapter adapter = new AchievementListAdapter(getContext(), achievementList);
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3, LinearLayoutManager.VERTICAL, false));
-
         // initialise user stats
         loadAllData();
 
         usernameTextView = view.findViewById(R.id.profile_username_textView);
-        levelTextView = view.findViewById(R.id.profile_user_level_number_textView);
-        expTextView = view.findViewById(R.id.profile_user_exp_number_textView);
-        totalCandiesMadeTextView = view.findViewById(R.id.profile_total_candies_made_number_textView);
-        totalCandiesGraduatedTextView = view.findViewById(R.id.profile_total_candies_graduated_number_textView);
 
         usernameTextView.setText(username);
-        levelTextView.setText(level + "");
-        expTextView.setText(exp + "");
-        totalCandiesMadeTextView.setText(totalCandiesMade + "");
-        totalCandiesGraduatedTextView.setText(totalCandiesGraduated + "");
+
+        // draw achievements
+        ImageView achievementStreakBar = (ImageView) view.findViewById(R.id.achievement_streak_bar);
+        achievementStreakBar.getDrawable().setLevel(5000);
+        ImageView achievementMadeBar = (ImageView) view.findViewById(R.id.achievement_made_bar);
+        achievementMadeBar.getDrawable().setLevel(2000);
+        ImageView achievementGraduatedBar = (ImageView) view.findViewById(R.id.achievement_graduated_bar);
+        achievementGraduatedBar.getDrawable().setLevel(3200);
+        ImageView achievementJarsBar = (ImageView) view.findViewById(R.id.achievement_jars_bar);
+        achievementJarsBar.getDrawable().setLevel(9040);
+        ImageView achievementSugarBar = (ImageView) view.findViewById(R.id.achievement_sugar_bar);
+        achievementSugarBar.getDrawable().setLevel(1000);
+        ImageView achievementLevelBar = (ImageView) view.findViewById(R.id.achievement_level_bar);
+        achievementLevelBar.getDrawable().setLevel(50);
+
+
+
+
 
         // button to reset user stats
         resetButton = (Button) view.findViewById(R.id.reset_button);
