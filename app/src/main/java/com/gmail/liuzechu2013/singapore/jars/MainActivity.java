@@ -6,43 +6,32 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.github.barteksc.pdfviewer.PDFView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-// MuPDF viewer
-import com.artifex.mupdf.viewer.DocumentActivity;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements ShopFragment.ViewCurrentItemsListener, FilesFragment.OnFileOpenListener{
@@ -58,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     private static ArrayList<Jar> jarList;
     public static final String USER_JAR_FILE_NAME = "userJars.txt";
     public static final String CANDY_TRAINING_FILE_NAME = "candyTraining.txt";
+    // for Training Button
+    final Random rnd = new Random();
 
     // user stats:
     // private String username;
@@ -79,13 +70,13 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigation_files:
                     fragment = new FilesFragment();
                     break;
-                case R.id.navigation_candy:
+                case R.id.navigation_jars:
                     fragment = new CandyFragment();
                     break;
                 case R.id.navigation_profile:
                     fragment = new ProfileFragment();
                     break;
-                case R.id.navigation_shop:
+                case R.id.navigation_maker:
                     fragment = new ShopFragment();
                     break;
             }
@@ -228,36 +219,27 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-//    // TEST: open PDF file
-//    @Override
-//    public void openFile() {
-//        Intent intent = new Intent(this, ViewFileActivity.class);
-//        startActivity(intent);
-//    }
-
-    // using MuPDF
+    // TEST: open PDF file
+    @Override
     public void openFile() {
-        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(dir, "Declaration_ReadTheDeclaration.pdf");
-        Uri uri = Uri.fromFile(file);
-
-        startMuPDFActivity(uri);
-    }
-
-    public void startMuPDFActivity(Uri documentUri) {
-        Intent intent = new Intent(this, DocumentActivity.class);
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(documentUri);
+        Intent intent = new Intent(this, ViewFileActivity.class);
         startActivity(intent);
     }
 
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        final ImageView img = findViewById(R.id.training_expression);
+        final String str = "ic_expression" + rnd.nextInt(17);
+        img.setImageDrawable
+                (
+                        getResources().getDrawable(getResourceID(str, "drawable",
+                                getApplicationContext()))
+                );
 
         // load data into jarList
         Gson gson = new Gson();
@@ -274,7 +256,6 @@ public class MainActivity extends AppCompatActivity
         loadFragment(new FilesFragment());
         /*
         Fragment existing = getSupportFragmentManager().findFragmentById(R.id.content);
-
         if (existing == null) {
             Fragment newFragment = new FilesFragment();
             getSupportFragmentManager().beginTransaction()
@@ -351,6 +332,17 @@ public class MainActivity extends AppCompatActivity
             Log.d("JobScheduler result", "Job scheduled successfully");
         } else {
             Log.d("JobScheduler result", "Job scheduling failed");
+        }
+    }
+
+    protected static int getResourceID(final String resName, final String resType, final Context ctx) {
+        final int ResourceID = ctx.getResources().getIdentifier(resName, resType,
+                ctx.getApplicationInfo().packageName);
+        if (ResourceID == 0) {
+            throw new IllegalArgumentException(
+                    "No resource string found with name " + resName);
+        } else {
+            return ResourceID;
         }
     }
 
