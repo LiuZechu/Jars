@@ -44,4 +44,8 @@ public class Candy {
     public String getAnswer() {
         return answer;
     }
+
+    public int getLevel() {
+        return level;
+    }
 }

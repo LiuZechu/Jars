@@ -135,6 +135,7 @@ public class MakeNewCandyActivity extends AppCompatActivity
                     || answerEditText == null || answerEditText.length() == 0 ) {
             Toast.makeText(this, "Prompt or Answer cannot be empty!", Toast.LENGTH_SHORT).show();
         } else {
+
             Intent intent = new Intent(this, MainActivity.class);
 
             // put the candy created by user into intent

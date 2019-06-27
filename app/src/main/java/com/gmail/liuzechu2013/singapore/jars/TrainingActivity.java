@@ -33,11 +33,17 @@ public class TrainingActivity extends AppCompatActivity {
     private int currentCandyIndex = 0;
     private Candy currentCandy;
     // statistics
+    private int currentStreak;
     private int numberCorrect;
     private int numberWrong;
+    private int expEarned = 0;
+    private int sugarEarned = 0;
 
     // CONSTANTS
     public static final String GET_JAR_LIST = "GET_JAR_LIST";
+    public static final String EXP_EARNED = "expEarned";
+    public static final String SUGAR_EARNED = "sugarEarned";
+    public static final String CURRENT_STREAK = "currentStreak";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +61,25 @@ public class TrainingActivity extends AppCompatActivity {
         numberCorrect = 0;
         numberWrong = 0;
 
-        // set up the buttons
+        // set up the buttons for CORRECT and WRONG
         correctButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (currentCandy != null) {
                     numberCorrect++;
+
+                    // get correct: exp += 1 * 2^level of candy
+                    expEarned += (int) Math.pow(2, currentCandy.getLevel());
+                    // get correct: sugar += (10) * level of candy (1-7) * (100 + (streak * 10))%
+                    // [e.g. 10 day streak means 200% sugar]
+                    sugarEarned += (int) (10 * currentCandy.getLevel() * (100 + (currentStreak * 10)) * 0.01);
+
+                    // if graduate: exp += 500; sugar += 5000
+                    if (currentCandy.getLevel() == 7) {
+                        expEarned += 500;
+                        sugarEarned += 5000;
+                    }
+
                     currentCandy.levelUp();
                     trainCandy();
                 }
@@ -72,6 +91,10 @@ public class TrainingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (currentCandy != null) {
                     numberWrong++;
+
+                    // get wrong: exp++
+                    expEarned++;
+
                     currentCandy.dropToLevelOne();
                     trainCandy();
                 }
@@ -93,6 +116,9 @@ public class TrainingActivity extends AppCompatActivity {
         jarList = gson.fromJson(jsonString, type);
 
         nextJar(jarList);
+
+        // get current streak from intent (for computation of sugar awarded)
+        currentStreak = intent.getIntExtra(CURRENT_STREAK, 1);
     }
 
     public void nextJar(List<Jar> jars) {
@@ -149,8 +175,9 @@ public class TrainingActivity extends AppCompatActivity {
     }
 
     public void exitTraining() {
-        // TODO: change this to return to CandyFragment instead of just MainActivity
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(EXP_EARNED, expEarned);
+        intent.putExtra(SUGAR_EARNED, sugarEarned);
         setResult(RESULT_OK, intent);
         finish();
     }

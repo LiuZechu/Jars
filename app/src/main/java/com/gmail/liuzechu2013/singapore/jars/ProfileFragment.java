@@ -1,5 +1,6 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,21 +25,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import edmt.dev.advancednestedscrollview.AdvancedNestedScrollView;
 import edmt.dev.advancednestedscrollview.MaxHeightRecyclerView;
 
 public class ProfileFragment extends Fragment {
-    private RecyclerView mRecyclerView;
-    private ArrayList<Achievement> achievementList;
+    // private RecyclerView mRecyclerView; // not used for now
+    // private ArrayList<Achievement> achievementList; // not used for now
     private Button resetButton; // button to reset user stats
     private TextView usernameTextView;
-    private TextView levelTextView;
-    private TextView expTextView;
-    private TextView totalCandiesMadeTextView;
-    private TextView totalCandiesGraduatedTextView;
-
+    // achievements
+    private TextView achievementStreakScore;
+    private TextView achievementMadeScore;
+    private TextView achievementGraduatedScore;
+    private TextView achievementJarsScore;
+    private TextView achievementSugarScore;
+    private TextView achievementLevelScore;
+    // achievement stars
+    private ImageView achievementStreakStars;
+    private ImageView achievementMadeStars;
+    private ImageView achievementGraduatedStars;
+    private ImageView achievementJarsStars;
+    private ImageView achievementSugarStars;
+    private ImageView achievementLevelStars;
 
     // SharedPreferences tags to save user data
     public static final String SHARED_PREFS = "SharedPrefs";
@@ -97,26 +109,56 @@ public class ProfileFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_profile, null);
 
-        // initialise user stats
+        // initialise achievement views
+        achievementStreakScore = view.findViewById(R.id.achievement_streak_score);
+        achievementMadeScore = view.findViewById(R.id.achievement_made_score);
+        achievementGraduatedScore = view.findViewById(R.id.achievement_graduated_score);
+        achievementJarsScore = view.findViewById(R.id.achievement_jars_score);
+        achievementSugarScore = view.findViewById(R.id.achievement_sugar_score);
+        achievementLevelScore = view.findViewById(R.id.achievement_level_score);
+
+        // FOR TESTING ONLY! RESETS ALL USER DATA
+        // resetAllData();
+
+        // load user stats
         loadAllData();
+
+        // set achievement stats; returns an array of double indicating the levels of achievement bars
+        double[] barLevels = setAchievementStats();
+
+        // set achievement stars
+        achievementStreakStars = view.findViewById(R.id.achievement_streak_stars);
+        achievementMadeStars = view.findViewById(R.id.achievement_made_stars);
+        achievementGraduatedStars = view.findViewById(R.id.achievement_graduated_stars);
+        achievementJarsStars = view.findViewById(R.id.achievement_jars_stars);
+        achievementSugarStars = view.findViewById(R.id.achievement_sugar_stars);
+        achievementLevelStars = view.findViewById(R.id.achievement_level_stars);
+        calculateAchievementStars();
+        setAchievementStars();
+
 
         usernameTextView = view.findViewById(R.id.profile_username_textView);
 
         usernameTextView.setText(username);
 
-        // draw achievements
+        // draw achievement bars
         ImageView achievementStreakBar = (ImageView) view.findViewById(R.id.achievement_streak_bar);
-        achievementStreakBar.getDrawable().setLevel(5000);
+        achievementStreakBar.getDrawable().setLevel((int) (barLevels[0] * 10000));
+
         ImageView achievementMadeBar = (ImageView) view.findViewById(R.id.achievement_made_bar);
-        achievementMadeBar.getDrawable().setLevel(2000);
+        achievementMadeBar.getDrawable().setLevel((int) (barLevels[1] * 10000));
+
         ImageView achievementGraduatedBar = (ImageView) view.findViewById(R.id.achievement_graduated_bar);
-        achievementGraduatedBar.getDrawable().setLevel(3200);
+        achievementGraduatedBar.getDrawable().setLevel((int) (barLevels[2] * 10000));
+
         ImageView achievementJarsBar = (ImageView) view.findViewById(R.id.achievement_jars_bar);
-        achievementJarsBar.getDrawable().setLevel(9040);
+        achievementJarsBar.getDrawable().setLevel((int) (barLevels[3] * 10000));
+
         ImageView achievementSugarBar = (ImageView) view.findViewById(R.id.achievement_sugar_bar);
-        achievementSugarBar.getDrawable().setLevel(1000);
+        achievementSugarBar.getDrawable().setLevel((int) (barLevels[4] * 10000));
+
         ImageView achievementLevelBar = (ImageView) view.findViewById(R.id.achievement_level_bar);
-        achievementLevelBar.getDrawable().setLevel(50);
+        achievementLevelBar.getDrawable().setLevel((int) (barLevels[5] * 10000));
 
 
 //        // button to reset user stats
@@ -137,6 +179,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
         return view;
     }
 
@@ -146,24 +189,23 @@ public class ProfileFragment extends Fragment {
         getActivity().startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_USERNAME);
     }
 
-    // not used for now
-    public void resetUserStats() {
-        // does not reset name
-        level = 1;
-        exp = 100;
-        streak = 1;
-        totalCandiesMade = 0;
-        totalCandiesGraduated = 0;
-
-        // TODO: Streak number not included here
-        levelTextView.setText(level + "");
-        expTextView.setText(exp + "");
-        totalCandiesMadeTextView.setText(totalCandiesMade + "");
-        totalCandiesGraduatedTextView.setText(totalCandiesGraduated + "");
-
-        saveAllData();
-        Toast.makeText(getContext(), "User data reset successfully", Toast.LENGTH_SHORT).show();
-    }
+//    // not used for now
+//    public void resetUserStats() {
+//        // does not reset name
+//        level = 1;
+//        exp = 100;
+//        streak = 1;
+//        totalCandiesMade = 0;
+//        totalCandiesGraduated = 0;
+//
+//        levelTextView.setText(level + "");
+//        expTextView.setText(exp + "");
+//        totalCandiesMadeTextView.setText(totalCandiesMade + "");
+//        totalCandiesGraduatedTextView.setText(totalCandiesGraduated + "");
+//
+//        saveAllData();
+//        Toast.makeText(getContext(), "User data reset successfully", Toast.LENGTH_SHORT).show();
+//    }
 
     public void saveAllData() {
         // does not save username here
@@ -198,25 +240,25 @@ public class ProfileFragment extends Fragment {
     // loads all saved sharedPrefs to be used on this screen
     public void loadAllData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        username = sharedPreferences.getString(USERNAME, "default username");
+        username = sharedPreferences.getString(USERNAME, "your username");
 
-        longestStreak = sharedPreferences.getInt(LONGEST_STREAK, -1);
-        longestStreakStar = sharedPreferences.getInt(LONGEST_STREAK_STAR, -1);
+        longestStreak = sharedPreferences.getInt(LONGEST_STREAK, 1);
+        longestStreakStar = sharedPreferences.getInt(LONGEST_STREAK_STAR, 0);
 
-        totalCandiesMade = sharedPreferences.getInt(TOTAL_CANDIES_MADE, -1);
-        totalCandiesMadeStar = sharedPreferences.getInt(TOTAL_CANDIES_MADE_STAR, -1);
+        totalCandiesMade = sharedPreferences.getInt(TOTAL_CANDIES_MADE, 0);
+        totalCandiesMadeStar = sharedPreferences.getInt(TOTAL_CANDIES_MADE_STAR, 0);
 
-        totalCandiesGraduated = sharedPreferences.getInt(TOTAL_CANDIES_GRADUATED, -1);
-        totalCandiesGraduatedStar = sharedPreferences.getInt(TOTAL_CANDIES_GRADUATED_STAR, -1);
+        totalCandiesGraduated = sharedPreferences.getInt(TOTAL_CANDIES_GRADUATED, 0);
+        totalCandiesGraduatedStar = sharedPreferences.getInt(TOTAL_CANDIES_GRADUATED_STAR, 0);
 
-        totalJarsMade = sharedPreferences.getInt(TOTAL_JARS_MADE, -1);
-        totalJarsMadeStar = sharedPreferences.getInt(TOTAL_JARS_MADE_STAR, -1);
+        totalJarsMade = sharedPreferences.getInt(TOTAL_JARS_MADE, 0);
+        totalJarsMadeStar = sharedPreferences.getInt(TOTAL_JARS_MADE_STAR, 0);
 
-        totalSugarSpent = sharedPreferences.getInt(TOTAL_SUGAR_SPENT, -1);
-        totalSugarSpentStar = sharedPreferences.getInt(TOTAL_SUGAR_SPENT_STAR, -1);
+        totalSugarSpent = sharedPreferences.getInt(TOTAL_SUGAR_SPENT, 0);
+        totalSugarSpentStar = sharedPreferences.getInt(TOTAL_SUGAR_SPENT_STAR, 0);
 
-        level = sharedPreferences.getInt(LEVEL, -1);
-        levelStar = sharedPreferences.getInt(LEVEL_STAR, -1);
+        level = sharedPreferences.getInt(LEVEL, 1);
+        levelStar = sharedPreferences.getInt(LEVEL_STAR, 0);
     }
 
     // individual methods for shared preferences
@@ -229,7 +271,351 @@ public class ProfileFragment extends Fragment {
 
     public void loadUsername() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        username = sharedPreferences.getString(USERNAME, "default username");
+        username = sharedPreferences.getString(USERNAME, "your username");
+    }
+
+
+    // return an array of doubles, corresponding to the levels of the bars
+    private double[] setAchievementStats() {
+        // maximum streak
+        int longestStreakNextStar = 0;
+        switch (longestStreakStar) {
+            case 0:
+                longestStreakNextStar = 5;
+                break;
+            case 1:
+                longestStreakNextStar = 10;
+                break;
+            case 2:
+                longestStreakNextStar = 50;
+                break;
+            case 3:
+                longestStreakNextStar = 100;
+                break;
+            case 4:
+                longestStreakNextStar = 500;
+                break;
+            case 5:
+                longestStreakNextStar = 500;
+                break;
+        }
+        achievementStreakScore.setText(longestStreak + "/" + longestStreakNextStar);
+
+        // candies made
+        int candiesMadeNextStar = 0;
+        switch (totalCandiesMadeStar) {
+            case 0:
+                candiesMadeNextStar = 10;
+                break;
+            case 1:
+                candiesMadeNextStar = 100;
+                break;
+            case 2:
+                candiesMadeNextStar = 1000;
+                break;
+            case 3:
+                candiesMadeNextStar = 5000;
+                break;
+            case 4:
+                candiesMadeNextStar = 10000;
+                break;
+            case 5:
+                candiesMadeNextStar = 10000;
+                break;
+        }
+        achievementMadeScore.setText(totalCandiesMade + "/" + candiesMadeNextStar);
+
+        // candies graduated
+        int candiesGraduatedNextStar = 0;
+        switch (totalCandiesGraduatedStar) {
+            case 0:
+                candiesGraduatedNextStar = 5;
+                break;
+            case 1:
+                candiesGraduatedNextStar = 50;
+                break;
+            case 2:
+                candiesGraduatedNextStar = 500;
+                break;
+            case 3:
+                candiesGraduatedNextStar = 2500;
+                break;
+            case 4:
+                candiesGraduatedNextStar = 5000;
+                break;
+            case 5:
+                candiesGraduatedNextStar = 5000;
+                break;
+        }
+        achievementGraduatedScore.setText(totalCandiesGraduated + "/" + candiesGraduatedNextStar);
+
+        // jars made
+        int jarsMadeNextStar = 0;
+        switch (totalJarsMadeStar) {
+            case 0:
+                jarsMadeNextStar = 3;
+                break;
+            case 1:
+                jarsMadeNextStar = 8;
+                break;
+            case 2:
+                jarsMadeNextStar = 20;
+                break;
+            case 3:
+                jarsMadeNextStar = 50;
+                break;
+            case 4:
+                jarsMadeNextStar = 100;
+                break;
+            case 5:
+                jarsMadeNextStar = 100;
+                break;
+        }
+        achievementJarsScore.setText(totalJarsMade + "/" + jarsMadeNextStar);
+
+        // sugar spent
+        int sugarSpentNextStar = 0;
+        switch (totalSugarSpentStar) {
+            case 0:
+                sugarSpentNextStar = 1000;
+                break;
+            case 1:
+                sugarSpentNextStar = 5000;
+                break;
+            case 2:
+                sugarSpentNextStar = 10000;
+                break;
+            case 3:
+                sugarSpentNextStar = 100000;
+                break;
+            case 4:
+                sugarSpentNextStar = 1000000;
+                break;
+            case 5:
+                sugarSpentNextStar = 1000000;
+                break;
+        }
+        achievementSugarScore.setText(totalSugarSpent + "/" + sugarSpentNextStar);
+
+        // current
+        int levelNextStar = 0;
+        switch (levelStar) {
+            case 0:
+                levelNextStar = 5;
+                break;
+            case 1:
+                levelNextStar = 10;
+                break;
+            case 2:
+                levelNextStar = 50;
+                break;
+            case 3:
+                levelNextStar = 100;
+                break;
+            case 4:
+                levelNextStar = 300;
+                break;
+            case 5:
+                levelNextStar = 300;
+                break;
+        }
+        achievementLevelScore.setText(level + "/" + levelNextStar);
+
+
+        // return an array of doubles to indicate achievement bar levels
+        double[] barLevels = new double[6];
+        barLevels[0] = (double) longestStreak / longestStreakNextStar;
+        barLevels[1] = (double) totalCandiesMade / candiesMadeNextStar;
+        barLevels[2] = (double) totalCandiesGraduated / candiesGraduatedNextStar;
+        barLevels[3] = (double) totalJarsMade / jarsMadeNextStar;
+        barLevels[4] = (double) totalSugarSpent / sugarSpentNextStar;
+        barLevels[5] = (double) level / levelNextStar;
+
+        return barLevels;
+    }
+
+
+    // display the correct number of stars for the achievement levels
+    private void setAchievementStars() {
+        achievementStreakStars.setImageResource(getStarResource(longestStreakStar));
+        achievementMadeStars.setImageResource(getStarResource(totalCandiesMadeStar));
+        achievementGraduatedStars.setImageResource(getStarResource(totalCandiesGraduatedStar));
+        achievementJarsStars.setImageResource(getStarResource(totalJarsMadeStar));
+        achievementSugarStars.setImageResource(getStarResource(totalSugarSpentStar));
+        achievementLevelStars.setImageResource(getStarResource(levelStar));
+    }
+
+    // used in the above setAchievementStars() method
+    private int getStarResource(int numberOfStars) {
+        int resourceID = 0;
+        switch(numberOfStars) {
+            case 0:
+                resourceID = R.drawable.ic_stars0;
+                break;
+            case 1:
+                resourceID = R.drawable.ic_stars1;
+                break;
+            case 2:
+                resourceID = R.drawable.ic_stars2;
+                break;
+            case 3:
+                resourceID = R.drawable.ic_stars3;
+                break;
+            case 4:
+                resourceID = R.drawable.ic_stars4;
+                break;
+            case 5:
+                resourceID = R.drawable.ic_stars5;
+                break;
+        }
+
+        return resourceID;
+    }
+
+    // calculates and updates achievement stars; rewards Sugar when getting an additional star
+    private void calculateAchievementStars() {
+        // maximum streak
+        int prevLongestStreakStar = longestStreakStar;
+        if (longestStreak < 5) {
+            longestStreakStar = 0;
+        } else if (longestStreak < 10) {
+            longestStreakStar = 1;
+        } else if (longestStreak < 50) {
+            longestStreakStar = 2;
+        } else if (longestStreak < 100) {
+            longestStreakStar = 3;
+        } else if (longestStreak < 500) {
+            longestStreakStar = 4;
+        } else {
+            longestStreakStar = 5;
+        }
+        if (longestStreakStar - prevLongestStreakStar == 1) {
+            addSugarToUser(longestStreakStar);
+        }
+
+        // candies made
+        int prevTotalCandiesMadeStar = totalCandiesMadeStar;
+        if (totalCandiesMade < 10) {
+            totalCandiesMadeStar = 0;
+        } else if (totalCandiesMade < 100) {
+            totalCandiesMadeStar = 1;
+        } else if (totalCandiesMade < 1000) {
+            totalCandiesMadeStar = 2;
+        } else if (totalCandiesMade < 5000) {
+            totalCandiesMadeStar = 3;
+        } else if (totalCandiesMade < 10000) {
+            totalCandiesMadeStar = 4;
+        } else {
+            totalCandiesMadeStar = 5;
+        }
+        if (totalCandiesMadeStar - prevTotalCandiesMadeStar == 1) {
+            addSugarToUser(totalCandiesMadeStar);
+        }
+
+        // candies graduated
+        int prevTotalCandiesGraduatedStar = totalCandiesGraduatedStar;
+        if (totalCandiesGraduated < 5) {
+            totalCandiesGraduatedStar = 0;
+        } else if (totalCandiesGraduated < 50) {
+            totalCandiesGraduatedStar = 1;
+        } else if (totalCandiesGraduated < 500) {
+            totalCandiesGraduatedStar = 2;
+        } else if (totalCandiesGraduated < 2500) {
+            totalCandiesGraduatedStar = 3;
+        } else if (totalCandiesGraduated < 5000) {
+            totalCandiesGraduatedStar = 4;
+        } else {
+            totalCandiesGraduatedStar = 5;
+        }
+        if (totalCandiesGraduatedStar - prevTotalCandiesGraduatedStar == 1) {
+            addSugarToUser(totalCandiesGraduatedStar);
+        }
+
+        // jars made
+        int prevTotalJarsMadeStar = totalJarsMadeStar;
+        if (totalJarsMade < 3) {
+            totalJarsMadeStar = 0;
+        } else if (totalJarsMade < 8) {
+            totalJarsMadeStar = 1;
+        } else if (totalJarsMade < 20) {
+            totalJarsMadeStar = 2;
+        } else if (totalJarsMade < 50) {
+            totalJarsMadeStar = 3;
+        } else if (totalJarsMade < 100) {
+            totalJarsMadeStar = 4;
+        } else {
+            totalJarsMadeStar = 5;
+        }
+        if (totalJarsMadeStar - prevTotalJarsMadeStar == 1) {
+            addSugarToUser(totalJarsMadeStar);
+        }
+
+        // sugar spent
+        int prevTotalSugarSpentStar = totalSugarSpentStar;
+        if (totalSugarSpent < 1000) {
+            totalSugarSpentStar = 0;
+        } else if (totalSugarSpent < 5000) {
+            totalSugarSpentStar = 1;
+        } else if (totalSugarSpent < 10000) {
+            totalSugarSpentStar = 2;
+        } else if (totalSugarSpent < 100000) {
+            totalSugarSpentStar = 3;
+        } else if (totalSugarSpent < 1000000) {
+            totalSugarSpentStar = 4;
+        } else {
+            totalSugarSpentStar = 5;
+        }
+        if (totalSugarSpentStar - prevTotalSugarSpentStar == 1) {
+            addSugarToUser(totalSugarSpentStar);
+        }
+
+        // current level
+        int prevLevelStar = levelStar;
+        if (level < 5) {
+            levelStar = 0;
+        } else if (level < 10) {
+            levelStar = 1;
+        } else if (level < 50) {
+            levelStar = 2;
+        } else if (level < 100) {
+            levelStar = 3;
+        } else if (level < 300) {
+            levelStar = 4;
+        } else {
+            levelStar = 5;
+        }
+        if (levelStar - prevLevelStar == 1) {
+            addSugarToUser(levelStar);
+        }
+    }
+
+    // used in the above method
+    private void addSugarToUser(int stars) {
+        int sugarAdded = 0;
+        switch (stars) {
+            case 1:
+                sugarAdded = 1000;
+                break;
+            case 2:
+                sugarAdded = 2000;
+                break;
+            case 3:
+                sugarAdded = 5000;
+                break;
+            case 4:
+                sugarAdded = 10000;
+                break;
+            case 5:
+                sugarAdded = 50000;
+                break;
+        }
+
+        // increase user's sugar count
+        Activity mainActivity = getActivity();
+        if (mainActivity instanceof MainActivity) {
+            MainActivity ma = (MainActivity) mainActivity;
+            ma.increaseSugar(sugarAdded);
+        }
     }
 
     @Override
@@ -238,6 +624,39 @@ public class ProfileFragment extends Fragment {
         saveAllData();
     }
 
+
+
+    // FOR TESTING ONLY!
+    public void resetAllData() {
+        // comment/uncomment as needed
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        // editor.putInt(EXP, exp);
+        // editor.putInt(STREAK, streak);
+
+        // editor.putString(USERNAME, username);
+
+        editor.putInt(LONGEST_STREAK, 1);
+        editor.putInt(LONGEST_STREAK_STAR, 0);
+
+        editor.putInt(TOTAL_CANDIES_MADE, 0);
+        editor.putInt(TOTAL_CANDIES_MADE_STAR, 0);
+
+        editor.putInt(TOTAL_CANDIES_GRADUATED, 0);
+        editor.putInt(TOTAL_CANDIES_GRADUATED_STAR, 0);
+
+        editor.putInt(TOTAL_JARS_MADE, 0);
+        editor.putInt(TOTAL_JARS_MADE_STAR, 0);
+
+        editor.putInt(TOTAL_SUGAR_SPENT, 0);
+        editor.putInt(TOTAL_SUGAR_SPENT_STAR, 0);
+
+        editor.putInt(LEVEL, 1);
+        editor.putInt(LEVEL_STAR, 0);
+
+        editor.commit();
+    }
 }
 
 

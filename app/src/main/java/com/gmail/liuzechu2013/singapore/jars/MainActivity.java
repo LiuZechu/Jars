@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView navView;
     private Button trainingButton;
     private ArrayList<Jar> jarListForTraining;
-    public static final int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE_FOR_TRAINING = 1;
     public static final int REQUEST_CODE_FOR_NEW_CANDY = 2;
     public static final int REQUEST_CODE_FOR_USERNAME = 3;
     // for saving user data using shared preferences
@@ -50,6 +51,11 @@ public class MainActivity extends AppCompatActivity
     public static final String CANDY_TRAINING_FILE_NAME = "candyTraining.txt";
     // for Training Button
     final Random rnd = new Random();
+
+    // top bar
+    private TextView topbarLevelText;
+    private TextView topbarStreaklText;
+    private TextView topbarSugarText;
 
     // user stats to be saved in SharedPreferences
     private String username;
@@ -77,6 +83,80 @@ public class MainActivity extends AppCompatActivity
     private int totalSugarSpent;
     private int totalSugarSpentStar;
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        final ImageView img = findViewById(R.id.training_expression);
+        final String str = "ic_expression" + rnd.nextInt(17);
+        img.setImageDrawable
+                (
+                        getResources().getDrawable(getResourceID(str, "drawable",
+                                getApplicationContext()))
+                );
+
+        // load data into topbar
+        topbarLevelText = findViewById(R.id.topbar_level_text);
+        topbarStreaklText = findViewById(R.id.topbar_streak_text);
+        topbarSugarText = findViewById(R.id.topbar_sugar_text);
+        loadDataIntoTopBar();
+
+        // load data into jarList
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
+        String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
+        jarList = gson.fromJson(jsonStringForJarList, type);
+
+        // prevent null pointer exception for jarList
+        if (jarList == null) {
+            jarList = new ArrayList<>();
+        }
+
+        // get list of candies to train from saved local file
+        String jsonStringForTrainingList = loadFromLocalFile(CANDY_TRAINING_FILE_NAME);
+        jarListForTraining = gson.fromJson(jsonStringForTrainingList, type);
+
+
+        // load default fragment; TODO: need to change to last saved later
+        loadFragment(new FilesFragment());
+        /*
+        Fragment existing = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (existing == null) {
+            Fragment newFragment = new FilesFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content, newFragment)
+                    .commit();
+        }
+        */
+
+        // topbar training button
+        trainingButton = (Button) findViewById(R.id.training_button);
+        trainingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoTraining();
+            }
+        });
+
+        // background work using jobScheduler
+        scheduleJob();
+    }
+
+
+    public void loadDataIntoTopBar() {
+        if (topbarLevelText != null && topbarStreaklText != null && topbarSugarText != null) {
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+            topbarLevelText.setText("" + sharedPreferences.getInt(ProfileFragment.LEVEL, 1));
+            topbarStreaklText.setText("" +sharedPreferences.getInt(ProfileFragment.STREAK, 1));
+            topbarSugarText.setText("" + sharedPreferences.getInt(ProfileFragment.SUGAR, 0));
+        } else {
+            Log.d("Loading Topbar", "Topbar views absent!");
+        }
+    }
 
 
     // switch between different screens using bottom navigation bar
@@ -130,7 +210,8 @@ public class MainActivity extends AppCompatActivity
         Gson gson = new Gson();
         String jsonString = gson.toJson(jarListForTraining);
         training.putExtra(TrainingActivity.GET_JAR_LIST, jsonString);
-        startActivityForResult(training, REQUEST_CODE);
+        training.putExtra(TrainingActivity.CURRENT_STREAK, streak);
+        startActivityForResult(training, REQUEST_CODE_FOR_TRAINING);
     }
 
     // come back to Candy tab from training
@@ -138,9 +219,16 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE_FOR_TRAINING) {
             if (resultCode == RESULT_OK) {
+                int expEarned = data.getIntExtra(TrainingActivity.EXP_EARNED, 0);
+                int sugarEarned = data.getIntExtra(TrainingActivity.SUGAR_EARNED, 0);
 
+                // adjust user's exp and sugar accordingly
+                increaseExp(expEarned);
+                increaseSugar(sugarEarned);
+
+                // return back to Candy Tab
                 loadFragment(new CandyFragment());
 
                 Menu menu = navView.getMenu();
@@ -161,6 +249,9 @@ public class MainActivity extends AppCompatActivity
 
                 //increment "total candies made" count
                 incrementTotalCandiesMade();
+
+                //increase user's exp
+                increaseExp(1);
 
                 // save and load newly updated jar data
                 Gson gson = new Gson();
@@ -258,62 +349,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        navView = findViewById(R.id.nav_view);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        final ImageView img = findViewById(R.id.training_expression);
-        final String str = "ic_expression" + rnd.nextInt(17);
-        img.setImageDrawable
-                (
-                        getResources().getDrawable(getResourceID(str, "drawable",
-                                getApplicationContext()))
-                );
-
-        // load data into jarList
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
-        String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
-        jarList = gson.fromJson(jsonStringForJarList, type);
-
-        // prevent null pointer exception for jarList
-        if (jarList == null) {
-            jarList = new ArrayList<>();
-        }
-
-        // get list of candies to train from saved local file
-        String jsonStringForTrainingList = loadFromLocalFile(CANDY_TRAINING_FILE_NAME);
-        jarListForTraining = gson.fromJson(jsonStringForTrainingList, type);
-
-
-        // load default fragment; TODO: need to change to last saved later
-        loadFragment(new FilesFragment());
-        /*
-        Fragment existing = getSupportFragmentManager().findFragmentById(R.id.content);
-        if (existing == null) {
-            Fragment newFragment = new FilesFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content, newFragment)
-                    .commit();
-        }
-        */
-
-        // topbar training button
-        trainingButton = (Button) findViewById(R.id.training_button);
-        trainingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoTraining();
-            }
-        });
-
-        // background work using jobScheduler
-        scheduleJob();
-    }
-
 
 
     // SHARED PREFERENCES METHODS:
@@ -328,8 +363,8 @@ public class MainActivity extends AppCompatActivity
         editor.putInt(ProfileFragment.STREAK, streak);
         editor.putInt(ProfileFragment.SUGAR, sugar);
         editor.putInt(ProfileFragment.LONGEST_STREAK, longestStreak);
-        // editor.putInt(ProfileFragment.TOTAL_CANDIES_MADE, totalCandiesMade);
-        // editor.putInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, totalCandiesGraduated);
+        editor.putInt(ProfileFragment.TOTAL_CANDIES_MADE, totalCandiesMade);
+        editor.putInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, totalCandiesGraduated);
         editor.commit();
     }
 
@@ -337,13 +372,13 @@ public class MainActivity extends AppCompatActivity
     public void loadAllData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         // username = sharedPreferences.getString(USERNAME, "default username");
-        level = sharedPreferences.getInt(ProfileFragment.LEVEL, -1);
-        exp = sharedPreferences.getInt(ProfileFragment.EXP, -1);
-        streak = sharedPreferences.getInt(ProfileFragment.STREAK, -1);
-        longestStreak = sharedPreferences.getInt(ProfileFragment.LONGEST_STREAK, -1);
-        sugar = sharedPreferences.getInt(ProfileFragment.SUGAR, -1);
-        // totalCandiesMade = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_MADE, -1);
-        // totalCandiesGraduated = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, -1);
+        level = sharedPreferences.getInt(ProfileFragment.LEVEL, 1);
+        exp = sharedPreferences.getInt(ProfileFragment.EXP, 0);
+        streak = sharedPreferences.getInt(ProfileFragment.STREAK, 1);
+        longestStreak = sharedPreferences.getInt(ProfileFragment.LONGEST_STREAK, 1);
+        sugar = sharedPreferences.getInt(ProfileFragment.SUGAR, 0);
+        totalCandiesMade = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_MADE, -1);
+        totalCandiesGraduated = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, -1);
     }
 
     // individual methods for shared preferences
@@ -356,8 +391,103 @@ public class MainActivity extends AppCompatActivity
 
     public void loadUsername() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        username = sharedPreferences.getString(ProfileFragment.USERNAME, "default username");
+        username = sharedPreferences.getString(ProfileFragment.USERNAME, "your username");
     }
+
+    public void saveExp() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.EXP, exp);
+        editor.commit();
+    }
+
+    public void loadExp() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        exp = sharedPreferences.getInt(ProfileFragment.EXP, 0);
+    }
+
+    public void saveSugar() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.SUGAR, sugar);
+        editor.commit();
+    }
+
+    public void loadSugar() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        sugar = sharedPreferences.getInt(ProfileFragment.SUGAR, 0);
+    }
+
+    public void saveLevel() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.LEVEL, level);
+        editor.commit();
+    }
+
+    public void loadLevel() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        level = sharedPreferences.getInt(ProfileFragment.LEVEL, 1);
+    }
+
+    public void saveTotalSugarSpent() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.TOTAL_SUGAR_SPENT, totalSugarSpent);
+        editor.commit();
+    }
+
+    public void loadTotalSugarSpent() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        totalSugarSpent = sharedPreferences.getInt(ProfileFragment.TOTAL_SUGAR_SPENT, 0);
+    }
+
+
+
+    // use negative values when exp is reduced
+    public void increaseExp(int amount) {
+        this.exp += amount;
+
+        // check whether next level is reached; update if necessary
+        // Exp needed to reach next level = 3 * (next level)^2, if next level <= 100
+        // Exp needed to reach next level = 30 000, if next level > 100
+        int expNeededToLevelUp = 0;
+        if (level <= 100) {
+            expNeededToLevelUp = 3 * (level + 1) * (level + 1);
+        } else {
+            expNeededToLevelUp = 30000;
+        }
+
+        if (exp >= expNeededToLevelUp) {
+            // level up!
+            level++;
+            exp -= expNeededToLevelUp;
+            saveLevel();
+
+            // award sugar
+            // Leveling up: sugar += floor[level^1.5] * 100
+            int sugarToAward = (int) Math.floor(Math.pow(level, 1.5)) * 100;
+            increaseSugar(sugarToAward);
+        }
+
+
+        saveExp();
+        loadDataIntoTopBar();
+    }
+
+    // use negative values when sugar is spent/reduced
+    public void increaseSugar(int amount) {
+        this.sugar += amount;
+        saveSugar();
+        loadDataIntoTopBar();
+    }
+
+    public void increaseTotalSugarSpent(int amount) {
+        this.totalSugarSpent += amount;
+        saveTotalSugarSpent();
+    }
+
+
 
 
     public static ArrayList<Jar> getJarList() {
