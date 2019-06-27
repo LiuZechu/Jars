@@ -247,6 +247,11 @@ public class MainActivity extends AppCompatActivity
         String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
         jarList = gson.fromJson(jsonStringForJarList, type);
 
+        // prevent null pointer exception for jarList
+        if (jarList == null) {
+            jarList = new ArrayList<>();
+        }
+
         // get list of candies to train from saved local file
         String jsonStringForTrainingList = loadFromLocalFile(CANDY_TRAINING_FILE_NAME);
         jarListForTraining = gson.fromJson(jsonStringForTrainingList, type);
@@ -256,7 +261,6 @@ public class MainActivity extends AppCompatActivity
         loadFragment(new FilesFragment());
         /*
         Fragment existing = getSupportFragmentManager().findFragmentById(R.id.content);
-
         if (existing == null) {
             Fragment newFragment = new FilesFragment();
             getSupportFragmentManager().beginTransaction()
@@ -338,10 +342,10 @@ public class MainActivity extends AppCompatActivity
 
     protected static int getResourceID(final String resName, final String resType, final Context ctx) {
         final int ResourceID = ctx.getResources().getIdentifier(resName, resType,
-                        ctx.getApplicationInfo().packageName);
+                ctx.getApplicationInfo().packageName);
         if (ResourceID == 0) {
             throw new IllegalArgumentException(
-                            "No resource string found with name " + resName);
+                    "No resource string found with name " + resName);
         } else {
             return ResourceID;
         }

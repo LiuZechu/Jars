@@ -123,14 +123,27 @@ public class MakeNewCandyActivity extends AppCompatActivity
     }
 
     public void doneMakingCandy() {
-        Intent intent = new Intent(this, MainActivity.class);
+        if (jarTitleSelected == null) {
+            // no Jar is selected
+            if (jarNameArray == null || jarNameArray.length == 0) {
+                // There is no existing Jar
+                Toast.makeText(this, "Please create a new Jar first.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Please select a Jar.", Toast.LENGTH_SHORT).show();
+            }
+        } else if (promptEditText == null || promptEditText.length() == 0
+                    || answerEditText == null || answerEditText.length() == 0 ) {
+            Toast.makeText(this, "Prompt or Answer cannot be empty!", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
 
-        // put the candy created by user into intent
-        intent.putExtra(JAR_TITLE, jarTitleSelected);
-        intent.putExtra(PROMPT, promptEditText.getText().toString());
-        intent.putExtra(ANSWER, answerEditText.getText().toString());
-        intent.putExtra(JAR_INDEX, jarIndex);
-        setResult(RESULT_OK, intent);
-        finish();
+            // put the candy created by user into intent
+            intent.putExtra(JAR_TITLE, jarTitleSelected);
+            intent.putExtra(PROMPT, promptEditText.getText().toString());
+            intent.putExtra(ANSWER, answerEditText.getText().toString());
+            intent.putExtra(JAR_INDEX, jarIndex);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 }

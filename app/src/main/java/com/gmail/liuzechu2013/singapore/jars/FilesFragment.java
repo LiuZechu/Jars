@@ -3,6 +3,7 @@ package com.gmail.liuzechu2013.singapore.jars;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -43,7 +44,7 @@ public class FilesFragment extends Fragment {
     }
 
     public interface OnFileOpenListener{
-        public void openFile();
+        void openFile();
     }
 
     // how to get activity from context
