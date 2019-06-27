@@ -86,7 +86,7 @@
                     android:layout_marginStart="8dp"
                     android:text="@string/achievement_streak_title"
                     android:textSize="30sp"
-                    app:layout_constraintStart_toEndOf="@+id/achievement_streak_icon"
+                    app:layout_constraintStart_toEndOf="@id/achievement_streak_icon"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -472,7 +472,7 @@
                     android:layout_marginStart="28dp"
                     android:text="6/30"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/achievement_level_stars"
+                    app:layout_constraintBottom_toBottomOf="@id/achievement_level_stars"
                     app:layout_constraintStart_toEndOf="@+id/achievement_level_stars"
                     app:layout_constraintTop_toTopOf="@+id/achievement_level_stars" />
 

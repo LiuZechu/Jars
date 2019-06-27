@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Jar> jarListForTraining;
     public static final int REQUEST_CODE = 1;
     public static final int REQUEST_CODE_FOR_NEW_CANDY = 2;
+    public static final int REQUEST_CODE_FOR_USERNAME = 3;
     // for saving user data using shared preferences
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String USER_STATISTICS = "UserStatistics";
@@ -50,13 +51,33 @@ public class MainActivity extends AppCompatActivity
     // for Training Button
     final Random rnd = new Random();
 
-    // user stats:
-    // private String username;
-    private int level;
+    // user stats to be saved in SharedPreferences
+    private String username;
     private int exp;
-    private int streak;
+    private int sugar; // current amount of sugar owned by the user
+    private int streak; // this is the current streak
+    private int selectedCandyColours;
+    private boolean[] selectedExpressions;
+
+    private int level;
+    private int levelStar;
+
+    private int longestStreak;
+    private int longestStreakStar;
+
     private int totalCandiesMade;
+    private int totalCandiesMadeStar;
+
     private int totalCandiesGraduated;
+    private int totalCandiesGraduatedStar;
+
+    private int totalJarsMade;
+    private int totalJarsMadeStar;
+
+    private int totalSugarSpent;
+    private int totalSugarSpentStar;
+
+
 
     // switch between different screens using bottom navigation bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -152,6 +173,17 @@ public class MainActivity extends AppCompatActivity
                 MenuItem menuItem = menu.getItem(1); // highlight the Candy tab
                 menuItem.setChecked(true);
 
+            }
+        } else if (requestCode == REQUEST_CODE_FOR_USERNAME) {
+            if (resultCode == RESULT_OK) {
+                username = data.getStringExtra(ProfileFragment.USERNAME);
+                saveUsername();
+
+                loadFragment(new ProfileFragment());
+
+                Menu menu = navView.getMenu();
+                MenuItem menuItem = menu.getItem(2); // highlight the Profile tab
+                menuItem.setChecked(true);
             }
         } else {}
     }
@@ -282,6 +314,11 @@ public class MainActivity extends AppCompatActivity
         scheduleJob();
     }
 
+
+
+    // SHARED PREFERENCES METHODS:
+
+    // saves all top bar data
     public void saveAllData() {
         // does not save username here
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
@@ -289,20 +326,39 @@ public class MainActivity extends AppCompatActivity
         editor.putInt(ProfileFragment.LEVEL, level);
         editor.putInt(ProfileFragment.EXP, exp);
         editor.putInt(ProfileFragment.STREAK, streak);
-        editor.putInt(ProfileFragment.TOTAL_CANDIES_MADE, totalCandiesMade);
-        editor.putInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, totalCandiesGraduated);
+        editor.putInt(ProfileFragment.SUGAR, sugar);
+        editor.putInt(ProfileFragment.LONGEST_STREAK, longestStreak);
+        // editor.putInt(ProfileFragment.TOTAL_CANDIES_MADE, totalCandiesMade);
+        // editor.putInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, totalCandiesGraduated);
         editor.commit();
     }
 
+    // loads all top bar data
     public void loadAllData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         // username = sharedPreferences.getString(USERNAME, "default username");
         level = sharedPreferences.getInt(ProfileFragment.LEVEL, -1);
         exp = sharedPreferences.getInt(ProfileFragment.EXP, -1);
         streak = sharedPreferences.getInt(ProfileFragment.STREAK, -1);
-        totalCandiesMade = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_MADE, -1);
-        totalCandiesGraduated = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, -1);
+        longestStreak = sharedPreferences.getInt(ProfileFragment.LONGEST_STREAK, -1);
+        sugar = sharedPreferences.getInt(ProfileFragment.SUGAR, -1);
+        // totalCandiesMade = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_MADE, -1);
+        // totalCandiesGraduated = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, -1);
     }
+
+    // individual methods for shared preferences
+    public void saveUsername() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ProfileFragment.USERNAME, username);
+        editor.commit();
+    }
+
+    public void loadUsername() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        username = sharedPreferences.getString(ProfileFragment.USERNAME, "default username");
+    }
+
 
     public static ArrayList<Jar> getJarList() {
         return jarList;

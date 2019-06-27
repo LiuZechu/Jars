@@ -1,6 +1,7 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
@@ -38,7 +39,8 @@ public class ProfileFragment extends Fragment {
     private TextView totalCandiesMadeTextView;
     private TextView totalCandiesGraduatedTextView;
 
-    // SharedPreferences to save user data
+
+    // SharedPreferences tags to save user data
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String USERNAME = "username";
     public static final String LEVEL = "level";
@@ -46,14 +48,48 @@ public class ProfileFragment extends Fragment {
     public static final String STREAK = "streak";
     public static final String TOTAL_CANDIES_MADE = "totalCandiesMade";
     public static final String TOTAL_CANDIES_GRADUATED = "totalCandiesGraduated";
+    public static final String LONGEST_STREAK = "longestStreak";
+    public static final String TOTAL_JARS_MADE = "totalJarsMade";
+    public static final String TOTAL_SUGAR_SPENT = "totalSugarSpent";
+    public static final String SUGAR = "sugar";
+    public static final String CANDY_COLOURS = "candyColours";
+    public static final String SELECTED_EXPRESSIONS = "selectedExpressions";
 
-    // user stats:
+    public static final String LEVEL_STAR = "levelStar";
+    public static final String TOTAL_CANDIES_MADE_STAR = "totalCandiesMadeStar";
+    public static final String TOTAL_CANDIES_GRADUATED_STAR = "totalCandiesGraduatedStar";
+    public static final String LONGEST_STREAK_STAR = "longestStreakStar";
+    public static final String TOTAL_JARS_MADE_STAR = "totalJarsMadeStar";
+    public static final String TOTAL_SUGAR_SPENT_STAR = "totalSugarSpentStar";
+
+    // user stats to be saved in SharedPreferences
     private String username;
-    private int level;
     private int exp;
-    private int streak;
+    private int sugar; // current amount of sugar owned by the user
+    private int streak; // this is the current streak
+    private int selectedCandyColours;
+    private boolean[] selectedExpressions;
+
+    private int level;
+    private int levelStar;
+
+    private int longestStreak;
+    private int longestStreakStar;
+
     private int totalCandiesMade;
+    private int totalCandiesMadeStar;
+
     private int totalCandiesGraduated;
+    private int totalCandiesGraduatedStar;
+
+    private int totalJarsMade;
+    private int totalJarsMadeStar;
+
+    private int totalSugarSpent;
+    private int totalSugarSpentStar;
+
+
+
 
     @Nullable
     @Override
@@ -83,21 +119,34 @@ public class ProfileFragment extends Fragment {
         achievementLevelBar.getDrawable().setLevel(50);
 
 
+//        // button to reset user stats
+//        resetButton = (Button) view.findViewById(R.id.reset_button);
+//        resetButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                resetUserStats();
+//            }
+//        });
 
-
-
-        // button to reset user stats
+        // go to Settings
         resetButton = (Button) view.findViewById(R.id.reset_button);
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetUserStats();
+                gotoSettings();
             }
         });
 
         return view;
     }
 
+
+    public void gotoSettings() {
+        Intent intent = new Intent(getContext(), SettingsActivity.class);
+        getActivity().startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_USERNAME);
+    }
+
+    // not used for now
     public void resetUserStats() {
         // does not reset name
         level = 1;
@@ -120,22 +169,67 @@ public class ProfileFragment extends Fragment {
         // does not save username here
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(LEVEL, level);
-        editor.putInt(EXP, exp);
-        editor.putInt(STREAK, streak);
+        // editor.putInt(EXP, exp);
+        // editor.putInt(STREAK, streak);
+
+        editor.putString(USERNAME, username);
+
+        editor.putInt(LONGEST_STREAK, longestStreak);
+        editor.putInt(LONGEST_STREAK_STAR, longestStreakStar);
+
         editor.putInt(TOTAL_CANDIES_MADE, totalCandiesMade);
+        editor.putInt(TOTAL_CANDIES_MADE_STAR, totalCandiesMadeStar);
+
         editor.putInt(TOTAL_CANDIES_GRADUATED, totalCandiesGraduated);
+        editor.putInt(TOTAL_CANDIES_GRADUATED_STAR, totalCandiesGraduatedStar);
+
+        editor.putInt(TOTAL_JARS_MADE, totalJarsMade);
+        editor.putInt(TOTAL_JARS_MADE_STAR, totalJarsMadeStar);
+
+        editor.putInt(TOTAL_SUGAR_SPENT, totalSugarSpent);
+        editor.putInt(TOTAL_SUGAR_SPENT_STAR, totalSugarSpentStar);
+
+        editor.putInt(LEVEL, level);
+        editor.putInt(LEVEL_STAR, levelStar);
+
         editor.commit();
     }
 
+    // loads all saved sharedPrefs to be used on this screen
     public void loadAllData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         username = sharedPreferences.getString(USERNAME, "default username");
-        level = sharedPreferences.getInt(LEVEL, -1);
-        exp = sharedPreferences.getInt(EXP, -1);
-        streak = sharedPreferences.getInt(STREAK, -1);
+
+        longestStreak = sharedPreferences.getInt(LONGEST_STREAK, -1);
+        longestStreakStar = sharedPreferences.getInt(LONGEST_STREAK_STAR, -1);
+
         totalCandiesMade = sharedPreferences.getInt(TOTAL_CANDIES_MADE, -1);
+        totalCandiesMadeStar = sharedPreferences.getInt(TOTAL_CANDIES_MADE_STAR, -1);
+
         totalCandiesGraduated = sharedPreferences.getInt(TOTAL_CANDIES_GRADUATED, -1);
+        totalCandiesGraduatedStar = sharedPreferences.getInt(TOTAL_CANDIES_GRADUATED_STAR, -1);
+
+        totalJarsMade = sharedPreferences.getInt(TOTAL_JARS_MADE, -1);
+        totalJarsMadeStar = sharedPreferences.getInt(TOTAL_JARS_MADE_STAR, -1);
+
+        totalSugarSpent = sharedPreferences.getInt(TOTAL_SUGAR_SPENT, -1);
+        totalSugarSpentStar = sharedPreferences.getInt(TOTAL_SUGAR_SPENT_STAR, -1);
+
+        level = sharedPreferences.getInt(LEVEL, -1);
+        levelStar = sharedPreferences.getInt(LEVEL_STAR, -1);
+    }
+
+    // individual methods for shared preferences
+    public void saveUsername() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(USERNAME, username);
+        editor.commit();
+    }
+
+    public void loadUsername() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        username = sharedPreferences.getString(USERNAME, "default username");
     }
 
     @Override
@@ -143,6 +237,21 @@ public class ProfileFragment extends Fragment {
         super.onPause();
         saveAllData();
     }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //          Failed attempt at using AdvancedNestedScrollView
 //        AchievementListAdapter adapter = new AchievementListAdapter(getContext(), achievementList);
@@ -169,4 +278,3 @@ public class ProfileFragment extends Fragment {
 //        });
 
 //        return view;
-}
