@@ -247,6 +247,11 @@ public class MainActivity extends AppCompatActivity
         String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
         jarList = gson.fromJson(jsonStringForJarList, type);
 
+        // prevent null pointer exception for jarList
+        if (jarList == null) {
+            jarList = new ArrayList<>();
+        }
+
         // get list of candies to train from saved local file
         String jsonStringForTrainingList = loadFromLocalFile(CANDY_TRAINING_FILE_NAME);
         jarListForTraining = gson.fromJson(jsonStringForTrainingList, type);
