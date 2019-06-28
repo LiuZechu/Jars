@@ -124,10 +124,12 @@ public class MainActivity extends AppCompatActivity
             jarList = new ArrayList<>();
         }
 
-        // get list of candies to train from saved local file
-        String jsonStringForTrainingList = loadFromLocalFile(CANDY_TRAINING_FILE_NAME);
-        jarListForTraining = gson.fromJson(jsonStringForTrainingList, type);
+//        // get list of candies to train from saved local file
+//        String jsonStringForTrainingList = loadFromLocalFile(CANDY_TRAINING_FILE_NAME);
+//        jarListForTraining = gson.fromJson(jsonStringForTrainingList, type);
 
+        // process which candies need to be trained
+        processCandiesForTraining();
 
         // load default fragment; TODO: need to change to last saved later
         loadFragment(new FilesFragment());
@@ -152,6 +154,37 @@ public class MainActivity extends AppCompatActivity
 
         // background work using jobScheduler
         scheduleJob();
+    }
+
+    public void processCandiesForTraining() {
+        // process Candies
+        jarListForTraining = new ArrayList<>(); // for now, create a new jar for candies, for training purpose
+
+        for (Jar jar : jarList) {
+            ArrayList<Candy> candyList = jar.getCandies();
+            Jar trainingJar = null;
+            boolean trainingJarCreated = false;
+            for (Candy candy: candyList) {
+                // candy.decrementCountDown(); // commented out because this should have been done in background work already
+                if (candy.shouldTrain()) {
+                    if (!trainingJarCreated) {
+                        trainingJar = new Jar(jar.getTitle());
+                        trainingJarCreated = true;
+                    }
+                    trainingJar.addCandy(candy);
+                }
+            }
+
+            if (trainingJar != null) {
+                jarListForTraining.add(trainingJar);
+            }
+        }
+
+//        // save the list of candies to train into a local file
+//        Gson gson = new Gson();
+//        String toSave = gson.toJson(candiesToTrain);
+//        saveToLocalFile(CANDY_TRAINING_FILE_NAME, toSave);
+
     }
 
 
@@ -238,7 +271,10 @@ public class MainActivity extends AppCompatActivity
                 int expEarned = data.getIntExtra(TrainingActivity.EXP_EARNED, 0);
                 int sugarEarned = data.getIntExtra(TrainingActivity.SUGAR_EARNED, 0);
 
-
+                // save jarList into local file to reflect changes in level
+                Gson gson = new Gson();
+                String jsonStringForJarList = gson.toJson(jarList);
+                saveToLocalFile(USER_JAR_FILE_NAME, jsonStringForJarList);
 
                 // adjust user's exp and sugar accordingly
                 increaseExp(expEarned);

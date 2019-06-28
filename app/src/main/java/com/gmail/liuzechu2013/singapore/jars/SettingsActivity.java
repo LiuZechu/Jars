@@ -24,14 +24,28 @@ public class SettingsActivity extends AppCompatActivity {
                 editUsername();
             }
         });
+
+        // view graduated candies
+        Button viewGraduatedCandiesButton = findViewById(R.id.settings_view_graduated_candies_button);
+        viewGraduatedCandiesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoArchives();
+            }
+        });
     }
 
-    public void editUsername() {
+    private void editUsername() {
         String username = usernameEditText.getText().toString();
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(ProfileFragment.USERNAME, username);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private void gotoArchives() {
+        Intent intent = new Intent(this, ArchiveActivity.class);
+        startActivity(intent);
     }
 }

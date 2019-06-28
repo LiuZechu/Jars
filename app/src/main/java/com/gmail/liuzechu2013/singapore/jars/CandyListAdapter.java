@@ -32,7 +32,8 @@ public class CandyListAdapter extends RecyclerView.Adapter<CandyViewHolder> {
         // retrieve data for that position i
         Candy candy = candyList.get(i);
         // add date to the view
-        viewHolder.candyItemView.setText(candy.getPrompt());
+        // added level number for testing; will be removed later
+        viewHolder.candyItemView.setText(candy.getPrompt() + " LEVEL: " + candy.getLevel());
         viewHolder.currentCandy = candy;
     }
 

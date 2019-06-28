@@ -2,6 +2,7 @@ package com.gmail.liuzechu2013.singapore.jars;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.support.annotation.Keep;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -36,8 +37,12 @@ public class TrainingActivity extends AppCompatActivity {
     private int currentStreak;
     private int numberCorrect;
     private int numberWrong;
+    private int numberGraduated;
     private int expEarned = 0;
     private int sugarEarned = 0;
+    // for graduation
+    private Jar currentGraduatedJar;
+    private ArrayList<Jar> candiesGraduated;
 
     // CONSTANTS
     public static final String GET_JAR_LIST = "GET_JAR_LIST";
@@ -60,8 +65,12 @@ public class TrainingActivity extends AppCompatActivity {
         // set stats to zero
         numberCorrect = 0;
         numberWrong = 0;
+        numberGraduated = 0;
 
-        // set up the buttons for CORRECT and WRONG
+        // process the entire list to get a training list
+
+
+        // set up the button for CORRECT
         correctButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,18 +83,31 @@ public class TrainingActivity extends AppCompatActivity {
                     // [e.g. 10 day streak means 200% sugar]
                     sugarEarned += (int) (10 * currentCandy.getLevel() * (100 + (currentStreak * 10)) * 0.01);
 
-                    // if graduate: exp += 500; sugar += 5000
-                    if (currentCandy.getLevel() == 7) {
+                    // GRADUATION: exp += 500; sugar += 5000
+                    if (currentCandy.getLevel() >= 7) {
                         expEarned += 500;
                         sugarEarned += 5000;
-                    }
 
-                    currentCandy.levelUp();
-                    trainCandy();
+                        numberGraduated++;
+                        // check whether current graduated jar is created
+                        if (currentGraduatedJar == null) {
+                            currentGraduatedJar = new Jar(currentJar.getTitle());
+                            candiesGraduated.add(currentGraduatedJar);
+                        }
+
+                        addCandyToGraduated(currentCandy);
+                        currentJar.deleteCandy(currentCandy);
+                        trainCandy(true);
+
+                    } else { // Candy hasn't graduated yet
+                        currentCandy.levelUp();
+                        trainCandy(false);
+                    }
                 }
             }
         });
 
+        // set up the button for WRONG
         wrongButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +118,7 @@ public class TrainingActivity extends AppCompatActivity {
                     expEarned++;
 
                     currentCandy.dropToLevelOne();
-                    trainCandy();
+                    trainCandy(false);
                 }
             }
         });
@@ -129,17 +151,24 @@ public class TrainingActivity extends AppCompatActivity {
             currentJar = jars.get(currentJarIndex);
             title.setText(currentJar.getTitle());
             currentJarIndex++;
-            trainCandy();
+            trainCandy(false);
         }
     }
 
-    public void trainCandy() {
+    // this method takes in a boolean parameter. True: previous candy is graduated and removed.
+    // in this case, the current candy index will be decremented by 1 so as to make up for the
+    // loss of one candy
+    public void trainCandy(boolean isPrevGraduated) {
+        if (isPrevGraduated) {
+            currentCandyIndex--;
+        }
+
         ArrayList<Candy> candies = currentJar.getCandies();
 
         // make the two buttons invisible initially
         trainingBottomBarLayout.setVisibility(View.INVISIBLE);
 
-        if (candies == null || currentCandyIndex >= candies.size()) {
+        if (candies == null || currentCandyIndex >= candies.size() || currentCandyIndex < 0 ) { // by right the last condition shouldn't happen
             // reset to zero
             currentCandyIndex = 0;
             nextJar(jarList);
@@ -164,7 +193,8 @@ public class TrainingActivity extends AppCompatActivity {
 
     public void finishTraining() {
         String displayText = "Good Job! You got " + numberCorrect + " correct and "
-                + numberWrong + " wrong! Keep it up! Tap to exit Training.";
+                + numberWrong + " wrong! You also graduated " + numberGraduated
+                + " Candies. Keep it up! Tap to exit Training.";
         mainTextView.setText(displayText);
         mainTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,5 +210,9 @@ public class TrainingActivity extends AppCompatActivity {
         intent.putExtra(SUGAR_EARNED, sugarEarned);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void addCandyToGraduated(Candy candy) {
+        currentGraduatedJar.addCandy(candy);
     }
 }

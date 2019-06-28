@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -89,6 +90,8 @@ public class DailyBackgroundJobService extends JobService {
         String toSave = gson.toJson(candiesToTrain);
         saveToLocalFile(MainActivity.CANDY_TRAINING_FILE_NAME, toSave);
         jsonStringForTraining = toSave;
+
+        Log.d("test", toSave);
 
         // fire up notification
         sendNotification();

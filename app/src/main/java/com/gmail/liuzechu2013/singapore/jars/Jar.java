@@ -24,6 +24,10 @@ public class Jar {
         candies.add(candy);
     }
 
+    public void deleteCandy(Candy candy) {
+        candies.remove(candy);
+    }
+
     // may be inefficient for large numbers
     public void graduateCandy(Candy candy) {
         candies.remove(candy);
