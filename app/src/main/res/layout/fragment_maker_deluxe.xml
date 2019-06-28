@@ -29,7 +29,7 @@
             android:layout_height="wrap_content" />
         <ImageView
             android:layout_margin="2dp"
-            android:src="@drawable/maker_indicator"
+            android:src="@drawable/maker_indicator_active"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -48,15 +48,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Ordinary" />
+        android:text="Deluxe" />
 
     <ImageView
+        android:elevation="1dp"
         app:layout_constraintBottom_toTopOf="@+id/maker_page_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/maker_page_text"
-        android:src="@drawable/maker_ordinary"
+        android:src="@drawable/maker_deluxe_front"
         android:id="@+id/maker_page_image"
+        app:layout_constrainedHeight="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:elevation="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/maker_page_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/maker_page_text"
+        android:src="@drawable/maker_deluxe_back"
+        android:id="@+id/maker_page_image_back"
+        app:layout_constrainedHeight="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -68,7 +82,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
-        android:text="200"
+        android:text="12500"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -42,9 +42,14 @@ public class MakerPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_maker_page, container, false);
-        View tv = v.findViewById(R.id.maker_page_text);
-        ((TextView)tv).setText(mNum == 0 ? "Ordinary" : mNum == 1 ? "Grand" : "Deluxe");
+        View v;
+        if (mNum == 0) {
+            v = inflater.inflate(R.layout.fragment_maker_ordinary, container, false);
+        } else if (mNum == 1) {
+            v = inflater.inflate(R.layout.fragment_maker_grand, container, false);
+        } else {
+            v = inflater.inflate(R.layout.fragment_maker_deluxe, container, false);
+        }
         return v;
     }
 }
