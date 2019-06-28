@@ -58,7 +58,7 @@ public class MakeNewCandyActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 String newJarName = makeNewJarEditText.getText().toString();
-                
+
                 if (newJarName != null && newJarName.length() != 0) {
 
                     makeNewJarSaveButton.setVisibility(View.GONE);

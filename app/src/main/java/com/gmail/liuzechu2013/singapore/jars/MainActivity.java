@@ -99,6 +99,11 @@ public class MainActivity extends AppCompatActivity
                                 getApplicationContext()))
                 );
 
+
+        // TODO: check whether there's unnecessary loading
+        loadAllData();
+
+
         // load data into topbar
         topbarLevelText = findViewById(R.id.topbar_level_text);
         topbarStreaklText = findViewById(R.id.topbar_streak_text);
@@ -150,9 +155,13 @@ public class MainActivity extends AppCompatActivity
     public void loadDataIntoTopBar() {
         if (topbarLevelText != null && topbarStreaklText != null && topbarSugarText != null) {
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-            topbarLevelText.setText("" + sharedPreferences.getInt(ProfileFragment.LEVEL, 1));
-            topbarStreaklText.setText("" +sharedPreferences.getInt(ProfileFragment.STREAK, 1));
-            topbarSugarText.setText("" + sharedPreferences.getInt(ProfileFragment.SUGAR, 0));
+            level = sharedPreferences.getInt(ProfileFragment.LEVEL, 1);
+            streak = sharedPreferences.getInt(ProfileFragment.STREAK, 1);
+            sugar = sharedPreferences.getInt(ProfileFragment.SUGAR, 0);
+
+            topbarLevelText.setText("" + level);
+            topbarStreaklText.setText("" + streak);
+            topbarSugarText.setText("" + sugar);
         } else {
             Log.d("Loading Topbar", "Topbar views absent!");
         }
@@ -224,9 +233,16 @@ public class MainActivity extends AppCompatActivity
                 int expEarned = data.getIntExtra(TrainingActivity.EXP_EARNED, 0);
                 int sugarEarned = data.getIntExtra(TrainingActivity.SUGAR_EARNED, 0);
 
+
+
                 // adjust user's exp and sugar accordingly
                 increaseExp(expEarned);
                 increaseSugar(sugarEarned);
+
+                // DEBUG
+                Log.d("help", "exp: " + exp);
+                Log.d("help", "sugar: " + sugar);
+                Log.d("help", "level: " + level);
 
                 // return back to Candy Tab
                 loadFragment(new CandyFragment());
@@ -377,8 +393,8 @@ public class MainActivity extends AppCompatActivity
         streak = sharedPreferences.getInt(ProfileFragment.STREAK, 1);
         longestStreak = sharedPreferences.getInt(ProfileFragment.LONGEST_STREAK, 1);
         sugar = sharedPreferences.getInt(ProfileFragment.SUGAR, 0);
-        totalCandiesMade = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_MADE, -1);
-        totalCandiesGraduated = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, -1);
+        totalCandiesMade = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_MADE, 0);
+        totalCandiesGraduated = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, 0);
     }
 
     // individual methods for shared preferences
