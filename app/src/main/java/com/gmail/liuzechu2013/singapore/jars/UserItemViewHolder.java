@@ -19,7 +19,7 @@ public class UserItemViewHolder extends RecyclerView.ViewHolder
     protected TextView userItemView;
     protected TextView userItemTypeView;
     private UserItemListAdapter mAdapter;
-    // protected ShopItem currentUserItem;
+    // protected Item currentUserItem;
 
     public UserItemViewHolder(View itemView, UserItemListAdapter adapter) {
         super(itemView);

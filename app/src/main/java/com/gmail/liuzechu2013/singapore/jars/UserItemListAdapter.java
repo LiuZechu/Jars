@@ -11,9 +11,9 @@ import java.util.List;
 
 public class UserItemListAdapter extends RecyclerView.Adapter<UserItemViewHolder> {
     private LayoutInflater mInflater;
-    private List<ShopItem> userItemList;
+    private List<Item> userItemList;
 
-    public UserItemListAdapter(Context context, List<ShopItem> userItemList) {
+    public UserItemListAdapter(Context context, List<Item> userItemList) {
         mInflater = LayoutInflater.from(context);
         this.userItemList = userItemList;
     }
@@ -30,7 +30,7 @@ public class UserItemListAdapter extends RecyclerView.Adapter<UserItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserItemViewHolder viewHolder, int i) {
         // retrieve data for that position i
-        ShopItem userItem = userItemList.get(i);
+        Item userItem = userItemList.get(i);
         // add date to the view
         viewHolder.userItemView.setText(userItem.getName());
         int itemType = userItem.getType();

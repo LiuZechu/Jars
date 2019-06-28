@@ -14,7 +14,7 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
     protected TextView shopItemView;
     private ShopItemListAdapter mAdapter;
-    // protected ShopItem currentUserItem;
+    // protected Item currentUserItem;
 
     public ShopItemViewHolder(View itemView, ShopItemListAdapter adapter) {
         super(itemView);
