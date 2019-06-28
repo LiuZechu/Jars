@@ -35,7 +35,7 @@ import edmt.dev.advancednestedscrollview.MaxHeightRecyclerView;
 public class ProfileFragment extends Fragment {
     // private RecyclerView mRecyclerView; // not used for now
     // private ArrayList<Achievement> achievementList; // not used for now
-    private Button resetButton; // button to reset user stats
+    private Button settingsButton; // button to reset user stats
     private TextView usernameTextView;
     // achievements
     private TextView achievementStreakScore;
@@ -118,7 +118,7 @@ public class ProfileFragment extends Fragment {
         achievementLevelScore = view.findViewById(R.id.achievement_level_score);
 
         // FOR TESTING ONLY! RESETS ALL USER DATA
-        // resetAllData();
+        //resetAllData();
 
         // load user stats
         loadAllData();
@@ -171,8 +171,8 @@ public class ProfileFragment extends Fragment {
 //        });
 
         // go to Settings
-        resetButton = (Button) view.findViewById(R.id.reset_button);
-        resetButton.setOnClickListener(new View.OnClickListener() {
+        settingsButton = (Button) view.findViewById(R.id.reset_button);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoSettings();
@@ -211,8 +211,8 @@ public class ProfileFragment extends Fragment {
         // does not save username here
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        // editor.putInt(EXP, exp);
-        // editor.putInt(STREAK, streak);
+        //editor.putInt(EXP, exp);
+        //editor.putInt(STREAK, streak);
 
         editor.putString(USERNAME, username);
 
@@ -241,6 +241,8 @@ public class ProfileFragment extends Fragment {
     public void loadAllData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         username = sharedPreferences.getString(USERNAME, "your username");
+
+        //streak = sharedPreferences.getInt(STREAK, 1);
 
         longestStreak = sharedPreferences.getInt(LONGEST_STREAK, 1);
         longestStreakStar = sharedPreferences.getInt(LONGEST_STREAK_STAR, 0);
@@ -632,10 +634,10 @@ public class ProfileFragment extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        // editor.putInt(EXP, exp);
-        // editor.putInt(STREAK, streak);
+        //editor.putInt(EXP, 1);
+        //editor.putInt(STREAK, 2);
 
-        // editor.putString(USERNAME, username);
+        editor.putString(USERNAME, username);
 
         editor.putInt(LONGEST_STREAK, 1);
         editor.putInt(LONGEST_STREAK_STAR, 0);

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     private TextView topbarLevelText;
     private TextView topbarStreaklText;
     private TextView topbarSugarText;
+    private ProgressBar topbarLevelRing;
 
     // user stats to be saved in SharedPreferences
     private String username;
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity
         topbarLevelText = findViewById(R.id.topbar_level_text);
         topbarStreaklText = findViewById(R.id.topbar_streak_text);
         topbarSugarText = findViewById(R.id.topbar_sugar_text);
+        topbarLevelRing = findViewById(R.id.topbar_level_ring);
         loadDataIntoTopBar();
 
         // load data into jarList
@@ -158,10 +161,12 @@ public class MainActivity extends AppCompatActivity
             level = sharedPreferences.getInt(ProfileFragment.LEVEL, 1);
             streak = sharedPreferences.getInt(ProfileFragment.STREAK, 1);
             sugar = sharedPreferences.getInt(ProfileFragment.SUGAR, 0);
+            exp = sharedPreferences.getInt(ProfileFragment.EXP, 0);
 
             topbarLevelText.setText("" + level);
             topbarStreaklText.setText("" + streak);
             topbarSugarText.setText("" + sugar);
+            topbarLevelRing.setProgress(exp * 100 / getExpToLevelUp());
         } else {
             Log.d("Loading Topbar", "Topbar views absent!");
         }
@@ -458,7 +463,13 @@ public class MainActivity extends AppCompatActivity
         totalSugarSpent = sharedPreferences.getInt(ProfileFragment.TOTAL_SUGAR_SPENT, 0);
     }
 
-
+    public int getExpToLevelUp() {
+        if (level <= 100) {
+            return 3 * (level + 1) * (level + 1);
+        } else {
+            return 30000;
+        }
+    }
 
     // use negative values when exp is reduced
     public void increaseExp(int amount) {
@@ -467,12 +478,7 @@ public class MainActivity extends AppCompatActivity
         // check whether next level is reached; update if necessary
         // Exp needed to reach next level = 3 * (next level)^2, if next level <= 100
         // Exp needed to reach next level = 30 000, if next level > 100
-        int expNeededToLevelUp = 0;
-        if (level <= 100) {
-            expNeededToLevelUp = 3 * (level + 1) * (level + 1);
-        } else {
-            expNeededToLevelUp = 30000;
-        }
+        int expNeededToLevelUp = getExpToLevelUp();
 
         if (exp >= expNeededToLevelUp) {
             // level up!
@@ -485,7 +491,6 @@ public class MainActivity extends AppCompatActivity
             int sugarToAward = (int) Math.floor(Math.pow(level, 1.5)) * 100;
             increaseSugar(sugarToAward);
         }
-
 
         saveExp();
         loadDataIntoTopBar();
