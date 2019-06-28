@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     public static final String CANDY_TRAINING_FILE_NAME = "candyTraining.txt";
     // for Training Button
     final Random rnd = new Random();
+    public static final String CODE_FOR_TRAINING_ALL_CANDIES = "codeForTrainingAllCandies";
 
     // top bar
     private TextView topbarLevelText;
@@ -114,10 +115,7 @@ public class MainActivity extends AppCompatActivity
         loadDataIntoTopBar();
 
         // load data into jarList
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
-        String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
-        jarList = gson.fromJson(jsonStringForJarList, type);
+        loadDataIntoJarList();
 
         // prevent null pointer exception for jarList
         if (jarList == null) {
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity
 //        jarListForTraining = gson.fromJson(jsonStringForTrainingList, type);
 
         // process which candies need to be trained
-        processCandiesForTraining();
+        // processCandiesForTraining();
 
         // load default fragment; TODO: need to change to last saved later
         loadFragment(new FilesFragment());
@@ -153,9 +151,18 @@ public class MainActivity extends AppCompatActivity
         });
 
         // background work using jobScheduler
-        scheduleJob();
+        // scheduleJob();
     }
 
+    public void loadDataIntoJarList() {
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
+        String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
+        Log.d("test fromMain", jsonStringForJarList);
+        jarList = gson.fromJson(jsonStringForJarList, type);
+    }
+
+    // moved to training activity
     public void processCandiesForTraining() {
         // process Candies
         jarListForTraining = new ArrayList<>(); // for now, create a new jar for candies, for training purpose
@@ -254,10 +261,11 @@ public class MainActivity extends AppCompatActivity
 
     private void gotoTraining() {
         Intent training = new Intent(this, TrainingActivity.class);
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(jarListForTraining);
-        training.putExtra(TrainingActivity.GET_JAR_LIST, jsonString);
-        training.putExtra(TrainingActivity.CURRENT_STREAK, streak);
+        // Gson gson = new Gson();
+        // String jsonString = gson.toJson(jarListForTraining);
+        // training.putExtra(TrainingActivity.GET_JAR_LIST, jsonString);
+        // training.putExtra(TrainingActivity.CURRENT_STREAK, streak);
+        training.putExtra(TrainingActivity.TRAINING_JAR_NAME, CODE_FOR_TRAINING_ALL_CANDIES);
         startActivityForResult(training, REQUEST_CODE_FOR_TRAINING);
     }
 
@@ -270,11 +278,6 @@ public class MainActivity extends AppCompatActivity
             if (resultCode == RESULT_OK) {
                 int expEarned = data.getIntExtra(TrainingActivity.EXP_EARNED, 0);
                 int sugarEarned = data.getIntExtra(TrainingActivity.SUGAR_EARNED, 0);
-
-                // save jarList into local file to reflect changes in level
-                Gson gson = new Gson();
-                String jsonStringForJarList = gson.toJson(jarList);
-                saveToLocalFile(USER_JAR_FILE_NAME, jsonStringForJarList);
 
                 // adjust user's exp and sugar accordingly
                 increaseExp(expEarned);

@@ -91,7 +91,7 @@ public class DailyBackgroundJobService extends JobService {
         saveToLocalFile(MainActivity.CANDY_TRAINING_FILE_NAME, toSave);
         jsonStringForTraining = toSave;
 
-        Log.d("test", toSave);
+        Log.d("test frombackgroundwork", toSave);
 
         // fire up notification
         sendNotification();

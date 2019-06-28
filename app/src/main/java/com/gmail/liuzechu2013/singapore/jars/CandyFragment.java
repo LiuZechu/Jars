@@ -1,5 +1,6 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,7 +37,15 @@ public class CandyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_candy, null);
 
         // Load list of jars
+        // get main activity to update its jarList in case its content changes
+        Activity activity = getActivity();
+        MainActivity mainActivity = null;
+        if (activity instanceof MainActivity) {
+            mainActivity = (MainActivity) activity;
+        }
+        mainActivity.loadDataIntoJarList();
         jarList = MainActivity.getJarList();
+
 
         // create jar list if there is none
         if (jarList == null) {

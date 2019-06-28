@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -89,11 +90,13 @@ public class JarViewHolder extends RecyclerView.ViewHolder
         Intent intent = new Intent(activity, TrainingActivity.class);
 
         // send candies as an extra
-        ArrayList<Jar> jarList = new ArrayList<>();
-        jarList.add(currentJar);
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(jarList);
-        intent.putExtra(TrainingActivity.GET_JAR_LIST, jsonString);
+        // ArrayList<Jar> jarList = new ArrayList<>();
+        // jarList.add(currentJar);
+        // Gson gson = new Gson();
+        // String jsonString = gson.toJson(jarList);
+        // intent.putExtra(TrainingActivity.GET_JAR_LIST, jsonString);
+
+        intent.putExtra(TrainingActivity.TRAINING_JAR_NAME, currentJar.getTitle());
 
         activity.startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_TRAINING);
 
