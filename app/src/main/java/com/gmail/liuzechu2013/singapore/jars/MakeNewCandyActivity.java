@@ -1,5 +1,6 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,11 +57,18 @@ public class MakeNewCandyActivity extends AppCompatActivity
         makeNewJarSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeNewJarSaveButton.setVisibility(View.GONE);
-                makeNewJarButton.setVisibility(View.VISIBLE);
                 String newJarName = makeNewJarEditText.getText().toString();
-                makeNewJarEditText.getText().clear();
-                makeNewJarEditText.setVisibility(View.GONE);
+                
+                if (newJarName != null && newJarName.length() != 0) {
+
+                    makeNewJarSaveButton.setVisibility(View.GONE);
+                    makeNewJarButton.setVisibility(View.VISIBLE);
+
+                    makeNewJarEditText.getText().clear();
+                    makeNewJarEditText.setVisibility(View.GONE);
+
+                }
+
                 createJar(newJarName);
             }
         });
@@ -103,23 +111,30 @@ public class MakeNewCandyActivity extends AppCompatActivity
     }
 
     public void createJar(String name) {
-        Jar jar = new Jar(name);
-        MainActivity.getJarList().add(jar);
-        // update spinner
-        String[] temp = jarNameArray;
-        int len = jarNameArray.length;
-        jarNameArray = new String[len + 1];
-        for (int i = 0; i < len; i++) {
-            jarNameArray[i] = temp[i];
-        }
-        jarNameArray[len] = name;
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jarNameArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        chooseJarSpinner.setAdapter(adapter);
-        chooseJarSpinner.setOnItemSelectedListener(this);
-        chooseJarSpinner.setSelection(adapter.getPosition(name));
 
-        Toast.makeText(this, "New Jar created successfully! Put in the first candy now!", Toast.LENGTH_SHORT).show();
+        // throw a Toast if the jar name entered is empty
+        if (name == null || name.length() == 0) {
+            Toast.makeText(this, "Jar's name cannot be empty!", Toast.LENGTH_SHORT).show();
+        } else {
+
+            Jar jar = new Jar(name);
+            MainActivity.getJarList().add(jar);
+            // update spinner
+            String[] temp = jarNameArray;
+            int len = jarNameArray.length;
+            jarNameArray = new String[len + 1];
+            for (int i = 0; i < len; i++) {
+                jarNameArray[i] = temp[i];
+            }
+            jarNameArray[len] = name;
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jarNameArray);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            chooseJarSpinner.setAdapter(adapter);
+            chooseJarSpinner.setOnItemSelectedListener(this);
+            chooseJarSpinner.setSelection(adapter.getPosition(name));
+
+            Toast.makeText(this, "New Jar created successfully! Put in the first candy now!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void doneMakingCandy() {
