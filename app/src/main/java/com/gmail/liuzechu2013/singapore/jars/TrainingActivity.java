@@ -53,7 +53,7 @@ public class TrainingActivity extends AppCompatActivity {
     private int sugarEarned = 0;
     // for graduation
     private Jar currentGraduatedJar;
-    private ArrayList<Jar> candiesGraduated;
+    private ArrayList<Jar> candiesGraduated = new ArrayList<>();
 
     // CONSTANTS
     public static final String GET_JAR_LIST = "GET_JAR_LIST";
@@ -168,9 +168,9 @@ public class TrainingActivity extends AppCompatActivity {
     // in this case, the current candy index will be decremented by 1 so as to make up for the
     // loss of one candy
     public void trainCandy(boolean isPrevGraduated) {
-        if (isPrevGraduated) {
-            currentCandyIndex--;
-        }
+//        if (isPrevGraduated) {
+//            currentCandyIndex--;
+//        }
 
         ArrayList<Candy> candies = currentJar.getCandies();
 
@@ -268,7 +268,20 @@ public class TrainingActivity extends AppCompatActivity {
                 }
 
                 addCandyToGraduated(currentCandy);
-                currentJar.deleteCandy(currentCandy);
+
+//                // TEST
+//                Gson gson = new Gson();
+//                String test = gson.toJson(candiesGraduated);
+//                Log.d("display", test);
+
+                // delete this candy from its original jar
+                // currentJar.deleteCandy(currentCandy);
+                for (Jar jar : userJarList) {
+                    if (currentJar.getTitle().equals(jar.getTitle())) {
+                        jar.deleteCandy(currentCandy);
+                    }
+                }
+
                 trainCandy(true);
 
             } else { // Candy hasn't graduated yet
