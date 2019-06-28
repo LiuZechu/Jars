@@ -6,7 +6,13 @@ import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,20 +32,26 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class ShopFragment extends Fragment {
+public class MakerFragment extends Fragment {
     private ViewCurrentItemsListener activityCommander;
 
+    /*
     private RecyclerView superpowerRecyclerView;
     private RecyclerView extensionRecyclerView;
     private RecyclerView jarRecyclerView;
     private RecyclerView candyRecyclerView;
     private RecyclerView candyExpressionRecyclerView;
 
-    private ArrayList<ShopItem> superpowerList;
-    private ArrayList<ShopItem> extensionList;
-    private ArrayList<ShopItem> jarList;
-    private ArrayList<ShopItem> candyList;
-    private ArrayList<ShopItem> candyExpressionList;
+    private ArrayList<Item> superpowerList;
+    private ArrayList<Item> extensionList;
+    private ArrayList<Item> jarList;
+    private ArrayList<Item> candyList;
+    private ArrayList<Item> candyExpressionList;
+    */
+
+    private static final int NUM_MAKER = 3;
+    private ViewPager makerPager;
+    private PagerAdapter makerPagerAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -55,9 +67,9 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_shop, null);
+        View view = inflater.inflate(R.layout.fragment_maker, null);
 
-        Button button = (Button) view.findViewById(R.id.view_current_items_button);
+        FloatingActionButton button = view.findViewById(R.id.view_current_items_button);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +78,11 @@ public class ShopFragment extends Fragment {
         };
         button.setOnClickListener(listener);
 
+        makerPager = (ViewPager) view.findViewById(R.id.maker_pager);
+        makerPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+        makerPager.setAdapter(makerPagerAdapter);
+
+        /*
         // Get all shop items from a .txt file from assets
         Activity currentActivity = getActivity(getContext());
         String jsonString = null;
@@ -97,8 +114,8 @@ public class ShopFragment extends Fragment {
         }
 
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<ArrayList<ShopItem>>>(){}.getType();
-        ArrayList<ArrayList<ShopItem>> allShopItems = gson.fromJson(jsonString, type);
+        Type type = new TypeToken<ArrayList<ArrayList<Item>>>(){}.getType();
+        ArrayList<ArrayList<Item>> allShopItems = gson.fromJson(jsonString, type);
         superpowerList = allShopItems.get(0);
         extensionList = allShopItems.get(1);
         jarList = allShopItems.get(2);
@@ -135,7 +152,7 @@ public class ShopFragment extends Fragment {
         ShopItemListAdapter adapter5 = new ShopItemListAdapter(getContext(), candyExpressionList);
         candyExpressionRecyclerView.setAdapter(adapter5);
         candyExpressionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1, LinearLayoutManager.HORIZONTAL, false));
-
+        */
 
         return view;
     }
@@ -166,54 +183,70 @@ public class ShopFragment extends Fragment {
     public interface ViewCurrentItemsListener {
         public void viewCurrentItems();
     }
+
+    private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return MakerPageFragment.newInstance(position);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_MAKER;
+        }
+    }
 }
 
 
 // for TESTING
 //        superpowerList = new ArrayList<>();
-//        superpowerList.add(new ShopItem(ShopItem.SUPERPOWER, "Life"));
-//        superpowerList.add(new ShopItem(ShopItem.SUPERPOWER, "Happiness"));
-//        superpowerList.add(new ShopItem(ShopItem.SUPERPOWER, "Progress"));
-//        superpowerList.add(new ShopItem(ShopItem.SUPERPOWER, "Democracy"));
-//        superpowerList.add(new ShopItem(ShopItem.SUPERPOWER, "Longevity"));
-//        superpowerList.add(new ShopItem(ShopItem.SUPERPOWER, "Invisibility"));
+//        superpowerList.add(new Item(Item.SUPERPOWER, "Life"));
+//        superpowerList.add(new Item(Item.SUPERPOWER, "Happiness"));
+//        superpowerList.add(new Item(Item.SUPERPOWER, "Progress"));
+//        superpowerList.add(new Item(Item.SUPERPOWER, "Democracy"));
+//        superpowerList.add(new Item(Item.SUPERPOWER, "Longevity"));
+//        superpowerList.add(new Item(Item.SUPERPOWER, "Invisibility"));
 //
 //        extensionList = new ArrayList<>();
-//        extensionList.add(new ShopItem(ShopItem.EXTENSION, "extension"));
-//        extensionList.add(new ShopItem(ShopItem.EXTENSION, "extension"));
-//        extensionList.add(new ShopItem(ShopItem.EXTENSION, "extension"));
-//        extensionList.add(new ShopItem(ShopItem.EXTENSION, "extension"));
-//        extensionList.add(new ShopItem(ShopItem.EXTENSION, "extension"));
-//        extensionList.add(new ShopItem(ShopItem.EXTENSION, "extension"));
-//        extensionList.add(new ShopItem(ShopItem.EXTENSION, "extension"));
+//        extensionList.add(new Item(Item.EXTENSION, "extension"));
+//        extensionList.add(new Item(Item.EXTENSION, "extension"));
+//        extensionList.add(new Item(Item.EXTENSION, "extension"));
+//        extensionList.add(new Item(Item.EXTENSION, "extension"));
+//        extensionList.add(new Item(Item.EXTENSION, "extension"));
+//        extensionList.add(new Item(Item.EXTENSION, "extension"));
+//        extensionList.add(new Item(Item.EXTENSION, "extension"));
 //
 //        jarList = new ArrayList<>();
-//        jarList.add(new ShopItem(ShopItem.JAR, "plastic jar"));
-//        jarList.add(new ShopItem(ShopItem.JAR, "porcelain jar"));
-//        jarList.add(new ShopItem(ShopItem.JAR, "bronze jar"));
-//        jarList.add(new ShopItem(ShopItem.JAR, "jelly jar"));
-//        jarList.add(new ShopItem(ShopItem.JAR, "glass jar"));
-//        jarList.add(new ShopItem(ShopItem.JAR, "broken jar"));
+//        jarList.add(new Item(Item.JAR, "plastic jar"));
+//        jarList.add(new Item(Item.JAR, "porcelain jar"));
+//        jarList.add(new Item(Item.JAR, "bronze jar"));
+//        jarList.add(new Item(Item.JAR, "jelly jar"));
+//        jarList.add(new Item(Item.JAR, "glass jar"));
+//        jarList.add(new Item(Item.JAR, "broken jar"));
 //
 //        candyList = new ArrayList<>();
-//        candyList.add(new ShopItem(ShopItem.CANDY, "sweet candy"));
-//        candyList.add(new ShopItem(ShopItem.CANDY, "sour candy"));
-//        candyList.add(new ShopItem(ShopItem.CANDY, "mala candy"));
-//        candyList.add(new ShopItem(ShopItem.CANDY, "chocolate candy"));
-//        candyList.add(new ShopItem(ShopItem.CANDY, "lollipop"));
-//        candyList.add(new ShopItem(ShopItem.CANDY, "chewing gum"));
-//        candyList.add(new ShopItem(ShopItem.CANDY, "jelly"));
+//        candyList.add(new Item(Item.CANDY, "sweet candy"));
+//        candyList.add(new Item(Item.CANDY, "sour candy"));
+//        candyList.add(new Item(Item.CANDY, "mala candy"));
+//        candyList.add(new Item(Item.CANDY, "chocolate candy"));
+//        candyList.add(new Item(Item.CANDY, "lollipop"));
+//        candyList.add(new Item(Item.CANDY, "chewing gum"));
+//        candyList.add(new Item(Item.CANDY, "jelly"));
 //
 //        candyExpressionList = new ArrayList<>();
-//        candyExpressionList.add(new ShopItem(ShopItem.CANDY_EXPRESSION, "happy"));
-//        candyExpressionList.add(new ShopItem(ShopItem.CANDY_EXPRESSION, "sad"));
-//        candyExpressionList.add(new ShopItem(ShopItem.CANDY_EXPRESSION, "hesitant"));
-//        candyExpressionList.add(new ShopItem(ShopItem.CANDY_EXPRESSION, "angry"));
-//        candyExpressionList.add(new ShopItem(ShopItem.CANDY_EXPRESSION, "crying"));
-//        candyExpressionList.add(new ShopItem(ShopItem.CANDY_EXPRESSION, "smiley"));
-//        candyExpressionList.add(new ShopItem(ShopItem.CANDY_EXPRESSION, "sarcastic"));
+//        candyExpressionList.add(new Item(Item.CANDY_EXPRESSION, "happy"));
+//        candyExpressionList.add(new Item(Item.CANDY_EXPRESSION, "sad"));
+//        candyExpressionList.add(new Item(Item.CANDY_EXPRESSION, "hesitant"));
+//        candyExpressionList.add(new Item(Item.CANDY_EXPRESSION, "angry"));
+//        candyExpressionList.add(new Item(Item.CANDY_EXPRESSION, "crying"));
+//        candyExpressionList.add(new Item(Item.CANDY_EXPRESSION, "smiley"));
+//        candyExpressionList.add(new Item(Item.CANDY_EXPRESSION, "sarcastic"));
 //
-//        ArrayList<ArrayList<ShopItem>> allShopItems = new ArrayList<>();
+//        ArrayList<ArrayList<Item>> allShopItems = new ArrayList<>();
 //        allShopItems.add(superpowerList);
 //        allShopItems.add(extensionList);
 //        allShopItems.add(jarList);

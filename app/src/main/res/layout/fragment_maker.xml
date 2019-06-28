@@ -6,18 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/view_current_items_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/shop_view_my_items"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <ScrollView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/maker_pager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_current_items_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--<ScrollView
         android:id="@+id/shop_scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -91,6 +100,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </ScrollView>-->
 
 </android.support.constraint.ConstraintLayout>

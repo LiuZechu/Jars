@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
-        implements ShopFragment.ViewCurrentItemsListener, FilesFragment.OnFileOpenListener{
+        implements MakerFragment.ViewCurrentItemsListener, FilesFragment.OnFileOpenListener{
     private BottomNavigationView navView;
     private Button trainingButton;
     private ArrayList<Jar> jarListForTraining;
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity
                     fragment = new ProfileFragment();
                     break;
                 case R.id.navigation_maker:
-                    fragment = new ShopFragment();
+                    fragment = new MakerFragment();
                     break;
             }
 
@@ -356,7 +356,7 @@ public class MainActivity extends AppCompatActivity
         return output;
     }
 
-    // view current items from ShopFragment
+    // view current items from MakerFragment
     @Override
     public void viewCurrentItems(){
         Intent intent = new Intent(this, CurrentItemsActivity.class);

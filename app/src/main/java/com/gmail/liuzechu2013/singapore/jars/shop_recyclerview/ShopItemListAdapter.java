@@ -7,19 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gmail.liuzechu2013.singapore.jars.Item;
 import com.gmail.liuzechu2013.singapore.jars.R;
-import com.gmail.liuzechu2013.singapore.jars.ShopItem;
-import com.gmail.liuzechu2013.singapore.jars.UserItemViewHolder;
 
 import java.util.List;
 
 public class ShopItemListAdapter extends RecyclerView.Adapter<ShopItemViewHolder> {
     private LayoutInflater mInflater;
-    private List<ShopItem> shopItemList;
+    private List<Item> itemList;
 
-    public ShopItemListAdapter(Context context, List<ShopItem> shopItemList) {
+    public ShopItemListAdapter(Context context, List<Item> itemList) {
         mInflater = LayoutInflater.from(context);
-        this.shopItemList = shopItemList;
+        this.itemList = itemList;
     }
 
     @NonNull
@@ -34,13 +33,13 @@ public class ShopItemListAdapter extends RecyclerView.Adapter<ShopItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ShopItemViewHolder viewHolder, int i) {
         // retrieve data for that position i
-        ShopItem superpower = shopItemList.get(i);
+        Item superpower = itemList.get(i);
         // add date to the view
         viewHolder.shopItemView.setText(superpower.getName());
     }
 
     @Override
     public int getItemCount() {
-        return shopItemList.size();
+        return itemList.size();
     }
 }

@@ -1,6 +1,6 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
-public class ShopItem {
+public class Item {
     private int type; // its value takes on one of the following constants
     private String name;
 
@@ -11,7 +11,7 @@ public class ShopItem {
     public final static int CANDY = 4;
     public final static int CANDY_EXPRESSION = 5;
 
-    public ShopItem(int type, String name) {
+    public Item(int type, String name) {
         this.type = type;
         this.name = name;
     }
