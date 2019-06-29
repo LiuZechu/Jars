@@ -27,4 +27,18 @@
         app:layout_constraintTop_toBottomOf="@id/settings_username_button"
         android:text="view my graduated candies"/>
 
+    <TimePicker
+        android:id="@+id/settings_alarm_time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/settings_view_graduated_candies_button">
+    </TimePicker>
+
+    <Button
+        android:id="@+id/settings_alarm_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/settings_alarm_time_picker"
+        android:text="Set Alarm"/>
+
 </android.support.constraint.ConstraintLayout>

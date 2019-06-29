@@ -61,37 +61,39 @@ public class DailyBackgroundJobService extends JobService {
         }
 
         // process Candies
-        ArrayList<Jar> candiesToTrain = new ArrayList<>(); // for now, create a new jar for candies, for training purpose
+        // ArrayList<Jar> candiesToTrain = new ArrayList<>(); // for now, create a new jar for candies, for training purpose
         numberOfCandiesToTrain = 0;
 
         for (Jar jar : jarList) {
             ArrayList<Candy> candyList = jar.getCandies();
-            Jar trainingJar = null;
-            boolean trainingJarCreated = false;
+            // Jar trainingJar = null;
+            // boolean trainingJarCreated = false;
             for (Candy candy: candyList) {
+                Log.d("test", "candy level decremented!");
                 candy.decrementCountDown();
                 if (candy.shouldTrain()) {
-                    if (!trainingJarCreated) {
-                        trainingJar = new Jar(jar.getTitle());
-                        trainingJarCreated = true;
-                    }
-                    trainingJar.addCandy(candy);
+//                    if (!trainingJarCreated) {
+//                        trainingJar = new Jar(jar.getTitle());
+//                        trainingJarCreated = true;
+//                    }
+//                    trainingJar.addCandy(candy);
                     numberOfCandiesToTrain++;
                 }
             }
 
-            if (trainingJar != null) {
-                candiesToTrain.add(trainingJar);
-            }
+//            if (trainingJar != null) {
+//                candiesToTrain.add(trainingJar);
+//            }
         }
 
+        String toSave = gson.toJson(jarList);
+        saveToLocalFile(MainActivity.USER_JAR_FILE_NAME, toSave);
 
         // save the list of candies to train into a local file
-        String toSave = gson.toJson(candiesToTrain);
-        saveToLocalFile(MainActivity.CANDY_TRAINING_FILE_NAME, toSave);
-        jsonStringForTraining = toSave;
+//        String toSave = gson.toJson(candiesToTrain);
+//        saveToLocalFile(MainActivity.CANDY_TRAINING_FILE_NAME, toSave);
+//        jsonStringForTraining = toSave;
 
-        Log.d("test frombackgroundwork", toSave);
 
         // fire up notification
         sendNotification();
@@ -114,8 +116,9 @@ public class DailyBackgroundJobService extends JobService {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL);
 
+        // open up Training Activity when the user taps the notification
         Intent intent = new Intent(this, TrainingActivity.class);
-        intent.putExtra(TrainingActivity.GET_JAR_LIST, jsonStringForTraining);
+        intent.putExtra(TrainingActivity.TRAINING_JAR_NAME, MainActivity.CODE_FOR_TRAINING_ALL_CANDIES);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder.setContentIntent(pendingIntent);
