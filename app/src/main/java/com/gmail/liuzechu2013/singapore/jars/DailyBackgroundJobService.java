@@ -90,11 +90,19 @@ public class DailyBackgroundJobService extends JobService {
         String toSave = gson.toJson(jarList);
         saveToLocalFile(MainActivity.USER_JAR_FILE_NAME, toSave);
 
+
+        // update the longest streak maintained
+        int currentStreak = loadStreak();
+
+        if (currentStreak > loadLongestStreak()) {
+            saveLongestStreak(currentStreak);
+        }
+
+
         // check whether the current streak can be maintained
         boolean isMaintained = loadStreakMaintained();
         if (isMaintained) {
             // streak increment by one
-            int currentStreak = loadStreak();
             saveStreak(currentStreak + 1);
 
         } else {
@@ -105,11 +113,12 @@ public class DailyBackgroundJobService extends JobService {
         saveStreakMaintained(false);
 
 
+
         // save the list of candies to train into a local file
 //        String toSave = gson.toJson(candiesToTrain);
 //        saveToLocalFile(MainActivity.CANDY_TRAINING_FILE_NAME, toSave);
 //        jsonStringForTraining = toSave;
-        
+
         // fire up notification
         sendNotification();
 
@@ -174,6 +183,20 @@ public class DailyBackgroundJobService extends JobService {
     private int loadStreak() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
         int numberOfDays = sharedPreferences.getInt(ProfileFragment.STREAK, 1);
+
+        return numberOfDays;
+    }
+
+    private void saveLongestStreak(int numberOfDays) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.LONGEST_STREAK, numberOfDays);
+        editor.commit();
+    }
+
+    private int loadLongestStreak() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        int numberOfDays = sharedPreferences.getInt(ProfileFragment.LONGEST_STREAK, 1);
 
         return numberOfDays;
     }
