@@ -2,8 +2,11 @@ package com.gmail.liuzechu2013.singapore.jars;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.gmail.liuzechu2013.singapore.jars.archive_recyclerview.ArchiveListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,11 +16,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class ArchiveActivity extends AppCompatActivity {
-    public final static String GRADUATED_CANDIES_FILE_NAME = "graduatedCandies.txt";
+    public final static String GRADUATED_CANDIES_FILE_NAME = "graduatedCandies.txt"; // this file saves a HashMap, not an ArrayList!
+    private ArrayList<Jar> graduatedJarList;
+    private static HashMap<String, Jar> graduatedJarHash;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +35,26 @@ public class ArchiveActivity extends AppCompatActivity {
 
         String jsonStringForGraduatedCandies = loadFromLocalFile(GRADUATED_CANDIES_FILE_NAME);
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
-        ArrayList<Jar> graduatedJarList = gson.fromJson(jsonStringForGraduatedCandies, type);
+        Type type = new TypeToken<HashMap<String, Jar>>(){}.getType();
+        graduatedJarHash = gson.fromJson(jsonStringForGraduatedCandies, type);
 
+        // to avoid null pointer exception
+        if (graduatedJarHash == null) {
+            graduatedJarHash = new HashMap<>();
+        }
 
+        Collection<Jar> collectionOfJars = graduatedJarHash.values();
+        graduatedJarList = new ArrayList<>(collectionOfJars);
+
+        mRecyclerView = findViewById(R.id.archive_recycler_view);
+        ArchiveListAdapter adapter = new ArchiveListAdapter(this, graduatedJarList);
+        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    public static HashMap<String, Jar> getGraduatedJarHash() {
+        return graduatedJarHash;
     }
 
     // save a String into local text file on phone

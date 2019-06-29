@@ -6,4 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ArchiveActivity">
 
+    <TextView
+        android:id="@+id/archive_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="View My Graduated Candies"
+        android:padding="10dp"
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/archive_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/archive_title_text_view">
+
+    </android.support.v7.widget.RecyclerView>
+
 </android.support.constraint.ConstraintLayout>

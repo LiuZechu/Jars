@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.effect.EffectUpdateListener;
 import android.support.annotation.Keep;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TrainingActivity extends AppCompatActivity {
@@ -269,10 +271,6 @@ public class TrainingActivity extends AppCompatActivity {
 
                 addCandyToGraduated(currentCandy);
 
-//                // TEST
-//                Gson gson = new Gson();
-//                String test = gson.toJson(candiesGraduated);
-//                Log.d("display", test);
 
                 // delete this candy from its original jar
                 // currentJar.deleteCandy(currentCandy);
@@ -301,6 +299,13 @@ public class TrainingActivity extends AppCompatActivity {
         Log.d("test", toSave);
         saveToLocalFile(MainActivity.USER_JAR_FILE_NAME, toSave);
 
+        // update user's archive graduatedCandies.txt file
+        updateUserGraduatedCandies();
+
+        // update the number of candies graduated in SharedPreferences
+        int totalGraduated = loadCandiesGraduated() + numberGraduated;
+        saveCandiesGraduated(totalGraduated);
+
         // display message of encouragement
         String displayText = "Good Job! You got " + numberCorrect + " correct and "
                 + numberWrong + " wrong! You also graduated " + numberGraduated
@@ -327,11 +332,54 @@ public class TrainingActivity extends AppCompatActivity {
         currentGraduatedJar.addCandy(candy);
     }
 
+    private void saveCandiesGraduated(int amount) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, amount);
+        editor.commit();
+    }
+
+    private int loadCandiesGraduated() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_GRADUATED, 0);
+    }
+
     private int loadStreak() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
         int currentStreak = sharedPreferences.getInt(ProfileFragment.STREAK, 0);
 
         return currentStreak;
+    }
+
+    public void updateUserGraduatedCandies() {
+        Gson gson = new Gson();
+        String stringFromFile = loadFromLocalFile(ArchiveActivity.GRADUATED_CANDIES_FILE_NAME);
+        // note: Jars are stored in a HashMap in the file, with Key: String, Value: Jar
+        Type type = new TypeToken<HashMap<String, Jar>>(){}.getType();
+        HashMap<String, Jar> graduatedHash = gson.fromJson(stringFromFile, type);
+
+        // prevent null pointer exception
+        if (graduatedHash == null) {
+            graduatedHash = new HashMap<>();
+        }
+
+        // loop through candiesGraduated ArrayList can add candies to their corresponding Jars in the HashMap
+        for (Jar jar: candiesGraduated) {
+            String jarTitle = jar.getTitle();
+            if (graduatedHash.containsKey(jarTitle)) {
+                Jar graduatedJar = graduatedHash.get(jarTitle);
+                graduatedJar.addAllCandies(jar.getCandies());
+            } else {
+                Jar graduatedJar = new Jar(jarTitle);
+                graduatedJar.addAllCandies(jar.getCandies());
+                graduatedHash.put(jarTitle, graduatedJar);
+            }
+        }
+
+        // save changes to file
+        String toSave = gson.toJson(graduatedHash);
+        saveToLocalFile(ArchiveActivity.GRADUATED_CANDIES_FILE_NAME, toSave);
+
     }
 
     // save a String into local text file on phone

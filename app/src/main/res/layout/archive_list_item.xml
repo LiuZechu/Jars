@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/sym_def_app_icon"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="4dp"
+        android:contentDescription="Jar icon"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/archive_item_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="placeholder"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="30sp"/>
+
+</android.support.v7.widget.LinearLayoutCompat>

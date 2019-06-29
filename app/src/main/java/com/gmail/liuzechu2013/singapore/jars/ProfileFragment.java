@@ -186,6 +186,7 @@ public class ProfileFragment extends Fragment {
 
     public void gotoSettings() {
         Intent intent = new Intent(getContext(), SettingsActivity.class);
+        intent.putExtra(USERNAME, username);
         getActivity().startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_USERNAME);
     }
 

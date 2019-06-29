@@ -17,6 +17,9 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         usernameEditText = findViewById(R.id.settings_username_edit_text);
+        // pre-fill edit text with current username
+        Intent intent = getIntent();
+        usernameEditText.setText(intent.getStringExtra(ProfileFragment.USERNAME));
         usernameButton = findViewById(R.id.settings_username_button);
         usernameButton.setOnClickListener(new View.OnClickListener() {
             @Override

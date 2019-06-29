@@ -24,6 +24,10 @@ public class Jar {
         candies.add(candy);
     }
 
+    public void addAllCandies(ArrayList<Candy> listOfCandies) {
+        candies.addAll(listOfCandies);
+    }
+
     public void deleteCandy(Candy candy) {
         candies.remove(candy);
     }
