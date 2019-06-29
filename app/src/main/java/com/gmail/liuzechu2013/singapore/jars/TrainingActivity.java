@@ -306,6 +306,10 @@ public class TrainingActivity extends AppCompatActivity {
         int totalGraduated = loadCandiesGraduated() + numberGraduated;
         saveCandiesGraduated(totalGraduated);
 
+        // update the boolean value of whether the current streak is maintained
+        // TODO: need to consider the case of whether the user completes all or only part of the daily training
+        saveStreakMaintained(true);
+
         // display message of encouragement
         String displayText = "Good Job! You got " + numberCorrect + " correct and "
                 + numberWrong + " wrong! You also graduated " + numberGraduated
@@ -330,6 +334,14 @@ public class TrainingActivity extends AppCompatActivity {
 
     public void addCandyToGraduated(Candy candy) {
         currentGraduatedJar.addCandy(candy);
+    }
+
+    // true indicates current streak is maintained
+    private void saveStreakMaintained(boolean isMaintained) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(ProfileFragment.STREAK_MAINTAINED, isMaintained);
+        editor.commit();
     }
 
     private void saveCandiesGraduated(int amount) {

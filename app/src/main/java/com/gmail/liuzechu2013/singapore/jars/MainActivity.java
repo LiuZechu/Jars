@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity
     private int exp;
     private int sugar; // current amount of sugar owned by the user
     private int streak; // this is the current streak
+    private boolean streakMaintained; // resets to false everyday during background processing;
+                                      // turns to true after training; used to indicate whether streak is maintained
     private int selectedCandyColours;
     private boolean[] selectedExpressions;
 

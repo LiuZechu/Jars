@@ -7,6 +7,7 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -89,12 +90,26 @@ public class DailyBackgroundJobService extends JobService {
         String toSave = gson.toJson(jarList);
         saveToLocalFile(MainActivity.USER_JAR_FILE_NAME, toSave);
 
+        // check whether the current streak can be maintained
+        boolean isMaintained = loadStreakMaintained();
+        if (isMaintained) {
+            // streak increment by one
+            int currentStreak = loadStreak();
+            saveStreak(currentStreak + 1);
+
+        } else {
+            // streak drops to one
+            saveStreak(1);
+        }
+        // reset isMaintained to FALSE
+        saveStreakMaintained(false);
+
+
         // save the list of candies to train into a local file
 //        String toSave = gson.toJson(candiesToTrain);
 //        saveToLocalFile(MainActivity.CANDY_TRAINING_FILE_NAME, toSave);
 //        jsonStringForTraining = toSave;
-
-
+        
         // fire up notification
         sendNotification();
 
@@ -131,6 +146,36 @@ public class DailyBackgroundJobService extends JobService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(notificationChannel);
         }
+    }
+
+    // true indicates current streak is maintained
+    private void saveStreakMaintained(boolean isMaintained) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(ProfileFragment.STREAK_MAINTAINED, isMaintained);
+        editor.commit();
+    }
+
+    // true indicates current streak is maintained
+    private boolean loadStreakMaintained() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        boolean isMaintained = sharedPreferences.getBoolean(ProfileFragment.STREAK_MAINTAINED, true);
+
+        return isMaintained;
+    }
+
+    private void saveStreak(int numberOfDays) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.STREAK, numberOfDays);
+        editor.commit();
+    }
+
+    private int loadStreak() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        int numberOfDays = sharedPreferences.getInt(ProfileFragment.STREAK, 1);
+
+        return numberOfDays;
     }
 
     // save a String into local text file on phone

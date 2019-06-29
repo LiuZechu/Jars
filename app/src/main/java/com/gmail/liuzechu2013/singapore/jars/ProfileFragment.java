@@ -58,6 +58,7 @@ public class ProfileFragment extends Fragment {
     public static final String LEVEL = "level";
     public static final String EXP = "exp";
     public static final String STREAK = "streak";
+    public static final String STREAK_MAINTAINED = "streakMaintained"; // resets to false daily
     public static final String TOTAL_CANDIES_MADE = "totalCandiesMade";
     public static final String TOTAL_CANDIES_GRADUATED = "totalCandiesGraduated";
     public static final String LONGEST_STREAK = "longestStreak";

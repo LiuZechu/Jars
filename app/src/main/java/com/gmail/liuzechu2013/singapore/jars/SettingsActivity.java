@@ -66,10 +66,14 @@ public class SettingsActivity extends AppCompatActivity {
     private void editUsername() {
         String username = usernameEditText.getText().toString();
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(ProfileFragment.USERNAME, username);
-        setResult(RESULT_OK, intent);
-        finish();
+        if (username == null || username.length() == 0) {
+            Toast.makeText(this, "Username cannot be empty!", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(ProfileFragment.USERNAME, username);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     private void gotoArchives() {

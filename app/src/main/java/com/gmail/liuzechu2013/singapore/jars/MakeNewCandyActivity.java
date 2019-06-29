@@ -1,7 +1,9 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -111,12 +113,18 @@ public class MakeNewCandyActivity extends AppCompatActivity
     }
 
     public void createJar(String name) {
-
         // throw a Toast if the jar name entered is empty
         if (name == null || name.length() == 0) {
             Toast.makeText(this, "Jar's name cannot be empty!", Toast.LENGTH_SHORT).show();
-        } else {
 
+        } else if (checkDuplicateName(name)) {
+            // check whether the same Jar name already exists
+            // if there are duplicates, this block of code will run
+            Toast.makeText(this,
+                    "A Jar with the same name already exists! Please enter another name.",
+                    Toast.LENGTH_SHORT);
+
+        } else {
             Jar jar = new Jar(name);
             MainActivity.getJarList().add(jar);
             // update spinner
@@ -133,8 +141,25 @@ public class MakeNewCandyActivity extends AppCompatActivity
             chooseJarSpinner.setOnItemSelectedListener(this);
             chooseJarSpinner.setSelection(adapter.getPosition(name));
 
+            // update Total Jars Made
+            int totalJarsMade = loadTotalJarsMade();
+            saveTotalJarsMade(totalJarsMade + 1);
+
             Toast.makeText(this, "New Jar created successfully! Put in the first candy now!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // checks name against jarNameArray to make sure that there won't be two Jars of the same name
+    // return TRUE when there are DUPLICATES
+    private boolean checkDuplicateName(String name) {
+        boolean result = false;
+        for (String jarName : jarNameArray) {
+            if (jarName.equals(name)) {
+                result = true;
+            }
+        }
+
+        return result;
     }
 
     public void doneMakingCandy() {
@@ -161,5 +186,17 @@ public class MakeNewCandyActivity extends AppCompatActivity
             setResult(RESULT_OK, intent);
             finish();
         }
+    }
+
+    private void saveTotalJarsMade(int amount) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.TOTAL_JARS_MADE, amount);
+        editor.commit();
+    }
+
+    private int loadTotalJarsMade() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(ProfileFragment.TOTAL_JARS_MADE, 0);
     }
 }
