@@ -16,7 +16,7 @@ public class CurrentItemsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_items);
 
-        // TESTING: CREATE A TEMP jarList; will be replaced later
+        /*// TESTING: CREATE A TEMP jarList; will be replaced later
         userItemList = new ArrayList<>();
         userItemList.add(new Item(Item.CANDY, "Mint Candy"));
         userItemList.add(new Item(Item.SUPERPOWER, "Keep Streak Alive for 2 days"));
@@ -27,11 +27,6 @@ public class CurrentItemsActivity extends AppCompatActivity {
         userItemList.add(new Item(Item.CANDY, "Lollipop"));
         userItemList.add(new Item(Item.SUPERPOWER, "Keep Streak Alive for 5 days"));
         userItemList.add(new Item(Item.CANDY_EXPRESSION, "Cute Face"));
-        // TESTING ENDS
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.user_item_list_recyclerView);
-        UserItemListAdapter adapter = new UserItemListAdapter(this, userItemList);
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // TESTING ENDS*/
     }
 }
