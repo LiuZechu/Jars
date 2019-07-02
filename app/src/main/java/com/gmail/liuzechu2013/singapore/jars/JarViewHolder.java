@@ -6,20 +6,13 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 public class JarViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
@@ -118,7 +111,7 @@ public class JarViewHolder extends RecyclerView.ViewHolder
         Activity activity = getActivity(jarItemView.getContext());
         if (activity instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) activity;
-            mainActivity.loadFragment(new CandyFragment());
+            mainActivity.loadFragment(new JarsFragment());
 
             // save changes to local file
             Gson gson = new Gson();

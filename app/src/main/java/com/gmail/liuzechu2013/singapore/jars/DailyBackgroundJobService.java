@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -148,7 +147,7 @@ public class DailyBackgroundJobService extends JobService {
 
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_navbar_candy_24dp) // placeholder icon; TODO: change this!!
+                .setSmallIcon(R.drawable.ic_mini_icon)
                 .setContentTitle("Train your Candies now!")
                 .setContentText("You have " + numberOfCandiesToTrain + " Candies waiting for you!")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

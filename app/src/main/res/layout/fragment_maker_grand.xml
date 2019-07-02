@@ -2,77 +2,45 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="10dp"
-        android:layout_marginTop="20dp"
-        android:id="@+id/maker_page_indicator"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_margin="2dp"
-            android:src="@drawable/maker_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_margin="2dp"
-            android:src="@drawable/maker_indicator_active"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_margin="2dp"
-            android:src="@drawable/maker_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
-    <TextView style="?android:textAppearanceMedium"
-        android:padding="16dp"
-        android:textSize="40sp"
-        android:textAlignment="center"
-        android:id="@+id/maker_page_text"
-        android:lineSpacingMultiplier="1.2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Grand" />
+
 
     <ImageView
-        app:layout_constraintBottom_toTopOf="@+id/maker_page_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maker_page_text"
-        android:src="@drawable/maker_grand"
         android:id="@+id/maker_page_image"
-        app:layout_constrainedHeight="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/maker_grand"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/maker_page_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
 
     <Button
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/maker_page_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:text="2500"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/maker_button"
+        android:backgroundTint="#DAA944"
+        android:drawableStart="@drawable/ic_sugar_yellow"
+        android:padding="8dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text=" 2500"
+        android:textColor="#5B4322"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

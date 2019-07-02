@@ -9,20 +9,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class CandyFragment extends Fragment {
+public class JarsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private static ArrayList<Jar> jarList;
     private FloatingActionButton makeCandyButton;
@@ -34,7 +29,7 @@ public class CandyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_candy, null);
+        View view = inflater.inflate(R.layout.fragment_jars, null);
 
         // Load list of jars
         // get main activity to update its jarList in case its content changes

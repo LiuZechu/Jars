@@ -10,20 +10,32 @@
         android:id="@+id/view_current_items_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#000000"
+        android:src="@drawable/ic_items"
         android:text="@string/shop_view_my_items"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <android.support.design.widget.TabLayout
+        android:id="@+id/maker_page_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabBackground="@drawable/maker_indicator"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/maker_pager"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_current_items_button"
+        app:layout_constraintTop_toBottomOf="@id/maker_page_indicator"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

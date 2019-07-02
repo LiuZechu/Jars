@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -79,6 +80,8 @@ public class MakerFragment extends Fragment {
         button.setOnClickListener(listener);
 
         makerPager = (ViewPager) view.findViewById(R.id.maker_pager);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.maker_page_indicator);
+        tabLayout.setupWithViewPager(makerPager, true);
         makerPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
         makerPager.setAdapter(makerPagerAdapter);
 
