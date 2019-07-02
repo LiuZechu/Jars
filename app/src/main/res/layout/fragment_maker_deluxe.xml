@@ -6,73 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="10dp"
-        android:layout_marginTop="20dp"
-        android:id="@+id/maker_page_indicator"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_margin="2dp"
-            android:src="@drawable/maker_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_margin="2dp"
-            android:src="@drawable/maker_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_margin="2dp"
-            android:src="@drawable/maker_indicator_active"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
-    <TextView style="?android:textAppearanceMedium"
-        android:padding="16dp"
-        android:textSize="40sp"
-        android:textAlignment="center"
-        android:id="@+id/maker_page_text"
-        android:lineSpacingMultiplier="1.2"
+    <ImageView
+        android:id="@+id/maker_page_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Deluxe" />
-
-    <ImageView
         android:elevation="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/maker_page_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maker_page_text"
         android:src="@drawable/maker_deluxe_front"
-        android:id="@+id/maker_page_image"
+        app:layout_constraintVertical_bias="0.7"
         app:layout_constrainedHeight="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/maker_page_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:elevation="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/maker_page_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maker_page_text"
-        android:src="@drawable/maker_deluxe_back"
         android:id="@+id/maker_page_image_back"
-        app:layout_constrainedHeight="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        android:src="@drawable/maker_deluxe_back"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/maker_page_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,9 +37,18 @@
         android:id="@+id/maker_page_button"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:text="12500"
-        android:layout_width="match_parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="25sp"
+        android:text=" 12500"
+        android:textColor="#1B3F19"
+        android:padding="8dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:background="@drawable/maker_button"
+        android:backgroundTint="#A9CF48"
+        android:drawableStart="@drawable/ic_sugar_green"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,13 +1,10 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class MakeNewCandyActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {
@@ -76,7 +72,7 @@ public class MakeNewCandyActivity extends AppCompatActivity
         });
 
         // get jarNameArray from intent
-        String jsonString = getIntent().getStringExtra(CandyFragment.JAR_NAME_ARRAY);
+        String jsonString = getIntent().getStringExtra(JarsFragment.JAR_NAME_ARRAY);
         Gson gson = new Gson();
         jarNameArray = gson.fromJson(jsonString, String[].class);
 

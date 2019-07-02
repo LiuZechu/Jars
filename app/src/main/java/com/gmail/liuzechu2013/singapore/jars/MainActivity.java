@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity
                     fragment = new FilesFragment();
                     break;
                 case R.id.navigation_jars:
-                    fragment = new CandyFragment();
+                    fragment = new JarsFragment();
                     break;
                 case R.id.navigation_profile:
                     fragment = new ProfileFragment();
@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d("help", "level: " + level);
 
                 // return back to Candy Tab
-                loadFragment(new CandyFragment());
+                loadFragment(new JarsFragment());
 
                 Menu menu = navView.getMenu();
                 MenuItem menuItem = menu.getItem(1); // highlight the Candy tab
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity
                 String jsonString = gson.toJson(jarList);
                 saveToLocalFile(USER_JAR_FILE_NAME, jsonString);
 
-                loadFragment(new CandyFragment());
+                loadFragment(new JarsFragment());
 
                 Menu menu = navView.getMenu();
                 MenuItem menuItem = menu.getItem(1); // highlight the Candy tab

@@ -13,9 +13,7 @@ import android.widget.TextView;
 import android.app.AlertDialog;
 
 import com.gmail.liuzechu2013.singapore.jars.ArchiveActivity;
-import com.gmail.liuzechu2013.singapore.jars.CandyFragment;
 import com.gmail.liuzechu2013.singapore.jars.Jar;
-import com.gmail.liuzechu2013.singapore.jars.MainActivity;
 import com.gmail.liuzechu2013.singapore.jars.R;
 import com.gmail.liuzechu2013.singapore.jars.ViewAllCandiesActivity;
 import com.google.gson.Gson;
