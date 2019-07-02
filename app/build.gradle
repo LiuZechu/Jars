@@ -41,5 +41,6 @@ dependencies {
     implementation 'com.github.eddydn:AdvancedNestedScrollView:1.1'
 
     // MuPDF viewer
-    api 'com.artifex.mupdf:viewer:1.15.0'
+    // api 'com.artifex.mupdf:viewer:1.15.0'
+    api project(':mupdf-lib')
 }

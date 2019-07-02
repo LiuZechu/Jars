@@ -1,1 +1,4 @@
 include ':app'
+
+// for MuPDF
+include ':mupdf-lib'
