@@ -31,7 +31,9 @@ public class Alarm extends BroadcastReceiver {
     public void scheduleJob() {
         ComponentName componentName = new ComponentName(context, DailyBackgroundJobService.class);
         JobInfo info = new JobInfo.Builder(DailyBackgroundJobService.JOB_ID, componentName)
-                .setPersisted(true)
+                .setMinimumLatency(1)
+                .setOverrideDeadline(1)
+                .setPersisted(false)
                 .build();
 
         JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);

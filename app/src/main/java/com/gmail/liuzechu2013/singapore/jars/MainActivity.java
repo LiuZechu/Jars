@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity
             topbarStreaklText.setText("" + streak);
             topbarSugarText.setText("" + sugar);
             topbarLevelRing.setProgress(exp * 100 / getExpToLevelUp());
+
         } else {
             Log.d("Loading Topbar", "Topbar views absent!");
         }
