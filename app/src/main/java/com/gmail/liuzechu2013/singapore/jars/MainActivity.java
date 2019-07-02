@@ -6,7 +6,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -22,10 +24,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.artifex.mupdf.viewer.DocumentActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -406,11 +410,29 @@ public class MainActivity extends AppCompatActivity
     }
 
     // TEST: open PDF file
-    @Override
-    public void openFile() {
-        Intent intent = new Intent(this, ViewFileActivity.class);
+//    @Override
+//    public void openFile() {
+//        Intent intent = new Intent(this, ViewFileActivity.class);
+//        startActivity(intent);
+//    }
+
+
+    // trying out MuPDF
+    public void startMuPDFActivity(Uri documentUri) {
+        Intent intent = new Intent(this, DocumentActivity.class);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(documentUri);
         startActivity(intent);
     }
+
+    @Override
+    public void openFile() {
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(dir, "Declaration_ReadTheDeclaration.pdf");
+        Uri uri = Uri.fromFile(file);
+        startMuPDFActivity(uri);
+    }
+
 
 
 
