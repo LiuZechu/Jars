@@ -12,7 +12,7 @@
         android:id="@+id/candy_icon_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_navbar_candy_24dp"
+        app:srcCompat="@drawable/ic_mini_icon"
         android:contentDescription="Candy icon"/>
 
     <android.support.v7.widget.AppCompatTextView

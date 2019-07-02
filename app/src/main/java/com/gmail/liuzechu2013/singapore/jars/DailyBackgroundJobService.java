@@ -9,9 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,20 +32,31 @@ public class DailyBackgroundJobService extends JobService {
     public static final int JOB_ID = 123;
     public static final String CHANNEL_ID = "channelID";
     public static final int NOTIFICATION_ID = 2019;
+    private final Handler workHandler = new Handler();
+    private Runnable workRunnable;
 
     @Override
-    public boolean onStartJob(JobParameters params) {
-        doBackgroundWork(params);
+    public boolean onStartJob(final JobParameters params) {
+        workRunnable = new Runnable() {
+            @Override
+            public void run() {
+                doBackgroundWork(params);
 
+                boolean reschedule = false;
+                jobFinished(params, reschedule);
+            }
+        };
+
+        workHandler.post(workRunnable);
         return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        // when job is cancelled
-        jobCancelled = true;
+        workHandler.removeCallbacks(workRunnable);
 
-        return true;
+        // CHANGED TO RETURN FALSE
+        return false;
     }
 
     // updates and checks all Candies; collates all Candies to be trained today and notifies user
@@ -70,7 +81,7 @@ public class DailyBackgroundJobService extends JobService {
             // Jar trainingJar = null;
             // boolean trainingJarCreated = false;
             for (Candy candy: candyList) {
-                Log.d("test", "candy level decremented!");
+                Log.d("test", candy.getPrompt() + " candy level decremented!");
                 candy.decrementCountDown();
                 if (candy.shouldTrain()) {
 //                    if (!trainingJarCreated) {
@@ -101,6 +112,8 @@ public class DailyBackgroundJobService extends JobService {
 
         // check whether the current streak can be maintained
         boolean isMaintained = loadStreakMaintained();
+        Log.d("test", "streak maintained? : " + isMaintained);
+
         if (isMaintained) {
             // streak increment by one
             saveStreak(currentStreak + 1);
@@ -122,7 +135,7 @@ public class DailyBackgroundJobService extends JobService {
         // fire up notification
         sendNotification();
 
-        jobFinished(params, true);
+        // jobFinished(params, false);
     }
 
     public void sendNotification() {
@@ -134,7 +147,7 @@ public class DailyBackgroundJobService extends JobService {
 
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_navbar_candy_24dp) // placeholder icon; TODO: change this!!
+                .setSmallIcon(R.drawable.ic_mini_icon)
                 .setContentTitle("Train your Candies now!")
                 .setContentText("You have " + numberOfCandiesToTrain + " Candies waiting for you!")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
