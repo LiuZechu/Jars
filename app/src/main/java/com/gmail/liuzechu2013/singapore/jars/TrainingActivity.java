@@ -92,8 +92,9 @@ public class TrainingActivity extends AppCompatActivity {
         String jsonStringForJarList = loadFromLocalFile(MainActivity.USER_JAR_FILE_NAME);
         userJarList = gson.fromJson(jsonStringForJarList, type);
 
-        processCandiesForTraining(jarName);
-
+        if (userJarList != null) {
+            processCandiesForTraining(jarName);
+        }
         // prevent null pointer exception for jarList
         if (jarList == null) {
             jarList = new ArrayList<>();
@@ -310,10 +311,15 @@ public class TrainingActivity extends AppCompatActivity {
         // TODO: need to consider the case of whether the user completes all or only part of the daily training
         saveStreakMaintained(true);
 
+        String displayText;
         // display message of encouragement
-        String displayText = "Good Job! You got " + numberCorrect + " correct and "
-                + numberWrong + " wrong! You also graduated " + numberGraduated
-                + " Candies. Keep it up! Tap to exit Training.";
+        if (numberCorrect == 0 && numberWrong == 0 && numberGraduated == 0) {
+            displayText = "You have no candies to train!";
+        } else {
+            displayText = "Good Job! You got " + numberCorrect + " correct and "
+                    + numberWrong + " wrong! You also graduated " + numberGraduated
+                    + " Candies. Keep it up! Tap to exit Training.";
+        }
         mainTextView.setText(displayText);
         mainTextView.setOnClickListener(new View.OnClickListener() {
             @Override

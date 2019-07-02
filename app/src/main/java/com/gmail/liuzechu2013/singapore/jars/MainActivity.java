@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
         String jsonStringForJarList = loadFromLocalFile(USER_JAR_FILE_NAME);
-        Log.d("test fromMain", jsonStringForJarList);
+        //Log.d("test fromMain", jsonStringForJarList);
         jarList = gson.fromJson(jsonStringForJarList, type);
     }
 
