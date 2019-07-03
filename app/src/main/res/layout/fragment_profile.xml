@@ -29,7 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Reset Button; put here temporarily for testing -->
+            <!-- Settings button -->
             <Button
                 android:id="@+id/reset_button"
                 android:layout_width="48dp"
@@ -40,6 +40,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
+
         <!-- SECTION 2: LINE GRAPH -->
         <android.support.constraint.ConstraintLayout
             android:id="@+id/profile_statistics_visualisation_layout"

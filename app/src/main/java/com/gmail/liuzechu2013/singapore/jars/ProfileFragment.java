@@ -30,8 +30,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,8 +141,10 @@ public class ProfileFragment extends Fragment {
 
         LineChartView lineChartView = view.findViewById(R.id.profile_chart);
 
+        // load line graph data from saved local file (for now, Candies trained only)
+        int[] yAxisData = loadLineGraphData(MainActivity.LINE_GRAPH_CANDIES_TRAINED_FILE_NAME);
         // test values
-        int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+        // int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
         List<PointValue> yAxisValues = new ArrayList<>();
         LineChartData data = new LineChartData();
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#000000"))
@@ -169,6 +180,8 @@ public class ProfileFragment extends Fragment {
         lineChartView.setValueSelectionEnabled(true);
         lineChartView.setZoomType(ZoomType.HORIZONTAL);
         lineChartView.setHorizontalScrollBarEnabled(true);
+
+
 
 
         // FOR TESTING ONLY! RESETS ALL USER DATA
@@ -237,6 +250,25 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+
+    private int[] loadLineGraphData(String fileName) {
+        String fromFile = loadFromLocalFile(fileName);
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<LineGraphPoint>>(){}.getType();
+        ArrayList<LineGraphPoint> lineGraphPoints = gson.fromJson(fromFile, type);
+        if (lineGraphPoints == null) {
+            lineGraphPoints = new ArrayList<>();
+        }
+
+        int[]  yAxisData = new int[lineGraphPoints.size()];
+
+        for (int i = 0; i < lineGraphPoints.size(); i++) {
+            LineGraphPoint point = lineGraphPoints.get(i);
+            yAxisData[i] = point.getQuantity();
+        }
+
+        return yAxisData;
+    }
 
     public void gotoSettings() {
         Intent intent = new Intent(getContext(), SettingsActivity.class);
@@ -673,6 +705,39 @@ public class ProfileFragment extends Fragment {
             MainActivity ma = (MainActivity) mainActivity;
             ma.increaseSugar(sugarAdded);
         }
+    }
+
+    // read a string out from local text file
+    public String loadFromLocalFile(String fileName) {
+        FileInputStream fis = null;
+        String output = null;
+
+        try {
+            fis = getContext().openFileInput(fileName);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+
+            output = sb.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return output;
     }
 
     @Override

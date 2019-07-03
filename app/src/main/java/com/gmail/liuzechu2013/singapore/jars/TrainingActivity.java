@@ -311,6 +311,13 @@ public class TrainingActivity extends AppCompatActivity {
         // TODO: need to consider the case of whether the user completes all or only part of the daily training
         saveStreakMaintained(true);
 
+        // update and save line graph data
+        // 1. line graph of Candies trained
+        int numberTrained = numberCorrect + numberWrong;
+        addToLineGraphFile(numberTrained, MainActivity.LINE_GRAPH_CANDIES_TRAINED_FILE_NAME);
+        // 2. line graph of Candies graduated
+        addToLineGraphFile(numberGraduated, MainActivity.LINE_GRAPH_CANDIES_GRADUATED_FILE_NAME);
+
         String displayText;
         // display message of encouragement
         if (numberCorrect == 0 && numberWrong == 0 && numberGraduated == 0) {
@@ -398,6 +405,24 @@ public class TrainingActivity extends AppCompatActivity {
         String toSave = gson.toJson(graduatedHash);
         saveToLocalFile(ArchiveActivity.GRADUATED_CANDIES_FILE_NAME, toSave);
 
+    }
+
+    // for line graph: add total candies trained in this training to local file
+    private void addToLineGraphFile(int quantity, String fileName) {
+        String fromFile = loadFromLocalFile(fileName);
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<LineGraphPoint>>(){}.getType();
+        ArrayList<LineGraphPoint> lineGraphPoints = gson.fromJson(fromFile, type);
+
+        if (lineGraphPoints == null) {
+            lineGraphPoints = new ArrayList<>();
+        }
+
+        LineGraphPoint lineGraphPoint = new LineGraphPoint(quantity);
+        lineGraphPoints.add(lineGraphPoint);
+
+        String toSave = gson.toJson(lineGraphPoints);
+        saveToLocalFile(fileName, toSave);
     }
 
     // save a String into local text file on phone

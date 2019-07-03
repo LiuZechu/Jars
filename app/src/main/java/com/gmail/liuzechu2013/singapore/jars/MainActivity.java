@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity
     private static ArrayList<Jar> jarList;
     public static final String USER_JAR_FILE_NAME = "userJars.txt";
     public static final String CANDY_TRAINING_FILE_NAME = "candyTraining.txt";
+    // for Profile Tab line graph
+    public static final String LINE_GRAPH_CANDIES_GRADUATED_FILE_NAME = "lineGraphCandiesGraduated.txt";
+    public static final String LINE_GRAPH_CANDIES_TRAINED_FILE_NAME = "lineGraphCandiesTrained.txt";
     // for Training Button
     final Random rnd = new Random();
     public static final String CODE_FOR_TRAINING_ALL_CANDIES = "codeForTrainingAllCandies";
