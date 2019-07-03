@@ -13,6 +13,7 @@
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#000000"
+        app:borderWidth="0dp"
         android:src="@drawable/ic_items"
         android:text="@string/shop_view_my_items"
         app:layout_constraintEnd_toEndOf="parent"

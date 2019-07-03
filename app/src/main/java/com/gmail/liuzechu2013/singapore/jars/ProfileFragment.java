@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,20 +20,29 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edmt.dev.advancednestedscrollview.AdvancedNestedScrollView;
 import edmt.dev.advancednestedscrollview.MaxHeightRecyclerView;
+import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.view.LineChartView;
 
 public class ProfileFragment extends Fragment {
     // private RecyclerView mRecyclerView; // not used for now
@@ -108,7 +120,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_profile, null);
+        final View view = inflater.inflate(R.layout.fragment_profile, null);
 
         // initialise achievement views
         achievementStreakScore = view.findViewById(R.id.achievement_streak_score);
@@ -117,6 +129,47 @@ public class ProfileFragment extends Fragment {
         achievementJarsScore = view.findViewById(R.id.achievement_jars_score);
         achievementSugarScore = view.findViewById(R.id.achievement_sugar_score);
         achievementLevelScore = view.findViewById(R.id.achievement_level_score);
+
+        LineChartView lineChartView = view.findViewById(R.id.profile_chart);
+
+        // test values
+        int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+        List<PointValue> yAxisValues = new ArrayList<>();
+        LineChartData data = new LineChartData();
+        Line line = new Line(yAxisValues).setColor(Color.parseColor("#000000"))
+                .setHasLabelsOnlyForSelected(true);
+        for (int i = 0; i < yAxisData.length; i++) {
+            yAxisValues.add(new PointValue(i, (int) (Math.random() * 100)));
+        }
+        List<Line> lines = new ArrayList<>();
+        lines.add(line);
+        data.setLines(lines);
+        data.setValueLabelBackgroundAuto(false);
+        data.setValueLabelBackgroundColor(Color.TRANSPARENT);
+        data.setValueLabelTypeface(Typeface.DEFAULT);
+        //data.setValueLabelBackgroundEnabled(false);
+        //Typeface jost = Typeface.createFromAsset(getContext().getAssets(), "font/jost_book.otf");
+        //data.setValueLabelTypeface(jost);
+        data.setValueLabelsTextColor(Color.BLACK);
+        data.setValueLabelTextSize(30);
+        lineChartView.setLineChartData(data);
+        for (Line l : data.getLines()) {
+            int count = 0;
+            for (PointValue value : l.getValues()) {
+                // Here I modify target only for Y values but it is OK to modify X targets as well.
+                value.setTarget(value.getX(), yAxisData[count]);
+                value.setLabel(Integer.toString(yAxisData[count]));
+                count++;
+            }
+        }
+//        for (int i = 0; i < yAxisData.length; i++){
+//            yAxisValues.add(new PointValue(i, yAxisData[i]));
+//        }
+        lineChartView.startDataAnimation();
+        lineChartView.setValueSelectionEnabled(true);
+        lineChartView.setZoomType(ZoomType.HORIZONTAL);
+        lineChartView.setHorizontalScrollBarEnabled(true);
+
 
         // FOR TESTING ONLY! RESETS ALL USER DATA
         //resetAllData();
