@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     // for saving user data using shared preferences
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String USER_STATISTICS = "UserStatistics";
+    public static final String USER_JAR_NAME_ARRAY = "UserJarNameArray"; // for easy access when making candy from other apps
     // for Candy Tab
     private static ArrayList<Jar> jarList;
     public static final String USER_JAR_FILE_NAME = "userJars.txt";
@@ -129,6 +132,7 @@ public class MainActivity extends AppCompatActivity
         // prevent null pointer exception for jarList
         if (jarList == null) {
             jarList = new ArrayList<>();
+            Log.d("test", "jar list not null");
         }
 
 //        // get list of candies to train from saved local file
@@ -314,6 +318,12 @@ public class MainActivity extends AppCompatActivity
                 String answer = data.getStringExtra(MakeNewCandyActivity.ANSWER);
                 int jarIndex = data.getIntExtra(MakeNewCandyActivity.JAR_INDEX,-1);
 
+                // changed here
+                if (jarList == null) {
+                    jarList = new ArrayList<>();
+                    jarList.add(new Jar(jarTitle));
+                }
+
                 Jar jar = jarList.get(jarIndex);
                 jar.addCandy(new Candy(prompt, answer));
 
@@ -420,20 +430,36 @@ public class MainActivity extends AppCompatActivity
 //    }
 
 
-    // trying out MuPDF
-    public void startMuPDFActivity(Uri documentUri) {
-        Intent intent = new Intent(this, DocumentActivity.class);
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(documentUri);
-        startActivity(intent);
-    }
+//    // trying out MuPDF
+//    public void startMuPDFActivity(Uri documentUri) {
+//        Intent intent = new Intent(this, DocumentActivity.class);
+//        intent.setAction(Intent.ACTION_VIEW);
+//        intent.setData(documentUri);
+//        startActivity(intent);
+//    }
+//
+//    @Override
+//    public void openFile() {
+//        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+//        File file = new File(dir, "Declaration_ReadTheDeclaration.pdf");
+//        Uri uri = Uri.fromFile(file);
+//        startMuPDFActivity(uri);
+//    }
 
     @Override
     public void openFile() {
-        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(dir, "Declaration_ReadTheDeclaration.pdf");
-        Uri uri = Uri.fromFile(file);
-        startMuPDFActivity(uri);
+        // creates a floating window
+
+        // TODO: edit hardcoding of this part
+        // check permission to overlay
+        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, 0);
+        } else {
+
+            // creates a floating window
+            startService(new Intent(MainActivity.this, FloatingWindowService.class));
+        }
     }
 
 

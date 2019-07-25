@@ -169,7 +169,8 @@ public class ProfileFragment extends Fragment {
             for (PointValue value : l.getValues()) {
                 // Here I modify target only for Y values but it is OK to modify X targets as well.
                 value.setTarget(value.getX(), yAxisData[count]);
-                value.setLabel(Integer.toString(yAxisData[count]));
+                String label = Integer.toString(yAxisData[count]);
+                value.setLabel(label);
                 count++;
             }
         }

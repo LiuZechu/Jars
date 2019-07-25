@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -117,6 +119,30 @@ public class JarViewHolder extends RecyclerView.ViewHolder
             Gson gson = new Gson();
             String jsonString = gson.toJson(MainActivity.getJarList());
             mainActivity.saveToLocalFile(MainActivity.USER_JAR_FILE_NAME, jsonString);
+
+            // update jar name array string in main activity
+            SharedPreferences sharedPreferences = getActivity(jarItemView.getContext()).getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+            String jarNameArrayString = sharedPreferences.getString(MainActivity.USER_JAR_NAME_ARRAY, "");
+            String[] jarNameArray = gson.fromJson(jarNameArrayString, String[].class);
+            String[] newJarNameArray;
+            if (jarNameArray.length > 1) {
+                newJarNameArray = new String[jarNameArray.length - 1];
+                int counter = 0;
+                for (int i = 0; i < jarNameArray.length; i++) {
+                    if (!jarNameArray[i].equals(currentJar.getTitle())) {
+                        newJarNameArray[counter] = jarNameArray[i];
+                        counter++;
+                    }
+                }
+            } else {
+                newJarNameArray = new String[0];
+            }
+            String toSave = gson.toJson(newJarNameArray);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(MainActivity.USER_JAR_NAME_ARRAY, toSave);
+            Log.d("test", toSave);
+
+            editor.commit();
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class MakeNewCandyActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {
@@ -122,7 +125,15 @@ public class MakeNewCandyActivity extends AppCompatActivity
 
         } else {
             Jar jar = new Jar(name);
-            MainActivity.getJarList().add(jar);
+            // changed here
+            ArrayList<Jar> jarList = MainActivity.getJarList();
+            if (jarList != null) {
+                jarList.add(jar);
+            } else {
+                jarList = new ArrayList<>();
+                jarList.add(jar);
+            }
+
             // update spinner
             String[] temp = jarNameArray;
             int len = jarNameArray.length;
@@ -140,6 +151,14 @@ public class MakeNewCandyActivity extends AppCompatActivity
             // update Total Jars Made
             int totalJarsMade = loadTotalJarsMade();
             saveTotalJarsMade(totalJarsMade + 1);
+
+            // update USER_JAR_NAME_ARRAY in shared preferences
+            Gson gson = new Gson();
+            String jarNameArrayString = gson.toJson(jarNameArray);
+            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
+            editor.commit();
 
             Toast.makeText(this, "New Jar created successfully! Put in the first candy now!", Toast.LENGTH_SHORT).show();
         }
