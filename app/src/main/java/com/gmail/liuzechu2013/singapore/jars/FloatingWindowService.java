@@ -26,8 +26,7 @@ import com.google.gson.Gson;
 public class FloatingWindowService extends Service {
     private WindowManager windowManager;
     private LinearLayout linearLayout;
-    // TEST
-    private TextView textView;
+    public static final String CANDY_ANSWER = "candyAnswer";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -62,8 +61,6 @@ public class FloatingWindowService extends Service {
             }
         });
 
-        // TEST
-        textView = linearLayout.findViewById(R.id.test);
 
         // set parameters of linear layout inside the floating window
         LinearLayout.LayoutParams linearLayoutParams =
@@ -131,17 +128,16 @@ public class FloatingWindowService extends Service {
 
         String text = (String) getText(clipboardManager);
 
-        // TEST
-        textView.setText(text);
-
         // start make candy activity
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
         String jarNameArrayString = sharedPreferences.getString(MainActivity.USER_JAR_NAME_ARRAY, "");
 
-        Intent intent = new Intent(getApplicationContext(), MakeNewCandyActivity.class);
+        // Intent intent = new Intent(getApplicationContext(), MakeNewCandyActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MakeNewCandyFromFloatingActivity.class);
         intent.putExtra(JarsFragment.JAR_NAME_ARRAY, jarNameArrayString);
         // startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_NEW_CANDY);
+        intent.putExtra(CANDY_ANSWER, text);
         startActivity(intent);
     }
 

@@ -3,10 +3,10 @@ package com.gmail.liuzechu2013.singapore.jars;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,10 +16,19 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
-public class MakeNewCandyActivity extends AppCompatActivity
+public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {
     private Spinner chooseJarSpinner;
     private Button doneButton;
@@ -31,17 +40,22 @@ public class MakeNewCandyActivity extends AppCompatActivity
     private EditText makeNewJarEditText;
     private Button makeNewJarSaveButton;
     private String[] jarNameArray;
+    private ArrayList<Jar> jarList;
 
     public static final String JAR_TITLE = "jarTitle";
     public static final String PROMPT = "prompt";
     public static final String ANSWER = "answer";
     public static final String JAR_INDEX = "jarIndex";
+    public static final String FLAG_FOR_FLOATING_WINDOW = "flagForFloatingWindow";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_new_candy);
+
+        // load jar list from local file
+        loadDataIntoJarList();
 
         // make a new jar by entering jar's name
         makeNewJarButton = findViewById(R.id.make_candy_new_jar_button);
@@ -79,6 +93,11 @@ public class MakeNewCandyActivity extends AppCompatActivity
         String jsonString = getIntent().getStringExtra(JarsFragment.JAR_NAME_ARRAY);
         Gson gson = new Gson();
         jarNameArray = gson.fromJson(jsonString, String[].class);
+
+        // prevent null pointer exception
+        if (jarNameArray == null) {
+            jarNameArray = new String[0];
+        }
 
         // spinner
         chooseJarSpinner = findViewById(R.id.make_candy_choose_jar_spinner);
@@ -133,7 +152,6 @@ public class MakeNewCandyActivity extends AppCompatActivity
         } else {
             Jar jar = new Jar(name);
             // changed here
-            ArrayList<Jar> jarList = MainActivity.getJarList();
             if (jarList != null) {
                 jarList.add(jar);
             } else {
@@ -198,14 +216,21 @@ public class MakeNewCandyActivity extends AppCompatActivity
             Toast.makeText(this, "Prompt or Answer cannot be empty!", Toast.LENGTH_SHORT).show();
         } else {
 
-            Intent intent = new Intent(this, MainActivity.class);
+            // SAVE CANDY MADE HERE INSTEAD OF MAIN ACTIVITY
+            saveCandy();
 
-            // put the candy created by user into intent
-            intent.putExtra(JAR_TITLE, jarTitleSelected);
-            intent.putExtra(PROMPT, promptEditText.getText().toString());
-            intent.putExtra(ANSWER, answerEditText.getText().toString());
-            intent.putExtra(JAR_INDEX, jarIndex);
-            setResult(RESULT_OK, intent);
+//            Intent intent = new Intent(this, MainActivity.class);
+
+//            // put the candy created by user into intent
+//            intent.putExtra(JAR_TITLE, jarTitleSelected);
+//            intent.putExtra(PROMPT, promptEditText.getText().toString());
+//            intent.putExtra(ANSWER, answerEditText.getText().toString());
+//            intent.putExtra(JAR_INDEX, jarIndex);
+//           intent.putExtra(FLAG_FOR_FLOATING_WINDOW, true);
+//            startActivity(intent);
+
+            // GO BACK TO THE PREVIOUS ACTIVITY
+            moveTaskToBack(true);
             finish();
         }
     }
@@ -220,5 +245,142 @@ public class MakeNewCandyActivity extends AppCompatActivity
     private int loadTotalJarsMade() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(ProfileFragment.TOTAL_JARS_MADE, 0);
+    }
+
+    // for accessing jar list
+    public void loadDataIntoJarList() {
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Jar>>(){}.getType();
+        String jsonStringForJarList = loadFromLocalFile(MainActivity.USER_JAR_FILE_NAME);
+        //Log.d("test fromMain", jsonStringForJarList);
+        jarList = gson.fromJson(jsonStringForJarList, type);
+    }
+
+    // for saving candy here instead of main activity
+    public void saveCandy() {
+
+        String jarTitle = jarTitleSelected;
+        String prompt = promptEditText.getText().toString();
+        String answer = answerEditText.getText().toString();
+
+        // changed here
+        if (jarList == null) {
+            jarList = new ArrayList<>();
+            jarList.add(new Jar(jarTitle));
+        }
+
+        Jar jar = jarList.get(jarIndex);
+        jar.addCandy(new Candy(prompt, answer));
+
+
+        // save and load newly updated jar data
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(jarList);
+        saveToLocalFile(MainActivity.USER_JAR_FILE_NAME, jsonString);
+
+        //increment "total candies made" count
+        incrementTotalCandiesMade();
+
+        //increase user's exp
+        increaseExp(1);
+    }
+
+    private void incrementTotalCandiesMade() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        int totalCandies = sharedPreferences.getInt(ProfileFragment.TOTAL_CANDIES_MADE, 0);
+        totalCandies++;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.TOTAL_CANDIES_MADE, totalCandies);
+        editor.commit();
+    }
+
+    private void increaseExp(int amount) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        int exp = sharedPreferences.getInt(ProfileFragment.EXP, 0);
+        exp = exp + amount;
+
+        int level = sharedPreferences.getInt(ProfileFragment.LEVEL, 1);
+
+        // check whether next level is reached; update if necessary
+        // Exp needed to reach next level = 3 * (next level)^2, if next level <= 100
+        // Exp needed to reach next level = 30 000, if next level > 100
+        int expNeededToLevelUp = MainActivity.getExpToLevelUp(level);
+
+        if (exp >= expNeededToLevelUp) {
+            // level up!
+            level++;
+            exp -= expNeededToLevelUp;
+
+            // save level
+            editor.putInt(ProfileFragment.LEVEL, level);
+
+            // award sugar
+            // Leveling up: sugar += floor[level^1.5] * 100
+            int sugarToAward = (int) Math.floor(Math.pow(level, 1.5)) * 100;
+            int totalSugar = sharedPreferences.getInt(ProfileFragment.SUGAR, 0);
+            totalSugar += sugarToAward;
+            editor.putInt(ProfileFragment.SUGAR, totalSugar);
+        }
+
+        editor.putInt(ProfileFragment.EXP, exp);
+        editor.commit();
+    }
+
+    // save a String into local text file on phone
+    public void saveToLocalFile(String fileName, String stringToSave) {
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(fileName, MODE_PRIVATE);
+            fos.write(stringToSave.getBytes());
+
+            Toast.makeText(this, "changes saved successfully", Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    // read a string out from local text file
+    public String loadFromLocalFile(String fileName) {
+        FileInputStream fis = null;
+        String output = null;
+
+        try {
+            fis = openFileInput(fileName);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+
+            output = sb.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return output;
     }
 }

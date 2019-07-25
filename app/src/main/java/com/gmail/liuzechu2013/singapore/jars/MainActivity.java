@@ -142,8 +142,20 @@ public class MainActivity extends AppCompatActivity
         // process which candies need to be trained
         // processCandiesForTraining();
 
-        // load default fragment; TODO: need to change to last saved later
+        // FOR MAKING CANDY OUTSIDE THE APP
+//        Intent intent = getIntent();
+//        if (intent != null && intent.getBooleanExtra(MakeNewCandyFromFloatingActivity.FLAG_FOR_FLOATING_WINDOW, false)) {
+//            makeCandyOutside();
+//            Log.d("test", "if block");
+//        } else {
+//            // load default fragment; TODO: need to change to last saved later
+//            loadFragment(new FilesFragment());
+//            Log.d("test", "else block");
+//        }
+
+
         loadFragment(new FilesFragment());
+
         /*
         Fragment existing = getSupportFragmentManager().findFragmentById(R.id.content);
         if (existing == null) {
@@ -219,7 +231,7 @@ public class MainActivity extends AppCompatActivity
             topbarLevelText.setText("" + level);
             topbarStreaklText.setText("" + streak);
             topbarSugarText.setText("" + sugar);
-            topbarLevelRing.setProgress(exp * 100 / getExpToLevelUp());
+            topbarLevelRing.setProgress(exp * 100 / getExpToLevelUp(level));
 
         } else {
             Log.d("Loading Topbar", "Topbar views absent!");
@@ -356,7 +368,9 @@ public class MainActivity extends AppCompatActivity
                 MenuItem menuItem = menu.getItem(2); // highlight the Profile tab
                 menuItem.setChecked(true);
             }
-        } else {}
+        } else {
+            Log.d("test", "this part is called");
+        }
     }
 
     // save a String into local text file on phone
@@ -422,6 +436,18 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    // for making candy from outside the app i.e. floating window
+    public void makeCandyOutside() {
+
+       // TODO
+
+        loadFragment(new JarsFragment());
+
+        Menu menu = navView.getMenu();
+        MenuItem menuItem = menu.getItem(1); // highlight the Candy tab
+        menuItem.setChecked(true);
+    }
+
     // TEST: open PDF file
 //    @Override
 //    public void openFile() {
@@ -458,6 +484,7 @@ public class MainActivity extends AppCompatActivity
         } else {
 
             // creates a floating window
+            moveTaskToBack(true);
             startService(new Intent(MainActivity.this, FloatingWindowService.class));
         }
     }
@@ -556,7 +583,7 @@ public class MainActivity extends AppCompatActivity
         totalSugarSpent = sharedPreferences.getInt(ProfileFragment.TOTAL_SUGAR_SPENT, 0);
     }
 
-    public int getExpToLevelUp() {
+    public static int getExpToLevelUp(int level) {
         if (level <= 100) {
             return 3 * (level + 1) * (level + 1);
         } else {
@@ -571,7 +598,7 @@ public class MainActivity extends AppCompatActivity
         // check whether next level is reached; update if necessary
         // Exp needed to reach next level = 3 * (next level)^2, if next level <= 100
         // Exp needed to reach next level = 30 000, if next level > 100
-        int expNeededToLevelUp = getExpToLevelUp();
+        int expNeededToLevelUp = getExpToLevelUp(level);
 
         if (exp >= expNeededToLevelUp) {
             // level up!

@@ -21,6 +21,7 @@
         <activity android:name=".ViewFileActivity" />
         <activity android:name=".CurrentItemsActivity" />
         <activity android:name=".TrainingActivity" />
+        <activity android:name=".MakeNewCandyFromFloatingActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
