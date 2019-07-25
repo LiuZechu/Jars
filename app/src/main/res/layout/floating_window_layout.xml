@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
         android:id="@+id/stop_floating_window_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="stop"/>
+        android:text="close window"/>
 
     <Button
         android:id="@+id/floating_window_make_candy_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="make a candy"/>
 
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <!-- This button allows the user to go back to the app but I can't think of a better name -->
+    <Button
+        android:id="@+id/floating_window_view_candies_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="view my candies"/>
 
 </LinearLayout>

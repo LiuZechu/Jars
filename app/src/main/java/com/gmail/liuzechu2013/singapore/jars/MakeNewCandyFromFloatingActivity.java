@@ -3,7 +3,10 @@ package com.gmail.liuzechu2013.singapore.jars;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -230,6 +233,7 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
 //            startActivity(intent);
 
             // GO BACK TO THE PREVIOUS ACTIVITY
+            launchFloatingWindow();
             moveTaskToBack(true);
             finish();
         }
@@ -284,6 +288,24 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         //increase user's exp
         increaseExp(1);
     }
+
+    // launch floating window again
+    public void launchFloatingWindow() {
+        // creates a floating window
+
+        // TODO: edit hardcoding of this part
+        // check permission to overlay
+        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, 0);
+        } else {
+
+            // creates a floating window
+            moveTaskToBack(true);
+            startService(new Intent(MakeNewCandyFromFloatingActivity.this, FloatingWindowService.class));
+        }
+    }
+
 
     private void incrementTotalCandiesMade() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);

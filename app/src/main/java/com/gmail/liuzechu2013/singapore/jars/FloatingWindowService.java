@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -139,6 +140,10 @@ public class FloatingWindowService extends Service {
         // startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_NEW_CANDY);
         intent.putExtra(CANDY_ANSWER, text);
         startActivity(intent);
+
+        // stop this floating window
+        windowManager.removeView(linearLayout);
+        stopSelf();
     }
 
     // get data from clip board
@@ -149,4 +154,5 @@ public class FloatingWindowService extends Service {
         }
         return null;
     }
+
 }
