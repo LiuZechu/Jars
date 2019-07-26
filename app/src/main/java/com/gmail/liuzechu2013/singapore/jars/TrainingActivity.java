@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.effect.EffectUpdateListener;
+import android.net.Uri;
 import android.support.annotation.Keep;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class TrainingActivity extends AppCompatActivity {
     private LinearLayoutCompat trainingBottomBarLayout;
     private Button correctButton;
     private Button wrongButton;
+    private Button contextButton;
     private Button exitTrainingButton;
     // moved here as class fields
     private int currentJarIndex = 0;
@@ -75,6 +77,7 @@ public class TrainingActivity extends AppCompatActivity {
         trainingBottomBarLayout = findViewById(R.id.training_bottom_bar_layout);
         correctButton = findViewById(R.id.training_correct_button);
         wrongButton = findViewById(R.id.training_wrong_button);
+        contextButton = findViewById(R.id.training_context_button);
         exitTrainingButton = findViewById(R.id.exit_training_button);
 
         // set stats to zero
@@ -122,6 +125,14 @@ public class TrainingActivity extends AppCompatActivity {
                     currentCandy.dropToLevelOne();
                     trainCandy(false);
                 }
+            }
+        });
+
+        // set up button to view CONTEXT i.e. screenshot attached to the candy
+        contextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewScreenshot();
             }
         });
 
@@ -334,6 +345,14 @@ public class TrainingActivity extends AppCompatActivity {
                 exitTraining();
             }
         });
+    }
+
+    // view screenshot attached to the candy
+    private void viewScreenshot() {
+        Uri imageUri = currentCandy.getImageUri();
+        Intent intent = new Intent(this, PopUpImageActivity.class);
+        intent.putExtra(PopUpImageActivity.IMAGE_URI, imageUri.toString());
+        startActivity(intent);
     }
 
     public void exitTraining() {

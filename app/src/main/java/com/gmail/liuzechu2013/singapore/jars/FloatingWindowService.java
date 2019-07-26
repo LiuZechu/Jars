@@ -75,14 +75,14 @@ public class FloatingWindowService extends Service {
             }
         });
 
-        // button to take a screenshot and make a candy at the same time
-        Button screenshotButton = linearLayout.findViewById(R.id.floating_window_screenshot_button);
-        screenshotButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takeScreenshot();
-            }
-        });
+//        // button to take a screenshot and make a candy at the same time
+//        Button screenshotButton = linearLayout.findViewById(R.id.floating_window_screenshot_button);
+//        screenshotButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                takeScreenshot();
+//            }
+//        });
 
 
         // set parameters of linear layout inside the floating window
@@ -184,10 +184,10 @@ public class FloatingWindowService extends Service {
         startActivity(intent);
     }
 
-    // take screenshot and create a candy
-    private void takeScreenshot() {
-        // TEST
-        Intent intent = new Intent(getApplicationContext(), ScreenshotActivity.class);
-        startActivity(intent);
-    }
+//    // take screenshot and create a candy
+//    private void takeScreenshot() {
+//        // TEST
+//        Intent intent = new Intent(getApplicationContext(), ScreenshotActivity.class);
+//        startActivity(intent);
+//    }
 }

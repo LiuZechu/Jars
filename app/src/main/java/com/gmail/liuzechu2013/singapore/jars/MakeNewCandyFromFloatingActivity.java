@@ -1,12 +1,16 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,18 +48,27 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
     private Button makeNewJarSaveButton;
     private String[] jarNameArray;
     private ArrayList<Jar> jarList;
+    private Uri imageUri;
 
     public static final String JAR_TITLE = "jarTitle";
     public static final String PROMPT = "prompt";
     public static final String ANSWER = "answer";
     public static final String JAR_INDEX = "jarIndex";
     public static final String FLAG_FOR_FLOATING_WINDOW = "flagForFloatingWindow";
+    public static final int PICK_IMAGE = 100;
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_new_candy);
+
+        // TODO: APPLY THIS TO THE OTHER ACTIVITY AS WELL?
+        // make screenshot button visible
+        FloatingActionButton screenshotFloatingActionButton = findViewById(R.id.add_screenshot_floating_action_button);
+        //screenshotFloatingActionButton.setVisibility(View.VISIBLE);
+        screenshotFloatingActionButton.show();
 
         // load jar list from local file
         loadDataIntoJarList();
@@ -125,6 +138,15 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 doneMakingCandy();
+            }
+        });
+
+        // ADD A SCREENSHOT
+        FloatingActionButton addScreenshotButton = findViewById(R.id.add_screenshot_floating_action_button);
+        addScreenshotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addScreenshot();
             }
         });
     }
@@ -274,8 +296,13 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         }
 
         Jar jar = jarList.get(jarIndex);
-        jar.addCandy(new Candy(prompt, answer));
+        Candy newCandy = new Candy(prompt, answer);
+        jar.addCandy(newCandy);
 
+        // attach screenshot URI to the candy
+        if (imageUri != null) {
+            newCandy.setImageUri(imageUri);
+        }
 
         // save and load newly updated jar data
         Gson gson = new Gson();
@@ -306,6 +333,25 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         }
     }
 
+    // ADD A SCREENSHOT
+    private void addScreenshot() {
+        // open phone photo gallery
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, PICK_IMAGE);
+    }
+
+    // SAVE A SCREENSHOT
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            imageUri = data.getData();
+            // imageView.setImageURI(imageUri);
+
+            Toast.makeText(this, "Screenshot chosen successfully", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void incrementTotalCandiesMade() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);

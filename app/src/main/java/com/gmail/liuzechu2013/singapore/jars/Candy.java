@@ -1,19 +1,22 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
+import android.net.Uri;
+
 public class Candy {
     private int level;
-    private int ID; // each candy has a unique ID
+    // private int ID; // each candy has a unique ID
     // TODO: attribute for location in a PDF document
     private int countDown; // number of days to the next training for this candy
     private String prompt;
     private String answer;
+    private String imageUri; // to access screenshot; saved as a string
 
-    private static int totalCandies = 0; // problem: will totalCandies become zero again on exiting the app?
+    // private static int totalCandies = 0; // problem: will totalCandies become zero again on exiting the app?
 
     public Candy(String prompt, String answer) {
         level = 1; // initial level defaults to 1
-        ID = totalCandies;
-        totalCandies++;
+//        ID = totalCandies;
+//        totalCandies++;
         countDown = 1;
         this.prompt = prompt;
         this.answer = answer;
@@ -47,5 +50,13 @@ public class Candy {
 
     public int getLevel() {
         return level;
+    }
+
+    public Uri getImageUri() {
+        return Uri.parse(imageUri);
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri.toString();
     }
 }

@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ScreenshotActivity"></activity>
+        <activity android:name=".PopUpImageActivity"
+            android:theme="@style/AppTheme.PopUpTheme"></activity>
+        <activity android:name=".ScreenshotActivity" />
         <activity android:name=".ArchiveActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".MakeNewCandyActivity" />
