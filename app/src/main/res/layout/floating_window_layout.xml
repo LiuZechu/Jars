@@ -7,19 +7,26 @@
         android:id="@+id/stop_floating_window_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="close window"/>
+        android:text="close"/>
 
     <Button
         android:id="@+id/floating_window_make_candy_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="make a candy"/>
+        android:text="make candy"/>
 
     <!-- This button allows the user to go back to the app but I can't think of a better name -->
     <Button
         android:id="@+id/floating_window_view_candies_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="view my candies"/>
+        android:text="view candies"/>
+
+    <!-- This button allows the user to take a screenshot and make a candy -->
+    <Button
+        android:id="@+id/floating_window_screenshot_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="context"/>
 
 </LinearLayout>

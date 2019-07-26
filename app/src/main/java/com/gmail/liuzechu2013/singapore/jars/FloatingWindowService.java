@@ -1,5 +1,6 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -27,13 +28,16 @@ import com.google.gson.Gson;
 public class FloatingWindowService extends Service {
     private WindowManager windowManager;
     private LinearLayout linearLayout;
+
     public static final String CANDY_ANSWER = "candyAnswer";
+    public static final String FLOATING_WINDOW_FLAG = "floatingWindowFlag";
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -62,6 +66,24 @@ public class FloatingWindowService extends Service {
             }
         });
 
+        // button for user to go back to app (view candies tab)
+        Button viewCandiesButton = linearLayout.findViewById(R.id.floating_window_view_candies_button);
+        viewCandiesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewCandies();
+            }
+        });
+
+        // button to take a screenshot and make a candy at the same time
+        Button screenshotButton = linearLayout.findViewById(R.id.floating_window_screenshot_button);
+        screenshotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeScreenshot();
+            }
+        });
+
 
         // set parameters of linear layout inside the floating window
         LinearLayout.LayoutParams linearLayoutParams =
@@ -78,7 +100,7 @@ public class FloatingWindowService extends Service {
         }
 
         // TODO: figure what these do
-        final WindowManager.LayoutParams windowManagerParams = new WindowManager.LayoutParams(600, 300,
+        final WindowManager.LayoutParams windowManagerParams = new WindowManager.LayoutParams(1000, 200,
                 layoutParams, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
         windowManagerParams.x = 0;
@@ -155,4 +177,17 @@ public class FloatingWindowService extends Service {
         return null;
     }
 
+    // go back to app from floating window
+    private void viewCandies() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra(FLOATING_WINDOW_FLAG, true);
+        startActivity(intent);
+    }
+
+    // take screenshot and create a candy
+    private void takeScreenshot() {
+        // TEST
+        Intent intent = new Intent(getApplicationContext(), ScreenshotActivity.class);
+        startActivity(intent);
+    }
 }

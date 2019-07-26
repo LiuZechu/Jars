@@ -143,18 +143,23 @@ public class MainActivity extends AppCompatActivity
         // processCandiesForTraining();
 
         // FOR MAKING CANDY OUTSIDE THE APP
-//        Intent intent = getIntent();
-//        if (intent != null && intent.getBooleanExtra(MakeNewCandyFromFloatingActivity.FLAG_FOR_FLOATING_WINDOW, false)) {
-//            makeCandyOutside();
-//            Log.d("test", "if block");
-//        } else {
-//            // load default fragment; TODO: need to change to last saved later
-//            loadFragment(new FilesFragment());
-//            Log.d("test", "else block");
-//        }
+        Intent intent = getIntent();
+        if (intent != null && intent.getBooleanExtra(FloatingWindowService.FLOATING_WINDOW_FLAG, false)) {
+            loadFragment(new JarsFragment());
+
+            Menu menu = navView.getMenu();
+            MenuItem menuItem = menu.getItem(1); // highlight the Candy tab
+            menuItem.setChecked(true);
+
+            Log.d("test", "if block");
+        } else {
+            // load default fragment; TODO: need to change to last saved later
+            loadFragment(new FilesFragment());
+            Log.d("test", "else block");
+        }
 
 
-        loadFragment(new FilesFragment());
+        // loadFragment(new FilesFragment());
 
         /*
         Fragment existing = getSupportFragmentManager().findFragmentById(R.id.content);
@@ -436,17 +441,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    // for making candy from outside the app i.e. floating window
-    public void makeCandyOutside() {
-
-       // TODO
-
-        loadFragment(new JarsFragment());
-
-        Menu menu = navView.getMenu();
-        MenuItem menuItem = menu.getItem(1); // highlight the Candy tab
-        menuItem.setChecked(true);
-    }
 
     // TEST: open PDF file
 //    @Override
