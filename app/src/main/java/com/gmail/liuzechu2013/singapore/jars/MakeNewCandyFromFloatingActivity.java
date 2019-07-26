@@ -336,7 +336,9 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
     // ADD A SCREENSHOT
     private void addScreenshot() {
         // open phone photo gallery
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        // Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        // NOTE: changed to ACTION_OPEN_DOCUMENT so that the URI obtained has permission even outside this activity
+        Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, PICK_IMAGE);
     }
 

@@ -109,8 +109,8 @@ public class FloatingWindowService extends Service {
 
         windowManager.addView(linearLayout, windowManagerParams);
 
-        // make the window movable on screen
-        linearLayout.setOnTouchListener(new View.OnTouchListener() {
+        // OnTouchListener that tracks finger movement
+        View.OnTouchListener listener = new View.OnTouchListener() {
 
             private WindowManager.LayoutParams updatedParams = windowManagerParams;
             int x, y;
@@ -135,15 +135,25 @@ public class FloatingWindowService extends Service {
                         updatedParams.y = (int) (y + (event.getRawY() - touchedY));
 
                         windowManager.updateViewLayout(linearLayout, updatedParams);
+
                         break;
                     default:
                         break;
                 }
 
                 return false;
+
             }
-        });
+        };
+
+        // make the window movable on screen
+        linearLayout.setOnTouchListener(listener);
+        // TODO: resolve the problem of touch = click for the following buttons
+//        stopButton.setOnTouchListener(listener);
+//        makeCandyButton.setOnTouchListener(listener);
+//        viewCandiesButton.setOnTouchListener(listener);
     }
+
 
     private void makeCandyFromClipBoard() {
 
