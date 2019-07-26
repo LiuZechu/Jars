@@ -120,6 +120,9 @@ public class JarViewHolder extends RecyclerView.ViewHolder
             String jsonString = gson.toJson(MainActivity.getJarList());
             mainActivity.saveToLocalFile(MainActivity.USER_JAR_FILE_NAME, jsonString);
 
+            // update last accessed jar index for spinner in jars fragment
+            saveLastAccessJarIndex(0);
+
             // update jar name array string in main activity
             SharedPreferences sharedPreferences = getActivity(jarItemView.getContext()).getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
             String jarNameArrayString = sharedPreferences.getString(MainActivity.USER_JAR_NAME_ARRAY, "");
@@ -144,6 +147,14 @@ public class JarViewHolder extends RecyclerView.ViewHolder
 
             editor.commit();
         }
+    }
+
+    // to reset last accessed jar index to zero
+    private void saveLastAccessJarIndex(int index) {
+        SharedPreferences sharedPreferences = getActivity(jarItemView.getContext()).getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(MakeNewCandyFromFloatingActivity.LAST_ACCESS_JAR_INDEX, index);
+        editor.commit();
     }
 
     // how to get activity from context

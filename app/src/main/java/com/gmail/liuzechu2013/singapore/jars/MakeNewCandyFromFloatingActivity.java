@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,6 +50,7 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
     private String[] jarNameArray;
     private ArrayList<Jar> jarList;
     private Uri imageUri;
+    private boolean newJarMade = false; // to check whether a new jar is created in this session
 
     public static final String JAR_TITLE = "jarTitle";
     public static final String PROMPT = "prompt";
@@ -56,6 +58,7 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
     public static final String JAR_INDEX = "jarIndex";
     public static final String FLAG_FOR_FLOATING_WINDOW = "flagForFloatingWindow";
     public static final int PICK_IMAGE = 100;
+    public static final String LAST_ACCESS_JAR_INDEX = "lastAccessJarIndex"; // so that the last access one will stay on top
 
 
     @SuppressLint("RestrictedApi")
@@ -124,6 +127,8 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         // Apply the adapter to the spinner
         chooseJarSpinner.setAdapter(adapter);
         chooseJarSpinner.setOnItemSelectedListener(this);
+        // LAST ACCESSED JAR IS SELECTED
+        chooseJarSpinner.setSelection(loadLastAccessJarIndex());
 
         // initialise edit text fields
         promptEditText = findViewById(R.id.make_candy_prompt_editText);
@@ -198,17 +203,21 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
             chooseJarSpinner.setOnItemSelectedListener(this);
             chooseJarSpinner.setSelection(adapter.getPosition(name));
 
+            // move AFTER creating a candy successfully
             // update Total Jars Made
-            int totalJarsMade = loadTotalJarsMade();
-            saveTotalJarsMade(totalJarsMade + 1);
+//            int totalJarsMade = loadTotalJarsMade();
+//            saveTotalJarsMade(totalJarsMade + 1);
 
+            newJarMade = true;
+
+            // move AFTER creating a candy successfully to prevent mismatch between jarList and jarNameArray
             // update USER_JAR_NAME_ARRAY in shared preferences
-            Gson gson = new Gson();
-            String jarNameArrayString = gson.toJson(jarNameArray);
-            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
-            editor.commit();
+//            Gson gson = new Gson();
+//            String jarNameArrayString = gson.toJson(jarNameArray);
+//            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
+//            editor.commit();
 
             Toast.makeText(this, "New Jar created successfully! Put in the first candy now!", Toast.LENGTH_SHORT).show();
         }
@@ -243,6 +252,26 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
 
             // SAVE CANDY MADE HERE INSTEAD OF MAIN ACTIVITY
             saveCandy();
+
+            // SAVE JAR MADE, IF ANY
+            //if (newJarMade) {
+                Gson gson = new Gson();
+                String jarNameArrayString = gson.toJson(jarNameArray);
+                SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
+                editor.commit();
+            //}
+
+
+            if (newJarMade) {
+                int totalJarsMade = loadTotalJarsMade();
+                saveTotalJarsMade(totalJarsMade + 1);
+            }
+
+
+            // UPDATE LAST ACCESSED JAR INDEX
+            saveLastAccessJarIndex(jarIndex);
 
 //            Intent intent = new Intent(this, MainActivity.class);
 
@@ -397,6 +426,22 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         editor.putInt(ProfileFragment.EXP, exp);
         editor.commit();
     }
+
+    // the following two methods are for the spinner, so that the last accessed jar will be shown first
+    private int loadLastAccessJarIndex() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        int index = sharedPreferences.getInt(LAST_ACCESS_JAR_INDEX, 0);
+        return index;
+    }
+
+    private void saveLastAccessJarIndex(int index) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(LAST_ACCESS_JAR_INDEX, index);
+        editor.commit();
+    }
+
+
 
     // save a String into local text file on phone
     public void saveToLocalFile(String fileName, String stringToSave) {

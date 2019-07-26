@@ -44,8 +44,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import edmt.dev.advancednestedscrollview.AdvancedNestedScrollView;
-import edmt.dev.advancednestedscrollview.MaxHeightRecyclerView;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;

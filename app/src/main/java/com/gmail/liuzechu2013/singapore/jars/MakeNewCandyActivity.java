@@ -31,11 +31,13 @@ public class MakeNewCandyActivity extends AppCompatActivity
     private EditText makeNewJarEditText;
     private Button makeNewJarSaveButton;
     private String[] jarNameArray;
+    private boolean newJarMade = false; // to check whether a new jar is created in this session
 
     public static final String JAR_TITLE = "jarTitle";
     public static final String PROMPT = "prompt";
     public static final String ANSWER = "answer";
     public static final String JAR_INDEX = "jarIndex";
+    public static final String LAST_ACCESS_JAR_INDEX = "lastAccessJarIndex"; // so that the last access one will stay on top
 
 
     @Override
@@ -89,6 +91,8 @@ public class MakeNewCandyActivity extends AppCompatActivity
         // Apply the adapter to the spinner
         chooseJarSpinner.setAdapter(adapter);
         chooseJarSpinner.setOnItemSelectedListener(this);
+        // LAST ACCESSED JAR IS SELECTED
+        chooseJarSpinner.setSelection(loadLastAccessJarIndex());
 
         // initialise edit text fields
         promptEditText = findViewById(R.id.make_candy_prompt_editText);
@@ -155,17 +159,22 @@ public class MakeNewCandyActivity extends AppCompatActivity
             chooseJarSpinner.setOnItemSelectedListener(this);
             chooseJarSpinner.setSelection(adapter.getPosition(name));
 
+            // move AFTER creating a candy successfully
             // update Total Jars Made
-            int totalJarsMade = loadTotalJarsMade();
-            saveTotalJarsMade(totalJarsMade + 1);
+//            int totalJarsMade = loadTotalJarsMade();
+//            saveTotalJarsMade(totalJarsMade + 1);
 
+
+            newJarMade = true;
+
+            // move AFTER creating a candy successfully to prevent mismatch between jarList and jarNameArray
             // update USER_JAR_NAME_ARRAY in shared preferences
-            Gson gson = new Gson();
-            String jarNameArrayString = gson.toJson(jarNameArray);
-            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
-            editor.commit();
+//            Gson gson = new Gson();
+//            String jarNameArrayString = gson.toJson(jarNameArray);
+//            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
+//            editor.commit();
 
             Toast.makeText(this, "New Jar created successfully! Put in the first candy now!", Toast.LENGTH_SHORT).show();
         }
@@ -198,7 +207,29 @@ public class MakeNewCandyActivity extends AppCompatActivity
             Toast.makeText(this, "Prompt or Answer cannot be empty!", Toast.LENGTH_SHORT).show();
         } else {
 
+            // update jar name array IF a jar is created
+            //if (newJarMade) {
+                Gson gson = new Gson();
+                String jarNameArrayString = gson.toJson(jarNameArray);
+                SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
+                editor.commit();
+            //}
+
+
+            if (newJarMade) {
+                int totalJarsMade = loadTotalJarsMade();
+                saveTotalJarsMade(totalJarsMade + 1);
+            }
+
+
             Intent intent = new Intent(this, MainActivity.class);
+
+
+            // UPDATE LAST ACCESSED JAR INDEX
+            saveLastAccessJarIndex(jarIndex);
+
 
             // put the candy created by user into intent
             intent.putExtra(JAR_TITLE, jarTitleSelected);
@@ -220,5 +251,19 @@ public class MakeNewCandyActivity extends AppCompatActivity
     private int loadTotalJarsMade() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(ProfileFragment.TOTAL_JARS_MADE, 0);
+    }
+
+    // the following two methods are for the spinner, so that the last accessed jar will be shown first
+    private int loadLastAccessJarIndex() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        int index = sharedPreferences.getInt(LAST_ACCESS_JAR_INDEX, 0);
+        return index;
+    }
+
+    private void saveLastAccessJarIndex(int index) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(LAST_ACCESS_JAR_INDEX, index);
+        editor.commit();
     }
 }

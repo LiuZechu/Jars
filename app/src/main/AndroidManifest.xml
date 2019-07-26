@@ -21,7 +21,6 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".MakeNewCandyActivity" />
         <activity android:name=".ViewAllCandiesActivity" />
-        <activity android:name=".ViewFileActivity" />
         <activity android:name=".CurrentItemsActivity" />
         <activity android:name=".TrainingActivity" />
         <activity android:name=".MakeNewCandyFromFloatingActivity" />

@@ -20,10 +20,10 @@ allprojects {
         jcenter()
 
         // for MuPDF viewer
-        maven { url 'http://maven.ghostscript.com' }
+        // maven { url 'http://maven.ghostscript.com' }
 
         // for nested scroll view
-        maven { url 'https://jitpack.io'}
+        // maven { url 'https://jitpack.io'}
     }
 }
 

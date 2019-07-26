@@ -5,17 +5,17 @@ import android.app.Activity;
 import java.util.ArrayList;
 
 public class Jar {
-    private int ID; // unique ID for each jar; Problem: useless? also training process may screw this up
+    // private int ID; // unique ID for each jar; Problem: useless? also training process may screw this up
     private String title;
     private long lastAcessTime; // timestamp of the last access time by user
     private ArrayList<Candy> candies; // all candies in the jar
 
-    private static int totalJars = 0; // problem: will totalJars become zero again on exiting the app?
+    // private static int totalJars = 0; // problem: will totalJars become zero again on exiting the app?
 
     public Jar(String title) {
-        ID = totalJars;
+        // ID = totalJars;
         this.title = title;
-        totalJars++;
+        // totalJars++;
         lastAcessTime = System.currentTimeMillis();
         candies = new ArrayList<>();
     }

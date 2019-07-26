@@ -36,12 +36,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
 
     // PDF reader library; changed "compile" to "implementation"
-    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
+    // implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
 
     // advanced nested scroll view
-    implementation 'com.github.eddydn:AdvancedNestedScrollView:1.1'
-
-    // MuPDF viewer
-    // api 'com.artifex.mupdf:viewer:1.15.0'
-    api project(':mupdf-lib')
+    // implementation 'com.github.eddydn:AdvancedNestedScrollView:1.1'
 }

@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import edmt.dev.advancednestedscrollview.AdvancedNestedScrollView;
 
 public class AchievementViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
@@ -31,26 +30,4 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder
 
 
     }
-
-//    // how to get activity from context
-//    public Activity getActivity(Context context)
-//    {
-//        if (context == null)
-//        {
-//            return null;
-//        }
-//        else if (context instanceof ContextWrapper)
-//        {
-//            if (context instanceof Activity)
-//            {
-//                return (Activity) context;
-//            }
-//            else
-//            {
-//                return getActivity(((ContextWrapper) context).getBaseContext());
-//            }
-//        }
-//
-//        return null;
-//    }
 }
