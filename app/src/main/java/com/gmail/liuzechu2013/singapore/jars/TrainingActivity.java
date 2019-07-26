@@ -351,22 +351,15 @@ public class TrainingActivity extends AppCompatActivity {
     // view screenshot attached to the candy
     private void viewScreenshot() {
         Uri imageUri = currentCandy.getImageUri();
-        Intent intent = new Intent(this, PopUpImageActivity.class);
-        intent.putExtra(PopUpImageActivity.IMAGE_URI, imageUri.toString());
 
+        if (imageUri == null) {
+            Toast.makeText(this, "No screenshot is available!", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(this, PopUpImageActivity.class);
+            intent.putExtra(PopUpImageActivity.IMAGE_URI, imageUri.toString());
 
-
-//        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-//            intent.setAction(Intent.ACTION_GET_CONTENT);
-//        } else {
-//            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-//            intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        }
-
-//        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 
     public void exitTraining() {

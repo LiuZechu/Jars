@@ -53,10 +53,16 @@ public class Candy {
     }
 
     public Uri getImageUri() {
-        return Uri.parse(imageUri);
+        if (imageUri != null && !imageUri.equals("")) {
+            return Uri.parse(imageUri);
+        } else {
+            return null;
+        }
     }
 
     public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri.toString();
+        if (imageUri != null) {
+            this.imageUri = imageUri.toString();
+        }
     }
 }
