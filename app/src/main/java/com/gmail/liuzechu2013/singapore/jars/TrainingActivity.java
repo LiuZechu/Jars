@@ -248,7 +248,29 @@ public class TrainingActivity extends AppCompatActivity {
             }
 
             if (jarToTrain != null) {
-                jarList.add(jarToTrain);
+
+                // changed here 27/07: process candies for individual jar as well
+                ArrayList<Candy> candyList = jarToTrain.getCandies();
+                Jar trainingJar = null;
+                boolean trainingJarCreated = false;
+                for (Candy candy : candyList) {
+                    // candy.decrementCountDown(); // commented out because this should have been done in background work already
+                    if (candy.shouldTrain()) {
+                        if (!trainingJarCreated) {
+                            trainingJar = new Jar(jarToTrain.getTitle());
+                            trainingJarCreated = true;
+                        }
+                        trainingJar.addCandy(candy);
+                    }
+                }
+
+                // prevent null pointer exception
+                if (trainingJar == null) {
+                    trainingJar = new Jar(jarToTrain.getTitle());
+                }
+
+                jarList.add(trainingJar);
+
             } else {
                 // no such jar is found
                 Toast.makeText(this, "No such Jar is found!", Toast.LENGTH_SHORT).show();

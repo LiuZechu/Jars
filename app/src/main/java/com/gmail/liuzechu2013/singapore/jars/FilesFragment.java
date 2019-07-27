@@ -3,6 +3,7 @@ package com.gmail.liuzechu2013.singapore.jars;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,11 +41,27 @@ public class FilesFragment extends Fragment {
             }
         });
 
+        // button to watch tutorial from an external link
+        Button watchTutorialButton = view.findViewById(R.id.watch_tutorial_button);
+        watchTutorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                watchTutorial();
+            }
+        });
+
         return view;
     }
 
     public interface OnFileOpenListener{
         void openFile();
+    }
+
+    // directs the user to an external link to watch our tutorial
+    private void watchTutorial() {
+        // TODO: change the URL to an actual video
+        Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com"));
+        startActivity(browseIntent);
     }
 
     // how to get activity from context

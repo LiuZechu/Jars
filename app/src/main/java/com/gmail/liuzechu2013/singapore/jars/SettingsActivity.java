@@ -116,6 +116,8 @@ public class SettingsActivity extends AppCompatActivity {
         alarmManager.setInexactRepeating(AlarmManager.RTC, timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent);
 
         Toast.makeText(this, "Daily training reminder set successfully", Toast.LENGTH_SHORT).show();
+
+        finish();
     }
 
 }
