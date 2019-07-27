@@ -8,12 +8,14 @@ import android.media.effect.EffectUpdateListener;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Keep;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,13 +35,16 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+
+import static com.gmail.liuzechu2013.singapore.jars.MainActivity.getResourceID;
 
 public class TrainingActivity extends AppCompatActivity {
     private ArrayList<Jar> jarList; // this jarList is the list for TRAINING
     private ArrayList<Jar> userJarList; // this userJarList is the list containing ALL CANDIES the user owns
     private TextView title;
     private TextView mainTextView;
-    private LinearLayoutCompat trainingBottomBarLayout;
+    private ConstraintLayout trainingBottomBarLayout;
     private Button correctButton;
     private Button wrongButton;
     private Button contextButton;
@@ -59,6 +64,8 @@ public class TrainingActivity extends AppCompatActivity {
     // for graduation
     private Jar currentGraduatedJar;
     private ArrayList<Jar> candiesGraduated = new ArrayList<>();
+    // for expression
+    final Random rnd = new Random();
 
     // CONSTANTS
     public static final String GET_JAR_LIST = "GET_JAR_LIST";
@@ -80,6 +87,7 @@ public class TrainingActivity extends AppCompatActivity {
         wrongButton = findViewById(R.id.training_wrong_button);
         contextButton = findViewById(R.id.training_context_button);
         exitTrainingButton = findViewById(R.id.exit_training_button);
+        changeExpression();
 
         // set stats to zero
         numberCorrect = 0;
@@ -202,6 +210,8 @@ public class TrainingActivity extends AppCompatActivity {
 
             String prompt = currentCandy.getPrompt();
             final String answer = currentCandy.getAnswer();
+
+            changeExpression();
 
             mainTextView.setText(prompt);
             mainTextView.setOnClickListener(new View.OnClickListener() {
@@ -453,6 +463,17 @@ public class TrainingActivity extends AppCompatActivity {
         String toSave = gson.toJson(graduatedHash);
         saveToLocalFile(ArchiveActivity.GRADUATED_CANDIES_FILE_NAME, toSave);
 
+    }
+
+    private void changeExpression() {
+        ImageView img = findViewById(R.id.training_expression);
+        String str = "ic_expression" + rnd.nextInt(62);
+        // TODO: need to select the correct expression.
+        img.setImageDrawable
+                (
+                        getResources().getDrawable(getResourceID(str, "drawable",
+                                getApplicationContext()))
+                );
     }
 
     // for line graph: add total candies trained in this training to local file

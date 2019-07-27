@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         final ImageView img = findViewById(R.id.training_expression);
-        final String str = "ic_expression" + rnd.nextInt(17);
+        final String str = "ic_expression" + rnd.nextInt(62);
+        // TODO: need to select the correct expression.
         img.setImageDrawable
                 (
                         getResources().getDrawable(getResourceID(str, "drawable",
