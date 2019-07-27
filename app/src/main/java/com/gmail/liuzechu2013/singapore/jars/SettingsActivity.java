@@ -9,12 +9,14 @@ import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.transform.Templates;
 
@@ -101,9 +103,22 @@ public class SettingsActivity extends AppCompatActivity {
             editor.putInt(ALARM_HOUR, timePicker.getCurrentHour());
             editor.putInt(ALARM_MINUTE, timePicker.getCurrentMinute());
         }
-
-        long timeInMillis = calendar.getTimeInMillis();
         editor.apply();
+
+        // EDITED HERE: to prevent alarm from firing off immediately when an earlier time is set
+        long timeInMillis;
+        long rawTimeInMillis = calendar.getTimeInMillis();
+        long difference = Calendar.getInstance().getTimeInMillis() - rawTimeInMillis;
+        if (difference > 0) {
+            // the set time is EARLIER than current time
+            timeInMillis = rawTimeInMillis + TimeUnit.DAYS.toMillis(1);
+            Log.d("test", "time too early");
+        } else {
+            // the set time is LATER than current time; as per normal
+            timeInMillis = rawTimeInMillis;
+            Log.d("test", "set time later than current time");
+        }
+
         // create the alarm
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, Alarm.class);
