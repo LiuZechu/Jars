@@ -3,6 +3,10 @@ package com.gmail.liuzechu2013.singapore.jars;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,12 +38,14 @@ public class MakeNewCandyActivity extends AppCompatActivity
     private LinearLayout makeNewJarBar;
     private String[] jarNameArray;
     private boolean newJarMade = false; // to check whether a new jar is created in this session
+    private Uri imageUri;
 
     public static final String JAR_TITLE = "jarTitle";
     public static final String PROMPT = "prompt";
     public static final String ANSWER = "answer";
     public static final String JAR_INDEX = "jarIndex";
     public static final String LAST_ACCESS_JAR_INDEX = "lastAccessJarIndex"; // so that the last access one will stay on top
+    public static final String SCREENSHOT_IMAGE_URI = "screenshotImageUri"; // for screenshot
 
 
     @Override
@@ -116,6 +122,15 @@ public class MakeNewCandyActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 doneMakingCandy();
+            }
+        });
+
+        // ADD A SCREENSHOT
+        FloatingActionButton addScreenshotButton = findViewById(R.id.add_screenshot_floating_action_button);
+        addScreenshotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addScreenshot();
             }
         });
     }
@@ -244,9 +259,34 @@ public class MakeNewCandyActivity extends AppCompatActivity
             intent.putExtra(JAR_TITLE, jarTitleSelected);
             intent.putExtra(PROMPT, promptEditText.getText().toString());
             intent.putExtra(ANSWER, answerEditText.getText().toString());
+            if (imageUri != null) {
+                intent.putExtra(SCREENSHOT_IMAGE_URI, imageUri.toString());
+            }
             intent.putExtra(JAR_INDEX, jarIndex);
             setResult(RESULT_OK, intent);
             finish();
+        }
+    }
+
+    // ADD A SCREENSHOT
+    private void addScreenshot() {
+        // open phone photo gallery
+        // Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        // NOTE: changed to ACTION_OPEN_DOCUMENT so that the URI obtained has permission even outside this activity
+        Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, MakeNewCandyFromFloatingActivity.PICK_IMAGE);
+    }
+
+    // SAVE A SCREENSHOT
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == MakeNewCandyFromFloatingActivity.PICK_IMAGE) {
+            imageUri = data.getData();
+            // imageView.setImageURI(imageUri);
+
+            Toast.makeText(this, "Screenshot chosen successfully", Toast.LENGTH_SHORT).show();
         }
     }
 

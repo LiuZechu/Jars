@@ -332,6 +332,7 @@ public class MainActivity extends AppCompatActivity
                 String jarTitle = data.getStringExtra(MakeNewCandyActivity.JAR_TITLE);
                 String prompt = data.getStringExtra(MakeNewCandyActivity.PROMPT);
                 String answer = data.getStringExtra(MakeNewCandyActivity.ANSWER);
+                String imageUri = data.getStringExtra(MakeNewCandyActivity.SCREENSHOT_IMAGE_URI);
                 int jarIndex = data.getIntExtra(MakeNewCandyActivity.JAR_INDEX,-1);
 
                 // changed here
@@ -341,7 +342,12 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 Jar jar = jarList.get(jarIndex);
-                jar.addCandy(new Candy(prompt, answer));
+                Candy newCandy = new Candy(prompt, answer);
+                // attach screenshot URI to the candy
+                if (imageUri != null) {
+                    newCandy.setImageUri(Uri.parse(imageUri));
+                }
+                jar.addCandy(newCandy);
 
                 //increment "total candies made" count
                 incrementTotalCandiesMade();

@@ -71,11 +71,6 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_new_candy);
 
-        // TODO: APPLY THIS TO THE OTHER ACTIVITY AS WELL?
-        // make screenshot button visible
-        FloatingActionButton screenshotFloatingActionButton = findViewById(R.id.add_screenshot_floating_action_button);
-        //screenshotFloatingActionButton.setVisibility(View.VISIBLE);
-        screenshotFloatingActionButton.show();
 
         // load jar list from local file
         loadDataIntoJarList();
