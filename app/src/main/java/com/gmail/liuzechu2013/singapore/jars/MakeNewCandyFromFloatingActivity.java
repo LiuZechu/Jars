@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,6 +48,9 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
     private Button makeNewJarButton;
     private EditText makeNewJarEditText;
     private Button makeNewJarSaveButton;
+    private Button makeNewJarCancelButton;
+    private LinearLayout oldJarBar;
+    private LinearLayout makeNewJarBar;
     private String[] jarNameArray;
     private ArrayList<Jar> jarList;
     private Uri imageUri;
@@ -77,15 +81,18 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         loadDataIntoJarList();
 
         // make a new jar by entering jar's name
+
         makeNewJarButton = findViewById(R.id.make_candy_new_jar_button);
         makeNewJarEditText = findViewById(R.id.make_candy_new_jar_name_edit_text);
         makeNewJarSaveButton = findViewById(R.id.make_candy_new_jar_save_button);
+        makeNewJarCancelButton = findViewById(R.id.make_candy_new_jar_cancel_button);
+        oldJarBar = findViewById(R.id.make_candy_old_jar_bar);
+        makeNewJarBar = findViewById(R.id.make_candy_new_jar_bar);
         makeNewJarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeNewJarEditText.setVisibility(View.VISIBLE);
-                makeNewJarSaveButton.setVisibility(View.VISIBLE);
-                makeNewJarButton.setVisibility(View.GONE);
+                oldJarBar.setVisibility(View.GONE);
+                makeNewJarBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -96,15 +103,21 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
 
                 if (newJarName != null && newJarName.length() != 0) {
 
-                    makeNewJarSaveButton.setVisibility(View.GONE);
-                    makeNewJarButton.setVisibility(View.VISIBLE);
-
                     makeNewJarEditText.getText().clear();
-                    makeNewJarEditText.setVisibility(View.GONE);
-
+                    oldJarBar.setVisibility(View.VISIBLE);
+                    makeNewJarBar.setVisibility(View.GONE);
                 }
 
                 createJar(newJarName);
+            }
+        });
+
+        makeNewJarCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeNewJarEditText.getText().clear();
+                oldJarBar.setVisibility(View.VISIBLE);
+                makeNewJarBar.setVisibility(View.GONE);
             }
         });
 

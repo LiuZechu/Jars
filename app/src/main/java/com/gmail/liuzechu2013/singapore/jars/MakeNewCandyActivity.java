@@ -3,15 +3,14 @@ package com.gmail.liuzechu2013.singapore.jars;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,6 +29,9 @@ public class MakeNewCandyActivity extends AppCompatActivity
     private Button makeNewJarButton;
     private EditText makeNewJarEditText;
     private Button makeNewJarSaveButton;
+    private Button makeNewJarCancelButton;
+    private LinearLayout oldJarBar;
+    private LinearLayout makeNewJarBar;
     private String[] jarNameArray;
     private boolean newJarMade = false; // to check whether a new jar is created in this session
 
@@ -49,12 +51,14 @@ public class MakeNewCandyActivity extends AppCompatActivity
         makeNewJarButton = findViewById(R.id.make_candy_new_jar_button);
         makeNewJarEditText = findViewById(R.id.make_candy_new_jar_name_edit_text);
         makeNewJarSaveButton = findViewById(R.id.make_candy_new_jar_save_button);
+        makeNewJarCancelButton = findViewById(R.id.make_candy_new_jar_cancel_button);
+        oldJarBar = findViewById(R.id.make_candy_old_jar_bar);
+        makeNewJarBar = findViewById(R.id.make_candy_new_jar_bar);
         makeNewJarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeNewJarEditText.setVisibility(View.VISIBLE);
-                makeNewJarSaveButton.setVisibility(View.VISIBLE);
-                makeNewJarButton.setVisibility(View.GONE);
+                oldJarBar.setVisibility(View.GONE);
+                makeNewJarBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -65,18 +69,23 @@ public class MakeNewCandyActivity extends AppCompatActivity
 
                 if (newJarName != null && newJarName.length() != 0) {
 
-                    makeNewJarSaveButton.setVisibility(View.GONE);
-                    makeNewJarButton.setVisibility(View.VISIBLE);
-
                     makeNewJarEditText.getText().clear();
-                    makeNewJarEditText.setVisibility(View.GONE);
-
+                    oldJarBar.setVisibility(View.VISIBLE);
+                    makeNewJarBar.setVisibility(View.GONE);
                 }
 
                 createJar(newJarName);
             }
         });
 
+        makeNewJarCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeNewJarEditText.getText().clear();
+                oldJarBar.setVisibility(View.VISIBLE);
+                makeNewJarBar.setVisibility(View.GONE);
+            }
+        });
         // get jarNameArray from intent
         String jsonString = getIntent().getStringExtra(JarsFragment.JAR_NAME_ARRAY);
         Gson gson = new Gson();
@@ -203,18 +212,18 @@ public class MakeNewCandyActivity extends AppCompatActivity
                 Toast.makeText(this, "Please select a Jar.", Toast.LENGTH_SHORT).show();
             }
         } else if (promptEditText == null || promptEditText.length() == 0
-                    || answerEditText == null || answerEditText.length() == 0 ) {
+                || answerEditText == null || answerEditText.length() == 0) {
             Toast.makeText(this, "Prompt or Answer cannot be empty!", Toast.LENGTH_SHORT).show();
         } else {
 
             // update jar name array IF a jar is created
             //if (newJarMade) {
-                Gson gson = new Gson();
-                String jarNameArrayString = gson.toJson(jarNameArray);
-                SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
-                editor.commit();
+            Gson gson = new Gson();
+            String jarNameArrayString = gson.toJson(jarNameArray);
+            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(MainActivity.USER_JAR_NAME_ARRAY, jarNameArrayString);
+            editor.commit();
             //}
 
 

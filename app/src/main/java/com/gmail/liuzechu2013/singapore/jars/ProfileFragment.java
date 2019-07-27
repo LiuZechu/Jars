@@ -6,34 +6,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -45,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lecho.lib.hellocharts.gesture.ZoomType;
-import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -54,7 +39,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class ProfileFragment extends Fragment {
     // private RecyclerView mRecyclerView; // not used for now
     // private ArrayList<Achievement> achievementList; // not used for now
-    private Button settingsButton; // button to reset user stats
+    private FloatingActionButton settingsButton; // button to reset user stats
     private TextView usernameTextView;
     // achievements
     private TextView achievementStreakScore;
@@ -237,7 +222,7 @@ public class ProfileFragment extends Fragment {
 //        });
 
         // go to Settings
-        settingsButton = (Button) view.findViewById(R.id.reset_button);
+        settingsButton = view.findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,77 +2,120 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/make_candy_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MakeNewCandyActivity"
-    android:id="@+id/make_candy_root_layout">
+    android:background="#F3F3F3"
+    tools:context=".MakeNewCandyActivity">
 
     <TextView
         android:id="@+id/make_candy_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Make a New Candy!"
-        android:textSize="26sp"
+        android:background="#fff"
+        android:elevation="2dp"
         android:padding="8dp"
-        android:textAlignment="center" />
+        android:text="New Candy"
+        android:textAlignment="center"
+        android:textSize="26sp"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/make_candy_choose_jar_spinner"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/make_candy_jar_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/make_candy_title">
-    </Spinner>
 
-    <Button
-    android:id="@+id/make_candy_new_jar_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toTopOf="@id/make_candy_text_layout"
-    app:layout_constraintRight_toRightOf="parent"
-    android:text="new jar"/>
+        <LinearLayout
+            android:id="@+id/make_candy_old_jar_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:weightSum="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/make_candy_new_jar_save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/make_candy_text_layout"
-        app:layout_constraintRight_toRightOf="parent"
-        android:visibility="gone"
-        android:text="save"/>
+            <Spinner
+                android:id="@+id/make_candy_choose_jar_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-    <EditText
-        android:id="@+id/make_candy_new_jar_name_edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toLeftOf="@id/make_candy_new_jar_button"
-        app:layout_constraintTop_toBottomOf="@id/make_candy_choose_jar_spinner"
-        android:visibility="gone"
-        android:hint="enter the name of the new Jar ..."/>
+            <Button
+                android:id="@+id/make_candy_new_jar_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_new_jar"
+                android:layout_weight="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/make_candy_new_jar_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:weightSum="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/make_candy_new_jar_name_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter the name of the new Jar ..." />
+
+            <Button
+                android:id="@+id/make_candy_new_jar_cancel_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="0"
+                android:layout_margin="3dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_cancel" />
+
+            <Button
+                android:id="@+id/make_candy_new_jar_save_button"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_weight="0"
+                android:layout_margin="3dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_save"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/make_candy_text_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/make_candy_new_jar_name_edit_text"
-        app:layout_constraintBottom_toTopOf="@id/make_candy_done_button">
+        app:layout_constraintBottom_toTopOf="@id/make_candy_done_button"
+        app:layout_constraintTop_toBottomOf="@id/make_candy_jar_bar">
 
         <EditText
             android:id="@+id/make_candy_prompt_editText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="8dp"
             android:layout_weight="1"
+            android:background="@drawable/training_text"
             android:hint="Enter your prompt here ..."
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
         <EditText
             android:id="@+id/make_candy_answer_editText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="8dp"
             android:layout_weight="1"
+            android:background="@drawable/training_text"
             android:hint="Enter your answer here ..."
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
     </LinearLayout>
 
@@ -80,22 +123,25 @@
         android:id="@+id/add_screenshot_floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:borderWidth="0dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#000000"
+        android:src="@drawable/ic_add_a_photo_black_24dp"
         android:visibility="gone"
-        android:src="@drawable/ic_add_a_photo_black_24dp"/>
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/make_candy_done_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="done"/>
+        android:text="done"
+        android:textAlignment="center"
+        android:background="#000"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
