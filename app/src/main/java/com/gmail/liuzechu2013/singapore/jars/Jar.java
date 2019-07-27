@@ -1,7 +1,5 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
-import android.app.Activity;
-
 import java.util.ArrayList;
 
 public class Jar {
