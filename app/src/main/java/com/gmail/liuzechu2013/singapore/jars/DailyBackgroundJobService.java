@@ -146,10 +146,16 @@ public class DailyBackgroundJobService extends JobService {
         }
 
 
+        // add username to notification text
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString(ProfileFragment.USERNAME, "username");
+        String toAddressUser = (username == null || username.equals("username")) ? "" : "Hi " + username + "! ";
+
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_mini_icon)
                 .setContentTitle("Train your Candies now!")
-                .setContentText("You have " + numberOfCandiesToTrain + " Candies waiting for you!")
+                .setContentText(toAddressUser + "You have " + numberOfCandiesToTrain + " Candies waiting for you!")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL);
 

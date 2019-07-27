@@ -325,7 +325,7 @@ public class ProfileFragment extends Fragment {
     // loads all saved sharedPrefs to be used on this screen
     public void loadAllData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        username = sharedPreferences.getString(USERNAME, "change username here");
+        username = sharedPreferences.getString(USERNAME, "username");
 
         //streak = sharedPreferences.getInt(STREAK, 1);
 

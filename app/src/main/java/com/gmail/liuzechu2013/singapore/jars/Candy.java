@@ -65,4 +65,37 @@ public class Candy {
             this.imageUri = imageUri.toString();
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Candy)) {
+            return false;
+        } else {
+
+            // check whether imageUri is equal
+            boolean imageUriEqual;
+            if (((Candy) obj).imageUri == null) {
+                if (this.imageUri == null) {
+                    imageUriEqual = true;
+                } else {
+                    imageUriEqual = false;
+                }
+            } else {
+                if (this.imageUri == null) {
+                    imageUriEqual = false;
+                } else {
+                    imageUriEqual = this.imageUri.equals(((Candy) obj).imageUri);
+                }
+            }
+
+            // check the other fields
+            boolean result = ((Candy) obj).level == this.level &&
+                    ((Candy) obj).countDown == this.countDown &&
+                    ((Candy) obj).prompt.equals(this.prompt) &&
+                    ((Candy) obj).answer.equals(this.answer) &&
+                    imageUriEqual;
+
+            return result;
+        }
+    }
 }

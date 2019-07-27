@@ -33,8 +33,10 @@ public class ViewAllCandiesActivity extends AppCompatActivity {
 
         // set up recycler view
         mRecyclerView = findViewById(R.id.view_all_candies_recyclerView);
-        CandyListAdapter adapter = new CandyListAdapter(this, candyList);
+        CandyListAdapter adapter = new CandyListAdapter(this, candyList, jar);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        setResult(RESULT_OK); // for reloading the page when returning from View All Candies Activity
     }
 }

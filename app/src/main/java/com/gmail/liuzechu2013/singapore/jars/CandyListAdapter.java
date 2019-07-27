@@ -12,10 +12,12 @@ import java.util.List;
 public class CandyListAdapter extends RecyclerView.Adapter<CandyViewHolder> {
     private LayoutInflater mInflater;
     private List<Candy> candyList;
+    private Jar jar;
 
-    public CandyListAdapter(Context context, List<Candy> candyList) {
+    public CandyListAdapter(Context context, List<Candy> candyList, Jar jar) {
         mInflater = LayoutInflater.from(context);
         this.candyList = candyList;
+        this.jar = jar;
     }
 
     @NonNull
@@ -35,6 +37,7 @@ public class CandyListAdapter extends RecyclerView.Adapter<CandyViewHolder> {
         // added level number for testing; will be removed later
         viewHolder.candyItemView.setText(candy.getPrompt() + " LEVEL: " + candy.getLevel());
         viewHolder.currentCandy = candy;
+        viewHolder.currentJar = jar;
     }
 
     @Override

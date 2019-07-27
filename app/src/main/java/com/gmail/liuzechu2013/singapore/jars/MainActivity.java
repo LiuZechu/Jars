@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     public static final int REQUEST_CODE_FOR_TRAINING = 1;
     public static final int REQUEST_CODE_FOR_NEW_CANDY = 2;
     public static final int REQUEST_CODE_FOR_USERNAME = 3;
+    public static final int REQUEST_CODE_FOR_VIEW_CANDIES = 4;
     // for saving user data using shared preferences
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String USER_STATISTICS = "UserStatistics";
@@ -371,6 +372,15 @@ public class MainActivity extends AppCompatActivity
 
                 Menu menu = navView.getMenu();
                 MenuItem menuItem = menu.getItem(2); // highlight the Profile tab
+                menuItem.setChecked(true);
+            }
+        } else if (requestCode == REQUEST_CODE_FOR_VIEW_CANDIES) {
+            if (resultCode == RESULT_OK) {
+                // reload Jars page
+                loadFragment(new JarsFragment());
+
+                Menu menu = navView.getMenu();
+                MenuItem menuItem = menu.getItem(1); // highlight the Candy/Jar tab
                 menuItem.setChecked(true);
             }
         } else {
