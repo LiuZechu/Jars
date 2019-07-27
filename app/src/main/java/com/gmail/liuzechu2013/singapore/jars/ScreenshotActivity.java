@@ -1,18 +1,12 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
-import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
 import android.hardware.display.VirtualDisplay;
-import android.media.Image;
 import android.media.ImageReader;
 import android.media.projection.MediaProjection;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import java.io.FileOutputStream;
-import java.nio.ByteBuffer;
 
 public class ScreenshotActivity extends AppCompatActivity {
 
