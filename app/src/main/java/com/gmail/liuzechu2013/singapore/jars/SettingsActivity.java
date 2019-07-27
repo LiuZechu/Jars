@@ -7,21 +7,28 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
+import javax.xml.transform.Templates;
+
 public class SettingsActivity extends AppCompatActivity {
+    public static final String ALARM_HOUR = "alarmhour";
+    public static final String ALARM_MINUTE= "alarmminute";
+
     private EditText usernameEditText;
-    private Button usernameButton;
     private TimePicker timePicker;
 
     public static final int REQUEST_CODE_FOR_ALARM = 6;
@@ -35,32 +42,29 @@ public class SettingsActivity extends AppCompatActivity {
         // pre-fill edit text with current username
         Intent intent = getIntent();
         usernameEditText.setText(intent.getStringExtra(ProfileFragment.USERNAME));
-        usernameButton = findViewById(R.id.settings_username_button);
-        usernameButton.setOnClickListener(new View.OnClickListener() {
+
+        // set alarm so that user will be notified of Candies to train
+        timePicker = findViewById(R.id.settings_alarm_time_picker);
+
+        FloatingActionButton saveButton = findViewById(R.id.settings_save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                setAlarm();
                 editUsername();
             }
         });
 
-        // view graduated candies
-        Button viewGraduatedCandiesButton = findViewById(R.id.settings_view_graduated_candies_button);
-        viewGraduatedCandiesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoArchives();
-            }
-        });
+        //load clock data
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        if (Build.VERSION.SDK_INT >= 23) {
+            timePicker.setHour(sharedPreferences.getInt(ALARM_HOUR, 0));
+            timePicker.setMinute(sharedPreferences.getInt(ALARM_MINUTE, 0));
+        } else {
+            timePicker.setCurrentHour(sharedPreferences.getInt(ALARM_HOUR, 0));
+            timePicker.setCurrentMinute(sharedPreferences.getInt(ALARM_MINUTE, 0));
+        }
 
-        // set alarm so that user will be notified of Candies to train
-        timePicker = findViewById(R.id.settings_alarm_time_picker);
-        Button alarmButton = findViewById(R.id.settings_alarm_button);
-        alarmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAlarm();
-            }
-        });
     }
 
     private void editUsername() {
@@ -76,12 +80,9 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void gotoArchives() {
-        Intent intent = new Intent(this, ArchiveActivity.class);
-        startActivity(intent);
-    }
-
     private void setAlarm() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         Calendar calendar = Calendar.getInstance();
         if (Build.VERSION.SDK_INT >= 23) {
             calendar.set(
@@ -92,6 +93,8 @@ public class SettingsActivity extends AppCompatActivity {
                     timePicker.getMinute(),
                     0
             );
+            editor.putInt(ALARM_HOUR, timePicker.getHour());
+            editor.putInt(ALARM_MINUTE, timePicker.getMinute());
         } else {
             calendar.set(
                     calendar.get(Calendar.YEAR),
@@ -101,11 +104,12 @@ public class SettingsActivity extends AppCompatActivity {
                     timePicker.getCurrentMinute(),
                     0
             );
+            editor.putInt(ALARM_HOUR, timePicker.getCurrentHour());
+            editor.putInt(ALARM_MINUTE, timePicker.getCurrentMinute());
         }
 
         long timeInMillis = calendar.getTimeInMillis();
-
-
+        editor.apply();
         // create the alarm
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, Alarm.class);
@@ -114,10 +118,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         // use RTC instead of RTC_WAKEUP so as not to wake up the phone when it's sleeping
         alarmManager.setInexactRepeating(AlarmManager.RTC, timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent);
-
-        Toast.makeText(this, "Daily training reminder set successfully", Toast.LENGTH_SHORT).show();
-
-        finish();
     }
 
 }

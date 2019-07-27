@@ -56,6 +56,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
+            android:textSize="20sp"
             android:id="@+id/training_main_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -362,6 +362,7 @@ public class TrainingActivity extends AppCompatActivity {
         // 2. line graph of Candies graduated
         addToLineGraphFile(numberGraduated, MainActivity.LINE_GRAPH_CANDIES_GRADUATED_FILE_NAME);
 
+        title.setText("");
         String displayText;
         // display message of encouragement
         if (numberCorrect == 0 && numberWrong == 0 && numberGraduated == 0) {
@@ -500,8 +501,6 @@ public class TrainingActivity extends AppCompatActivity {
         try {
             fos = openFileOutput(fileName, MODE_PRIVATE);
             fos.write(stringToSave.getBytes());
-
-            Toast.makeText(this, "changes saved successfully", Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

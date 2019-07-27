@@ -138,8 +138,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="done"
+        android:layout_margin="8dp"
         android:textAlignment="center"
-        android:background="#000"
+        android:backgroundTint="#000"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent" />
 

@@ -55,6 +55,8 @@ public class ProfileFragment extends Fragment {
     private ImageView achievementJarsStars;
     private ImageView achievementSugarStars;
     private ImageView achievementLevelStars;
+    // graduated candies button
+    private Button viewGraduatedCandiesButton;
 
     // SharedPreferences tags to save user data
     public static final String SHARED_PREFS = "SharedPrefs";
@@ -121,6 +123,14 @@ public class ProfileFragment extends Fragment {
         achievementJarsScore = view.findViewById(R.id.achievement_jars_score);
         achievementSugarScore = view.findViewById(R.id.achievement_sugar_score);
         achievementLevelScore = view.findViewById(R.id.achievement_level_score);
+
+        viewGraduatedCandiesButton = view.findViewById(R.id.view_graduated_candies);
+        viewGraduatedCandiesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoArchives();
+            }
+        });
 
         LineChartView lineChartView = view.findViewById(R.id.profile_chart);
 
@@ -260,6 +270,10 @@ public class ProfileFragment extends Fragment {
         getActivity().startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_USERNAME);
     }
 
+    private void gotoArchives() {
+        Intent intent = new Intent(getContext(), ArchiveActivity.class);
+        startActivity(intent);
+    }
 //    // not used for now
 //    public void resetUserStats() {
 //        // does not reset name
