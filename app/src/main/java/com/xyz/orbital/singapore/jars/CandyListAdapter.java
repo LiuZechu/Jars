@@ -37,7 +37,7 @@ public class CandyListAdapter extends RecyclerView.Adapter<CandyViewHolder> {
         Candy candy = candyList.get(i);
         // add date to the view
         // added level number for testing; will be removed later
-        viewHolder.candyItemView.setText(candy.getPrompt() + " LEVEL: " + candy.getLevel());
+        viewHolder.candyItemView.setText(candy.getPrompt());
         String[] arr = {"#ef6256", "#f99c1c", "#fec41b", "#47b585", "#5bc4bf", "#825ca4", "#e96ca9"};
         viewHolder.candyColorView.getBackground().setColorFilter(Color.parseColor(arr[candy.getLevel() - 1]), PorterDuff.Mode.SRC_OVER);
         viewHolder.currentCandy = candy;
