@@ -7,7 +7,7 @@
         <item name="fontFamily">@font/book</item>
         <item name="android:textColor">#FF000000</item>
     </style>
-    
+
     <style name="AppTheme.PopUpTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>

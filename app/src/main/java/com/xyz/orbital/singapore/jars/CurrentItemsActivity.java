@@ -21,6 +21,7 @@ public class CurrentItemsActivity extends AppCompatActivity {
 
     private ArrayList<ArrayList<Integer>> userInventory;
     ImageButton expressionButton;
+    ImageButton powerupButton;
 
     // internal file to store current inventory
     public static final String USER_INVENTORY_FILE_NAME = "userInventory.txt";
@@ -34,6 +35,13 @@ public class CurrentItemsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openExpression();
+            }
+        });
+        powerupButton = findViewById(R.id.user_item_powerup);
+        powerupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPowerup();
             }
         });
 
@@ -56,6 +64,11 @@ public class CurrentItemsActivity extends AppCompatActivity {
 
     private void openExpression() {
         Intent intent = new Intent(this, ExpressionActivity.class);
+        startActivity(intent);
+    }
+
+    private void openPowerup() {
+        Intent intent = new Intent(this, PowerupActivity.class);
         startActivity(intent);
     }
 

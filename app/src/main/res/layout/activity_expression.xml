@@ -6,13 +6,32 @@
     android:layout_height="match_parent"
     android:layout_weight="12"
     android:orientation="vertical"
+    android:background="#F3F3F3"
     tools:context=".ExpressionActivity">
 
+    <TextView
+        android:id="@+id/expression_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Expressions"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:background="#fff"
+        android:elevation="2dp" />
+
     <HorizontalScrollView
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbars="none"
+        android:scrollbarSize="0dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="11">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <android.support.constraint.ConstraintLayout
             android:id="@+id/ordinary_exp"
             android:layout_width="wrap_content"
@@ -24,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:paddingStart="8dp"
+                android:paddingBottom="8dp"
                 android:text="Ordinary"
                 android:textSize="26sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -611,6 +631,368 @@
                 </RelativeLayout>
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/grand_exp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/grand_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingStart="8dp"
+                android:paddingBottom="8dp"
+                android:text="Grand"
+                android:textSize="26sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/grand_col_0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="30sp"
+                android:weightSum="7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/grand_title">
+
+                <RelativeLayout
+                    android:id="@+id/exp23"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_23"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression23" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp24"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_24"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression24" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp25"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_25"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression25" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp26"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_26"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression26" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp27"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_27"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression27" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp28"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_28"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression28" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp29"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_29"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression29" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/grand_col_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="30sp"
+                android:weightSum="7"
+                app:layout_constraintStart_toEndOf="@id/grand_col_0"
+                app:layout_constraintTop_toBottomOf="@id/grand_title">
+
+                <RelativeLayout
+                    android:id="@+id/exp30"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_30"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression30" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp31"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_31"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression31" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp32"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_32"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression32" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp33"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_33"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression33" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp34"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_34"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression34" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp35"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_35"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression35" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/exp36"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/training_button" />
+
+                    <View
+                        android:id="@+id/face_36"
+                        android:visibility="invisible"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_expression36" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
     </HorizontalScrollView>
 
@@ -619,5 +1001,6 @@
         android:layout_height="0dp"
         android:layout_margin="8dp"
         android:layout_weight="1"
+        android:visibility="gone"
         android:text="EDIT" />
 </LinearLayout>

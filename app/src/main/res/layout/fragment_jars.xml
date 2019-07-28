@@ -42,7 +42,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="#000000"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_add_white"
         app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

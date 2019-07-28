@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F3F3"
+    tools:context=".PowerupActivity">
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/user_items_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Powerups"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:background="#fff"
+        android:elevation="2dp" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/powerup_streak"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/powerup_sugar"
+        app:layout_constraintVertical_bias="0.7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/powerup_streak_1"
+            android:id="@+id/powerup_streak_0"
+            android:layout_margin="8dp"
+            android:layout_width="110dp"
+            android:layout_height="140dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_powerup_streak_0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:text="x3"
+                android:textSize="30sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/powerup_streak_2"
+            app:layout_constraintStart_toEndOf="@id/powerup_streak_0"
+            android:id="@+id/powerup_streak_1"
+            android:layout_margin="8dp"
+            android:layout_width="110dp"
+            android:layout_height="140dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_powerup_streak_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="x1"
+                android:textSize="30sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/powerup_streak_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/powerup_streak_2"
+            android:layout_margin="8dp"
+            android:layout_width="110dp"
+            android:layout_height="140dp">
+
+            <ImageView
+                android:alpha="0.5"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_powerup_streak_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:text="x0"
+                android:textSize="30sp" />
+        </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/powerup_sugar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/powerup_streak"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/powerup_sugar_1"
+            android:id="@+id/powerup_sugar_0"
+            android:layout_margin="8dp"
+            android:layout_width="110dp"
+            android:layout_height="140dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_powerup_sugar_0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:text="x2"
+                android:textSize="30sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/powerup_sugar_2"
+            app:layout_constraintStart_toEndOf="@id/powerup_sugar_0"
+            android:id="@+id/powerup_sugar_1"
+            android:layout_margin="8dp"
+            android:layout_width="110dp"
+            android:layout_height="140dp">
+
+            <ImageView
+                android:alpha="0.5"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_powerup_sugar_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="x0"
+                android:textSize="30sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/powerup_sugar_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/powerup_sugar_2"
+            android:layout_margin="8dp"
+            android:layout_width="110dp"
+            android:layout_height="140dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_powerup_sugar_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:text="x1"
+                android:textSize="30sp" />
+        </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

@@ -478,6 +478,8 @@ public class MainActivity extends AppCompatActivity
             moveTaskToBack(true);
             startService(new Intent(MainActivity.this, FloatingWindowService.class));
         }
+
+
     }
 
 

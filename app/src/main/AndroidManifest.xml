@@ -14,20 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.xyz.orbital.singapore.jars.ExpressionActivity"></activity>
+        <activity android:name=".PowerupActivity"></activity>
+        <activity android:name=".ExpressionActivity" />
         <activity
-            android:name="com.xyz.orbital.singapore.jars.PopUpImageActivity"
+            android:name=".PopUpImageActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
-        <activity android:name="com.xyz.orbital.singapore.jars.ScreenshotActivity" />
-        <activity android:name="com.xyz.orbital.singapore.jars.ArchiveActivity" />
-        <activity android:name="com.xyz.orbital.singapore.jars.SettingsActivity" />
-        <activity android:name="com.xyz.orbital.singapore.jars.MakeNewCandyActivity" />
-        <activity android:name="com.xyz.orbital.singapore.jars.ViewAllCandiesActivity" />
-        <activity android:name="com.xyz.orbital.singapore.jars.CurrentItemsActivity" />
-        <activity android:name="com.xyz.orbital.singapore.jars.TrainingActivity" />
-        <activity android:name="com.xyz.orbital.singapore.jars.MakeNewCandyFromFloatingActivity" />
+        <activity android:name=".ScreenshotActivity" />
+        <activity android:name=".ArchiveActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".MakeNewCandyActivity" />
+        <activity android:name=".ViewAllCandiesActivity" />
+        <activity android:name=".CurrentItemsActivity" />
+        <activity android:name=".TrainingActivity" />
+        <activity android:name=".MakeNewCandyFromFloatingActivity" />
         <activity
-            android:name="com.xyz.orbital.singapore.jars.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,12 +38,12 @@
         </activity>
 
         <service
-            android:name="com.xyz.orbital.singapore.jars.DailyBackgroundJobService"
+            android:name=".DailyBackgroundJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name="com.xyz.orbital.singapore.jars.FloatingWindowService" />
+        <service android:name=".FloatingWindowService" />
 
         <receiver
-            android:name="com.xyz.orbital.singapore.jars.Alarm"
+            android:name=".Alarm"
             android:enabled="true" />
     </application>
 
