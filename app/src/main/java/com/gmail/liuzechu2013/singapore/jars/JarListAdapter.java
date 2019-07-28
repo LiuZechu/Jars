@@ -1,6 +1,8 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ public class JarListAdapter extends RecyclerView.Adapter<JarViewHolder> {
         Jar jar = jarList.get(i);
         // add date to the view
         viewHolder.jarItemView.setText(jar.getTitle());
+        viewHolder.jarItemColorView.getBackground().setColorFilter(Color.parseColor(jar.getJarColor()), PorterDuff.Mode.SRC_OVER);
         viewHolder.currentJar = jar;
     }
 

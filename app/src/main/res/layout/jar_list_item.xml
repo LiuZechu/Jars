@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/jar_text"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:layout_margin="8dp"
+    android:elevation="2dp"
+    android:padding="4dp">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/sym_def_app_icon"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="4dp"
-        android:contentDescription="Jar icon"/>
+    <View
+        android:id="@+id/jar_item_colorView"
+        android:background="@drawable/training_button"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="8dp"
+        android:layout_width="20sp"
+        android:layout_height="20sp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/jar_item_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:text="placeholder"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:textSize="30sp"/>
+        android:layout_alignStart="@+id/jar_item_colorView"
+        android:layout_marginStart="35sp"
+        android:textSize="20sp"/>
 
-</android.support.v7.widget.LinearLayoutCompat>
+</RelativeLayout>
