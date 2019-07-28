@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -263,6 +264,12 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
         } else if (promptEditText == null || promptEditText.length() == 0
                     || answerEditText == null || answerEditText.length() == 0 ) {
             Toast.makeText(this, "Prompt or Answer cannot be empty!", Toast.LENGTH_SHORT).show();
+        } else if (makeNewJarBar.getVisibility() == View.VISIBLE) {
+            // makeNewJarBar.setBackgroundColor(Color.RED);
+            // makeNewJarBar.getBackground().setColorFilter(Color.parseColor("#ef6256"), PorterDuff.Mode.SRC_OVER);
+            // makeNewJarEditText.setTextColor(Color.parseColor("#940000"));
+            makeNewJarEditText.setBackgroundColor(Color.parseColor("#ff9c9c"));
+            Toast.makeText(this, "Remember to save your new Jar!", Toast.LENGTH_SHORT).show();
         } else {
 
             // SAVE CANDY MADE HERE INSTEAD OF MAIN ACTIVITY

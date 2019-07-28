@@ -1,6 +1,8 @@
 package com.xyz.orbital.singapore.jars;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -108,13 +110,40 @@ public class MakerPageFragment extends Fragment {
         }
         int category = result[0];
         int item = result[1];
-        ArrayList<Integer> items = inventory.get(0);
+        ArrayList<Integer> items = inventory.get(category);
         items.add(item);
 
         // save changes
         String toSave = gson.toJson(inventory);
         saveToLocalFile(CurrentItemsActivity.USER_INVENTORY_FILE_NAME, toSave);
+
+        // update sugar
+        int cost = 0;
+        switch (makerType) {
+            case MakerFragment.ORDINARY:
+                cost = 200;
+                break;
+            case MakerFragment.GRAND:
+                cost = 2500;
+                break;
+            case MakerFragment.DELUXE:
+                cost = 12500;
+                break;
+            default:
+                break;
+        }
+
+        int newSugarAmount = loadSugar() - cost;
+        saveSugar(newSugarAmount);
+
+        // update top bar sugar amount
+        Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).loadDataIntoTopBar();
+        }
+
     }
+
 
     // returns an array of 2 integers(int). 1st int represents category, 2nd represents item
     private int[] generateNewItem(int makerType) {
@@ -246,5 +275,18 @@ public class MakerPageFragment extends Fragment {
         }
 
         return output;
+    }
+
+    public void saveSugar(int amount) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ProfileFragment.SUGAR, amount);
+        editor.commit();
+    }
+
+    public int loadSugar() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        int sugar = sharedPreferences.getInt(ProfileFragment.SUGAR, 0);
+        return sugar;
     }
 }

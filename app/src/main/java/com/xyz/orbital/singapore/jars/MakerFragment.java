@@ -259,7 +259,7 @@ public class MakerFragment extends Fragment {
         }
         int category = result[0];
         int item = result[1];
-        ArrayList<Integer> items = inventory.get(0);
+        ArrayList<Integer> items = inventory.get(category);
         items.add(item);
 
         // save changes
