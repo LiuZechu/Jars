@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -157,7 +158,10 @@ public class FloatingWindowService extends Service {
 
     private void makeCandyFromClipBoard() {
 
-        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(CLIPBOARD_SERVICE);
+
+        ClipData clipData = clipboardManager.getPrimaryClip();
+
 
         String text = (String) getText(clipboardManager);
 
@@ -174,6 +178,7 @@ public class FloatingWindowService extends Service {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
+
         // stop this floating window
         windowManager.removeView(linearLayout);
         stopSelf();
@@ -184,7 +189,10 @@ public class FloatingWindowService extends Service {
         ClipData clip = clipboardManager.getPrimaryClip();
         if (clip != null && clip.getItemCount() > 0) {
             return clip.getItemAt(0).coerceToText(getApplicationContext());
+//            String result = clip.getItemAt(0).getText().toString();
+//            return result;
         }
+
         return null;
     }
 
@@ -195,10 +203,4 @@ public class FloatingWindowService extends Service {
         startActivity(intent);
     }
 
-//    // take screenshot and create a candy
-//    private void takeScreenshot() {
-//        // TEST
-//        Intent intent = new Intent(getApplicationContext(), ScreenshotActivity.class);
-//        startActivity(intent);
-//    }
 }
