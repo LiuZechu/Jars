@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.gmail.liuzechu2013.singapore.jars"
+        applicationId "com.xyz.orbital.singapore.jars"
         // minSdkVersion 15
         minSdkVersion 21
         targetSdkVersion 28
