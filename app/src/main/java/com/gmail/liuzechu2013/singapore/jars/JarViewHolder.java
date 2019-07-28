@@ -107,7 +107,8 @@ public class JarViewHolder extends RecyclerView.ViewHolder
         Gson gson = new Gson();
         String jarString = gson.toJson(currentJar);
         intent.putExtra(JAR_STRING, jarString);
-        activity.startActivity(intent);
+        // activity.startActivity(intent);
+        activity.startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_VIEW_CANDIES);
     }
 
     public void deleteJar() {

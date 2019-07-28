@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     public static final int REQUEST_CODE_FOR_TRAINING = 1;
     public static final int REQUEST_CODE_FOR_NEW_CANDY = 2;
     public static final int REQUEST_CODE_FOR_USERNAME = 3;
+    public static final int REQUEST_CODE_FOR_VIEW_CANDIES = 4;
     // for saving user data using shared preferences
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String USER_STATISTICS = "UserStatistics";
@@ -331,6 +332,7 @@ public class MainActivity extends AppCompatActivity
                 String jarTitle = data.getStringExtra(MakeNewCandyActivity.JAR_TITLE);
                 String prompt = data.getStringExtra(MakeNewCandyActivity.PROMPT);
                 String answer = data.getStringExtra(MakeNewCandyActivity.ANSWER);
+                String imageUri = data.getStringExtra(MakeNewCandyActivity.SCREENSHOT_IMAGE_URI);
                 int jarIndex = data.getIntExtra(MakeNewCandyActivity.JAR_INDEX,-1);
 
                 // changed here
@@ -340,7 +342,12 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 Jar jar = jarList.get(jarIndex);
-                jar.addCandy(new Candy(prompt, answer));
+                Candy newCandy = new Candy(prompt, answer);
+                // attach screenshot URI to the candy
+                if (imageUri != null) {
+                    newCandy.setImageUri(Uri.parse(imageUri));
+                }
+                jar.addCandy(newCandy);
 
                 //increment "total candies made" count
                 incrementTotalCandiesMade();
@@ -369,6 +376,15 @@ public class MainActivity extends AppCompatActivity
 
                 Menu menu = navView.getMenu();
                 MenuItem menuItem = menu.getItem(2); // highlight the Profile tab
+                menuItem.setChecked(true);
+            }
+        } else if (requestCode == REQUEST_CODE_FOR_VIEW_CANDIES) {
+            if (resultCode == RESULT_OK) {
+                // reload Jars page
+                loadFragment(new JarsFragment());
+
+                Menu menu = navView.getMenu();
+                MenuItem menuItem = menu.getItem(1); // highlight the Candy/Jar tab
                 menuItem.setChecked(true);
             }
         } else {
