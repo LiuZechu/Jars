@@ -77,6 +77,11 @@ public class MakerFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_maker, null);
 
+        // to get references to buttons
+        View viewOrdinary = inflater.inflate(R.layout.fragment_maker_ordinary, null);
+        View viewGrand = inflater.inflate(R.layout.fragment_maker_grand, null);
+        View viewDeluxe = inflater.inflate(R.layout.fragment_maker_deluxe, null);
+
         FloatingActionButton button = view.findViewById(R.id.view_current_items_button);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -93,7 +98,7 @@ public class MakerFragment extends Fragment {
         makerPager.setAdapter(makerPagerAdapter);
 
         // maker buttons
-        Button ordinaryButton = view.findViewById(R.id.maker_page_ordinary_button);
+        Button ordinaryButton = viewOrdinary.findViewById(R.id.maker_page_ordinary_button);
         ordinaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +106,7 @@ public class MakerFragment extends Fragment {
             }
         });
 
-        Button grandButton = view.findViewById(R.id.maker_page_grand_button);
+        Button grandButton = viewGrand.findViewById(R.id.maker_page_grand_button);
         grandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +114,7 @@ public class MakerFragment extends Fragment {
             }
         });
 
-        Button deluxeButton = view.findViewById(R.id.maker_page_deluxe_button);
+        Button deluxeButton = viewDeluxe.findViewById(R.id.maker_page_deluxe_button);
         deluxeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

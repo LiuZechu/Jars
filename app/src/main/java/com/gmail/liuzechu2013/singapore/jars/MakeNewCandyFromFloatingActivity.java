@@ -1,6 +1,8 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -144,7 +146,18 @@ public class MakeNewCandyFromFloatingActivity extends AppCompatActivity
 
         // get candy answer from intent if it is launched outside the app
         String answer = getIntent().getStringExtra(FloatingWindowService.CANDY_ANSWER);
+//        // FOR API 29+ i.e. Android Q:
+//        if (answer == null || answer.equals("")) {
+//            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+//            ClipData clip = clipboardManager.getPrimaryClip();
+//            if (clip != null && clip.getItemCount() > 0) {
+//                answer = clip.getItemAt(0).coerceToText(getApplicationContext()).toString();
+//                // String result = clip.getItemAt(0).getText().toString();
+//            }
+//        }
+//        Toast.makeText(getApplicationContext(), "FOCUS "+ answer, Toast.LENGTH_LONG).show();
         answerEditText.setText(answer);
+
 
         doneButton = findViewById(R.id.make_candy_done_button);
         doneButton.setOnClickListener(new View.OnClickListener() {
