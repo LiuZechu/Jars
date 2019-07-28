@@ -3,6 +3,8 @@ package com.gmail.liuzechu2013.singapore.jars;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -203,6 +205,7 @@ public class TrainingActivity extends AppCompatActivity {
             String prompt = currentCandy.getPrompt();
             final String answer = currentCandy.getAnswer();
 
+            changeColor(currentCandy.getLevel());
             changeExpression();
 
             mainTextView.setText(prompt);
@@ -467,6 +470,13 @@ public class TrainingActivity extends AppCompatActivity {
                         getResources().getDrawable(getResourceID(str, "drawable",
                                 getApplicationContext()))
                 );
+    }
+
+    private void changeColor(int level) {
+        View img = findViewById(R.id.training_candy_color);
+        String[] arr = {"#ef6256", "#f99c1c", "#fec41b", "#47b585", "#5bc4bf", "#825ca4", "#e96ca9"};
+        img.getBackground().setColorFilter(Color.parseColor(arr[level - 1]), PorterDuff.Mode.SRC_OVER);
+        // TODO: need to select the correct color.
     }
 
     // for line graph: add total candies trained in this training to local file

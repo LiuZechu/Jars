@@ -22,8 +22,8 @@ public class Jar {
         lastAcessTime = System.currentTimeMillis();
         candies = new ArrayList<>();
         jarType = new Random().nextInt(9);
-        String[] arr = {"#c8af95", "#c7c694", "#aec795", "#95c7ae", "#95afc7", "#ae95c6", "#c694ad", "#c79595"};
-        jarColor = arr[new Random().nextInt(8)];
+        String[] arr = {"#ef6256", "#f99c1c", "#fec41b", "#47b585", "#5bc4bf", "#825ca4", "#e96ca9"};
+        jarColor = arr[new Random().nextInt(7)];
     }
 
     public void addCandy(Candy candy) {

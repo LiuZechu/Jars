@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -104,6 +106,15 @@ public class MainActivity extends AppCompatActivity
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        // topbar training button
+        trainingButton = (Button) findViewById(R.id.training_button);
+        trainingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoTraining();
+            }
+        });
+
         final ImageView img = findViewById(R.id.training_expression);
         final String str = "ic_expression" + rnd.nextInt(62);
         // TODO: need to select the correct expression.
@@ -113,6 +124,8 @@ public class MainActivity extends AppCompatActivity
                                 getApplicationContext()))
                 );
 
+        String[] arr = {"#ef6256", "#f99c1c", "#fec41b", "#47b585", "#5bc4bf", "#825ca4", "#e96ca9"};
+        trainingButton.getBackground().setColorFilter(Color.parseColor(arr[new Random().nextInt(7)]), PorterDuff.Mode.SRC_OVER);
 
         // TODO: check whether there's unnecessary loading
         loadAllData();
@@ -170,14 +183,7 @@ public class MainActivity extends AppCompatActivity
         }
         */
 
-        // topbar training button
-        trainingButton = (Button) findViewById(R.id.training_button);
-        trainingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoTraining();
-            }
-        });
+
 
         // background work using jobScheduler
         // scheduleJob();
