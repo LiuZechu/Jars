@@ -11,23 +11,26 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-public class JarViewHolder extends RecyclerView.ViewHolder
+public class JarShelfViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
     protected TextView jarItemView;
-    protected View jarItemColorView;
-    private JarListAdapter mAdapter;
+    protected ImageView jarImageView;
+    protected View jarColorView;
+    private JarShelfAdapter mAdapter;
     protected Jar currentJar;
     public static final String JAR_STRING = "JAR STRING";
 
-    public JarViewHolder(View itemView, JarListAdapter adapter) {
+    public JarShelfViewHolder(View itemView, JarShelfAdapter adapter) {
         super(itemView);
-        jarItemView = (TextView) itemView.findViewById(R.id.jar_item_textView);
-        jarItemColorView = itemView.findViewById(R.id.jar_item_colorView);
+        jarItemView = (TextView) itemView.findViewById(R.id.jar_shelf_textView);
+        jarImageView = itemView.findViewById(R.id.jar_shelf_imageView);
+        jarColorView = itemView.findViewById(R.id.jar_shelf_colorView);
         this.mAdapter = adapter;
         itemView.setOnClickListener(this);
         //jarItemView.setOnCreateContextMenuListener(this);
@@ -107,8 +110,7 @@ public class JarViewHolder extends RecyclerView.ViewHolder
         Gson gson = new Gson();
         String jarString = gson.toJson(currentJar);
         intent.putExtra(JAR_STRING, jarString);
-        // activity.startActivity(intent);
-        activity.startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_VIEW_CANDIES);
+        activity.startActivity(intent);
     }
 
     public void deleteJar() {

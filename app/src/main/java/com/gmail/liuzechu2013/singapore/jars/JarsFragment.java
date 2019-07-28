@@ -18,7 +18,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class JarsFragment extends Fragment {
-    private RecyclerView mRecyclerView;
+    private RecyclerView mListRecyclerView;
+    private RecyclerView mShelfRecyclerView;
     private static ArrayList<Jar> jarList;
     private FloatingActionButton makeCandyButton;
     private String[] jarNameArray;
@@ -47,10 +48,15 @@ public class JarsFragment extends Fragment {
             jarList = new ArrayList<>();
         }
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.jar_list_recyclerView);
+        mListRecyclerView = (RecyclerView) view.findViewById(R.id.jar_list_recyclerView);
         JarListAdapter adapter = new JarListAdapter(getContext(), jarList);
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mListRecyclerView.setAdapter(adapter);
+        mListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mShelfRecyclerView = view.findViewById(R.id.jar_shelf_recyclerView);
+        JarShelfAdapter shelfAdapter = new JarShelfAdapter(getContext(), jarList);
+        mShelfRecyclerView.setAdapter(shelfAdapter);
+        mShelfRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         makeCandyButton = view.findViewById(R.id.make_candy_floating_action_button);
         makeCandyButton.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +72,8 @@ public class JarsFragment extends Fragment {
         }
 
         // menu that pops up when tapping a list item
-        //registerForContextMenu(mRecyclerView);
-        //mRecyclerView.setLongClickable(false); // menu pops up via short tap instead of long press
+        //registerForContextMenu(mListRecyclerView);
+        //mListRecyclerView.setLongClickable(false); // menu pops up via short tap instead of long press
 
         return view;
     }
