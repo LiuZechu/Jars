@@ -19,31 +19,33 @@
             android:layout_height="match_parent">
 
             <TextView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/ordinary_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
                 android:layout_margin="8dp"
+                android:paddingStart="8dp"
                 android:text="Ordinary"
-                android:textSize="26sp" />
+                android:textSize="26sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:paddingTop="30sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ordinary_title"
+                android:id="@+id/ordinary_col_0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/ordinary_col_0"
+                android:orientation="vertical"
+                android:paddingTop="30sp"
                 android:weightSum="7"
-                android:orientation="vertical">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ordinary_title">
+
                 <RelativeLayout
                     android:id="@+id/exp0"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -52,17 +54,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_0"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression0" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp1"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -71,17 +77,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_1"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression1" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp2"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -90,17 +100,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_2"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression2" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp3"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -109,17 +123,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_3"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression3" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp4"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -128,17 +146,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_4"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression4" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp5"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -147,17 +169,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_5"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression5" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp6"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -166,27 +192,32 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_6"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression6" />
                 </RelativeLayout>
             </LinearLayout>
+
             <LinearLayout
-                android:paddingTop="30sp"
                 android:id="@+id/ordinary_col_1"
-                app:layout_constraintStart_toEndOf="@id/ordinary_col_0"
-                app:layout_constraintTop_toBottomOf="@id/ordinary_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="30sp"
                 android:weightSum="7"
-                android:orientation="vertical">
+                app:layout_constraintStart_toEndOf="@id/ordinary_col_0"
+                app:layout_constraintTop_toBottomOf="@id/ordinary_title">
+
                 <RelativeLayout
                     android:id="@+id/exp7"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -195,17 +226,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_7"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression7" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp8"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -214,17 +249,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_8"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression8" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp9"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -233,17 +272,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_9"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression9" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp10"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -252,17 +295,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_10"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression10" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp11"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -271,17 +318,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_11"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression11" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp12"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -290,17 +341,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_12"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression12" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp13"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -309,27 +364,32 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_13"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression13" />
                 </RelativeLayout>
             </LinearLayout>
+
             <LinearLayout
-                android:paddingTop="30sp"
                 android:id="@+id/ordinary_col_2"
-                app:layout_constraintStart_toEndOf="@id/ordinary_col_1"
-                app:layout_constraintTop_toBottomOf="@id/ordinary_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="30sp"
                 android:weightSum="7"
-                android:orientation="vertical">
+                app:layout_constraintStart_toEndOf="@id/ordinary_col_1"
+                app:layout_constraintTop_toBottomOf="@id/ordinary_title">
+
                 <RelativeLayout
                     android:id="@+id/exp14"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -338,17 +398,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_14"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression14" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp15"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -357,17 +421,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_15"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression15" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp16"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -376,17 +444,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_16"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression16" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp17"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -395,17 +467,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_17"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression17" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp18"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -414,17 +490,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_18"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression18" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp19"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -433,17 +513,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_19"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression19" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp20"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -452,27 +536,32 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_20"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression20" />
                 </RelativeLayout>
             </LinearLayout>
+
             <LinearLayout
-                android:paddingTop="30sp"
                 android:id="@+id/ordinary_col_3"
-                app:layout_constraintStart_toEndOf="@id/ordinary_col_2"
-                app:layout_constraintTop_toBottomOf="@id/ordinary_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="30sp"
                 android:weightSum="7"
-                android:orientation="vertical">
+                app:layout_constraintStart_toEndOf="@id/ordinary_col_2"
+                app:layout_constraintTop_toBottomOf="@id/ordinary_title">
+
                 <RelativeLayout
                     android:id="@+id/exp21"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -481,17 +570,21 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_21"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression21" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/exp22"
-                    android:layout_weight="1"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:alpha="0.3">
 
                     <View
                         android:layout_width="50dp"
@@ -500,16 +593,20 @@
                         android:background="@drawable/training_button" />
 
                     <View
+                        android:id="@+id/face_22"
+                        android:visibility="invisible"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/ic_expression22" />
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:layout_weight="5"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:layout_margin="40dp">
+                    android:layout_margin="40dp"
+                    android:layout_weight="5"
+                    android:alpha="0.3">
 
                 </RelativeLayout>
             </LinearLayout>

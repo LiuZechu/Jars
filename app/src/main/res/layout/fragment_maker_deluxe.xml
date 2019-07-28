@@ -34,7 +34,7 @@
 
     <android.support.v4.widget.Space
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/maker_page_button"
+        app:layout_constraintBottom_toTopOf="@id/maker_page_deluxe_button"
         android:id="@+id/space"
         android:layout_width="match_parent"
         android:layout_height="8dp" />
