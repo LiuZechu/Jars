@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,29 +99,29 @@ public class MakerFragment extends Fragment {
         makerPager.setAdapter(makerPagerAdapter);
 
         // maker buttons
-        Button ordinaryButton = viewOrdinary.findViewById(R.id.maker_page_ordinary_button);
-        ordinaryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onGeneratingNewItem(ORDINARY);
-            }
-        });
-
-        Button grandButton = viewGrand.findViewById(R.id.maker_page_grand_button);
-        grandButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onGeneratingNewItem(GRAND);
-            }
-        });
-
-        Button deluxeButton = viewDeluxe.findViewById(R.id.maker_page_deluxe_button);
-        deluxeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onGeneratingNewItem(DELUXE);
-            }
-        });
+//        Button ordinaryButton = viewOrdinary.findViewById(R.id.maker_page_ordinary_button);
+//        ordinaryButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onGeneratingNewItem(ORDINARY);
+//            }
+//        });
+//
+//        Button grandButton = viewGrand.findViewById(R.id.maker_page_grand_button);
+//        grandButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onGeneratingNewItem(GRAND);
+//            }
+//        });
+//
+//        Button deluxeButton = viewDeluxe.findViewById(R.id.maker_page_deluxe_button);
+//        deluxeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onGeneratingNewItem(DELUXE);
+//            }
+//        });
 
 
         /*
@@ -245,6 +246,8 @@ public class MakerFragment extends Fragment {
     // called when a maker button is clicked
     private void onGeneratingNewItem(int makerType) {
         int[] result = generateNewItem(makerType);
+        Log.d("test", result[0] + " AND " + result[1]);
+        Toast.makeText(getContext(), result[0] + " AND " + result[1], Toast.LENGTH_LONG).show();
         String fromFile = loadFromLocalFile(CurrentItemsActivity.USER_INVENTORY_FILE_NAME);
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<ArrayList<Integer>>>(){}.getType();
