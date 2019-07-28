@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class CandyViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener, View.OnLongClickListener {
     protected TextView candyItemView;
+    protected View candyColorView;
     private CandyListAdapter mAdapter;
     // the following two attributes are for toggling prompt/answer when tapping a candy item; can change later
     protected Candy currentCandy;
@@ -36,7 +37,8 @@ public class CandyViewHolder extends RecyclerView.ViewHolder
 
     public CandyViewHolder(View itemView, CandyListAdapter adapter) {
         super(itemView);
-        candyItemView = (TextView) itemView.findViewById(R.id.candy_item_textView);
+        candyItemView = (TextView) itemView.findViewById(R.id.jar_item_textView);
+        candyColorView = itemView.findViewById(R.id.jar_item_colorView);
         this.mAdapter = adapter;
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
