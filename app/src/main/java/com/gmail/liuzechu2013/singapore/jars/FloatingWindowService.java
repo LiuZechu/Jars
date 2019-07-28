@@ -171,6 +171,7 @@ public class FloatingWindowService extends Service {
         intent.putExtra(JarsFragment.JAR_NAME_ARRAY, jarNameArrayString);
         // startActivityForResult(intent, MainActivity.REQUEST_CODE_FOR_NEW_CANDY);
         intent.putExtra(CANDY_ANSWER, text);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
         // stop this floating window

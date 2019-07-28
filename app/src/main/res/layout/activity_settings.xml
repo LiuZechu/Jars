@@ -15,6 +15,7 @@
         android:background="#fff"
         android:textAlignment="center"
         android:elevation="2dp"
+        android:padding="8dp"
         android:id="@+id/settings_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -31,11 +32,13 @@
         app:layout_constraintTop_toBottomOf="@id/settings_title" />
 
     <EditText
+        android:background="@drawable/jar_text"
         android:id="@+id/settings_username_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:textSize="24sp"
+        android:elevation="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_username_text" />
 
@@ -52,6 +55,8 @@
         android:id="@+id/settings_alarm_time_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/jar_text"
+        android:elevation="2dp"
         android:layout_margin="8dp"
         android:headerBackground="#000"
         android:numbersInnerTextColor="#000"

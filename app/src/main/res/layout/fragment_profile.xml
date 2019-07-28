@@ -23,6 +23,10 @@
 
         <!-- SECTION 1: USERNAME AND SETTINGS -->
         <android.support.constraint.ConstraintLayout
+            android:background="@drawable/jar_text"
+            android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -50,9 +54,19 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <TextView
+            android:text="Candy Trained per day"
+            android:textSize="26sp"
+            android:padding="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <!-- SECTION 2: LINE GRAPH -->
         <android.support.constraint.ConstraintLayout
             android:id="@+id/profile_statistics_visualisation_layout"
+            android:background="@drawable/jar_text"
+            android:layout_margin="8dp"
+            android:elevation="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -68,6 +82,13 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <TextView
+            android:text="Achievements"
+            android:textSize="26sp"
+            android:padding="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <!-- SECTION 3: ACHIEVEMENTS -->
         <LinearLayout
             android:layout_marginBottom="18dp"
@@ -79,13 +100,15 @@
                 android:id="@+id/achievement_streak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/jar_text"
+                android:layout_margin="8dp"
+                android:elevation="2dp"
                 android:layout_marginTop="16dp">
 
                 <ImageView
                     android:id="@+id/achievement_streak_icon"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_marginStart="8dp"
                     android:src="@drawable/ic_achievement_streak"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -152,13 +175,15 @@
                 android:id="@+id/achievement_made"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/jar_text"
+                android:layout_margin="8dp"
+                android:elevation="2dp"
                 android:layout_marginTop="16dp">
 
                 <ImageView
                     android:id="@+id/achievement_made_icon"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_marginStart="8dp"
                     android:src="@drawable/ic_achievement_made"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -225,13 +250,15 @@
                 android:id="@+id/achievement_graduated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/jar_text"
+                android:layout_margin="8dp"
+                android:elevation="2dp"
                 android:layout_marginTop="16dp">
 
                 <ImageView
                     android:id="@+id/achievement_graduated_icon"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_marginStart="8dp"
                     android:src="@drawable/ic_achievement_graduated"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -298,13 +325,15 @@
                 android:id="@+id/achievement_jars"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/jar_text"
+                android:layout_margin="8dp"
+                android:elevation="2dp"
                 android:layout_marginTop="16dp">
 
                 <ImageView
                     android:id="@+id/achievement_jars_icon"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_marginStart="8dp"
                     android:src="@drawable/ic_achievement_jars"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -370,6 +399,9 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_marginTop="16dp"
                 android:id="@+id/achievement_sugar"
+                android:background="@drawable/jar_text"
+                android:layout_margin="8dp"
+                android:elevation="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -377,7 +409,6 @@
                     android:id="@+id/achievement_sugar_icon"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_marginStart="8dp"
                     android:src="@drawable/ic_achievement_sugar"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -443,6 +474,9 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_marginTop="16dp"
                 android:id="@+id/achievement_level"
+                android:background="@drawable/jar_text"
+                android:layout_margin="8dp"
+                android:elevation="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -450,7 +484,6 @@
                     android:id="@+id/achievement_level_icon"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_marginStart="8dp"
                     android:src="@drawable/ic_achievement_level"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

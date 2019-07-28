@@ -1,31 +1,33 @@
 package com.gmail.liuzechu2013.singapore.jars;
 
+import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-
-import java.util.ArrayList;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 public class CurrentItemsActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
-    private ArrayList<Item> userItemList;
+
+    ImageButton expressionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_items);
 
-        /*// TESTING: CREATE A TEMP jarList; will be replaced later
-        userItemList = new ArrayList<>();
-        userItemList.add(new Item(Item.CANDY, "Mint Candy"));
-        userItemList.add(new Item(Item.SUPERPOWER, "Keep Streak Alive for 2 days"));
-        userItemList.add(new Item(Item.CANDY_EXPRESSION, "Smiley Face"));
-        userItemList.add(new Item(Item.CANDY, "Chocolate Candy"));
-        userItemList.add(new Item(Item.SUPERPOWER, "Keep Streak Alive for 3 days"));
-        userItemList.add(new Item(Item.CANDY_EXPRESSION, "Angry Face"));
-        userItemList.add(new Item(Item.CANDY, "Lollipop"));
-        userItemList.add(new Item(Item.SUPERPOWER, "Keep Streak Alive for 5 days"));
-        userItemList.add(new Item(Item.CANDY_EXPRESSION, "Cute Face"));
-        // TESTING ENDS*/
+        expressionButton = findViewById(R.id.user_item_expression);
+        expressionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openExpression();
+            }
+        });
+    }
+
+    private void openExpression() {
+        Intent intent = new Intent(this, ExpressionActivity.class);
+        startActivity(intent);
     }
 }
