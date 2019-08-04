@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -491,7 +492,40 @@ public class TrainingActivity extends AppCompatActivity {
         }
 
         LineGraphPoint lineGraphPoint = new LineGraphPoint(quantity);
-        lineGraphPoints.add(lineGraphPoint);
+
+        // check whether this point has the same date as the previous point. If so, merge them
+        if (lineGraphPoints.size() > 0) {
+            LineGraphPoint previousPoint = lineGraphPoints.get(lineGraphPoints.size() - 1);
+            String previousDate = previousPoint.getDate();
+
+            if (lineGraphPoint.getDate().equals(previousDate)) {
+                previousPoint.addQuantity(quantity);
+            } else { // different dates
+
+                Calendar previousCalendar = previousPoint.getCalendar();
+
+                do {
+                    // check whether there's any empty point/date between the current point and the previous point
+                    Calendar nextCalendar = (Calendar) previousCalendar.clone();
+                    nextCalendar.set(Calendar.DAY_OF_MONTH, previousCalendar.get(Calendar.DAY_OF_MONTH) + 1);
+                    String next = LineGraphPoint.getDateFromCalendar(nextCalendar);
+                    String current = lineGraphPoint.getDate();
+                    // Log.d("test", next);
+                    if (!next.equals(current)) {
+                        lineGraphPoints.add(new LineGraphPoint(0, nextCalendar));
+                    } else {
+                        break;
+                    }
+
+                    previousCalendar = nextCalendar;
+
+                } while (true);
+
+                lineGraphPoints.add(lineGraphPoint);
+
+            }
+        }
+
 
         String toSave = gson.toJson(lineGraphPoints);
         saveToLocalFile(fileName, toSave);

@@ -135,9 +135,14 @@ public class ProfileFragment extends Fragment {
         LineChartView lineChartView = view.findViewById(R.id.profile_chart);
 
         // load line graph data from saved local file (for now, Candies trained only)
-        int[] yAxisData = loadLineGraphData(MainActivity.LINE_GRAPH_CANDIES_TRAINED_FILE_NAME);
+        LineGraphPoint[] yAxisData = loadLineGraphData(MainActivity.LINE_GRAPH_CANDIES_TRAINED_FILE_NAME);
+        // IF GRADUATED CANDIES IS CHOSEN:
+        // LineGraphPoint[] yAxisData = loadLineGraphData(MainActivity.LINE_GRAPH_CANDIES_GRADUATED_FILE_NAME);
+        
+
         // test values
         // int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+
         List<PointValue> yAxisValues = new ArrayList<>();
         LineChartData data = new LineChartData();
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#000000"))
@@ -161,8 +166,8 @@ public class ProfileFragment extends Fragment {
             int count = 0;
             for (PointValue value : l.getValues()) {
                 // Here I modify target only for Y values but it is OK to modify X targets as well.
-                value.setTarget(value.getX(), yAxisData[count]);
-                String label = Integer.toString(yAxisData[count]);
+                value.setTarget(value.getX(), yAxisData[count].getQuantity());
+                String label = yAxisData[count].getDate() + ": " + Integer.toString(yAxisData[count].getQuantity());
                 value.setLabel(label);
                 count++;
             }
@@ -245,7 +250,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    private int[] loadLineGraphData(String fileName) {
+    private LineGraphPoint[] loadLineGraphData(String fileName) {
         String fromFile = loadFromLocalFile(fileName);
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<LineGraphPoint>>(){}.getType();
@@ -254,11 +259,12 @@ public class ProfileFragment extends Fragment {
             lineGraphPoints = new ArrayList<>();
         }
 
-        int[]  yAxisData = new int[lineGraphPoints.size()];
+        //int[]  yAxisData = new int[lineGraphPoints.size()];
+        LineGraphPoint[] yAxisData = new LineGraphPoint[lineGraphPoints.size()];
 
         for (int i = 0; i < lineGraphPoints.size(); i++) {
             LineGraphPoint point = lineGraphPoints.get(i);
-            yAxisData[i] = point.getQuantity();
+            yAxisData[i] = point;
         }
 
         return yAxisData;
