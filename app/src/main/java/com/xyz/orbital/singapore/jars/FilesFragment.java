@@ -42,13 +42,13 @@ public class FilesFragment extends Fragment {
         });
 
         // button to watch tutorial from an external link
-        Button watchTutorialButton = view.findViewById(R.id.watch_tutorial_button);
-        watchTutorialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                watchTutorial();
-            }
-        });
+        //Button watchTutorialButton = view.findViewById(R.id.watch_tutorial_button);
+//        //watchTutorialButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                watchTutorial();
+//            }
+//        });
 
         return view;
     }
