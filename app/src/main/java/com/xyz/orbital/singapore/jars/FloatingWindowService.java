@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -326,6 +327,7 @@ public class FloatingWindowService extends Service {
     public CharSequence getText(ClipboardManager clipboardManager) {
         ClipData clip = clipboardManager.getPrimaryClip();
         if (clip != null && clip.getItemCount() > 0) {
+            Log.d("test", "message is: " + clip.getItemAt(0).coerceToText(getApplicationContext()));
             return clip.getItemAt(0).coerceToText(getApplicationContext());
 //            String result = clip.getItemAt(0).getText().toString();
 //            return result;
