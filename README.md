@@ -5,6 +5,12 @@ Jars is an Android mobile app that allows the user to highlight phrases or sente
 
 Flashcards are represented as candies that must be trained and can graduate (after getting the candy right seven times). Users are encouraged to consistently make and review their candies through a gamified level/exp/sugar currency system.
 
+## Video Demo
+[click here for video demo](https://drive.google.com/open?id=1X7Ny4u_FHCcaZuly0BNPbAnLZH6SWwKj)
+
+## Screenshots
+![floating button]()
+
 ## Authors
 * [Ong Yan Chun](https://github.com/yaaanch)
 * [Liu Zechu](https://github.com/LiuZechu)
@@ -15,12 +21,10 @@ To make learning content knowledge from text materials convenient, efficient and
 * Efficient = Want to make cards quickly, review cards quickly  
 * Effective = Consistent. Good for memory retention  
 
-## Video demo
-[click here for video demo](https://drive.google.com/open?id=1X7Ny4u_FHCcaZuly0BNPbAnLZH6SWwKj)
-
 ## What we have achieved
 1. Back-end 
-   1. New Addition: Users can open a floating window from the Main Tab of our app. The app will be sent to the background automatically, leaving only a floating icon on the foreground. Users can freely browse websites, PDFs, word documents etc. outside the app. When they wish to make a Candy (flash-card), they can select a portion of the text, click “copy”. Then they can access the “Make a Candy” button through the floating icon, which expands into three buttons upon tapping. The leftmost button minimises the floating window, the middle one brings users directly to the app, where they can fill in a prompt and choose a Jar (category) for their Candy. The answer portion is auto filled with text from the clipboard. Finally, users click the DONE button to save the Candy and automatically return to the previous app to continue reading. The third button on the floating window brings the user back to Jars Tab of the app, where they can view all their Jars and Candies made. We’ve decided to implement this feature instead of limiting the app to only PDF documents because through our user interviews, many prospective users have said that they don’t just use PDFs to learn. They use a combination of resources such as PDFs, web pages, word documents etc. Our final implementation allows for greater flexibility for learning resources.
+   1. New Addition: Users can open a floating window from the Main Tab of our app. The app will be sent to the background automatically, leaving only a floating icon on the foreground. Users can freely browse websites, PDFs, word documents etc. outside the app. When they wish to make a Candy (flash-card), they can select a portion of the text, click “copy”. Then they can access the “Make a Candy” button through the floating icon, which expands into three buttons upon tapping. The leftmost button minimises the floating window, the middle one brings users directly to the app, where they can fill in a prompt and choose a Jar (category) for their Candy. The answer portion is auto filled with text from the clipboard. Finally, users click the DONE button to save the Candy and automatically return to the previous app to continue reading. The third button on the floating window brings the user back to Jars Tab of the app, where they can view all their Jars and Candies made. 
+      1. We’ve decided to implement this feature instead of limiting the app to only PDF documents because through our user interviews, many prospective users have said that they don’t just use PDFs to learn. They use a combination of resources such as PDFs, web pages, word documents etc. Our final implementation allows for greater flexibility for learning resources.
    1. New Addition: the app enables users to attach a screenshot to a Candy. When they highlight the text, though not compulsory, they may choose to take a screenshot of the context of the highlighted phrases, and attach it to a Candy in the “Make a Candy” Page. They can do so through in-app Candy-making button as well. During training, they can view the screenshot by tapping the photo icon in the middle (as shown).
    1. New Addition: Candies can now be deleted from their respective Jars. An alert window will pop up to let users confirm before deletion.
    1. Jars and Candies: The Jar and Candy system is fully complete. Users can create candies, place them into jars, and train them as per spaced repetition. The candies can graduate and enter the archive.
