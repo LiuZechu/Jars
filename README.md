@@ -10,6 +10,17 @@ Flashcards are represented as candies that must be trained and can graduate (aft
 
 ## Screenshots
 ![floating button](/docs/screenshots/floating_button.png)
+![jars_fragment](/docs/screenshots/jars_fragment.png)
+![new_candy](/docs/screenshots/new_candy.png)
+![training_prompt](/docs/screenshots/training_prompt.png)
+![training_answer](/docs/screenshots/training_answer.png)
+![achievements](/docs/screenshots/achievements.png)
+![profile_fragment](/docs/screenshots/profile_fragment.png)
+![settings](/docs/screenshots/settings.png)
+![candy_maker](/docs/screenshots/candy_maker.png)
+![my_items](/docs/screenshots/my_items.png)
+![powerups](/docs/screenshots/powerups.png)
+![expressions](/docs/screenshots/expressions.png)
 
 ## Authors
 * [Ong Yan Chun](https://github.com/yaaanch)
