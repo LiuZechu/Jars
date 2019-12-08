@@ -9,7 +9,7 @@ Flashcards are represented as candies that must be trained and can graduate (aft
 [click here for video demo](https://drive.google.com/open?id=1X7Ny4u_FHCcaZuly0BNPbAnLZH6SWwKj)
 
 ## Screenshots
-![floating button]()
+![floating button](blob/master/docs/screenshots/floating_button.png)
 
 ## Authors
 * [Ong Yan Chun](https://github.com/yaaanch)
