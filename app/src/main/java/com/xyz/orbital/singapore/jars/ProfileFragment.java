@@ -138,7 +138,7 @@ public class ProfileFragment extends Fragment {
         LineGraphPoint[] yAxisData = loadLineGraphData(MainActivity.LINE_GRAPH_CANDIES_TRAINED_FILE_NAME);
         // IF GRADUATED CANDIES IS CHOSEN:
         // LineGraphPoint[] yAxisData = loadLineGraphData(MainActivity.LINE_GRAPH_CANDIES_GRADUATED_FILE_NAME);
-        
+
 
         // test values
         // int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
